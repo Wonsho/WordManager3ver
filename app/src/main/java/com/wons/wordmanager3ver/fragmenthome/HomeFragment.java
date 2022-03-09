@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.fragmenthome;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,9 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.FragmentHomeBinding;
 import com.wons.wordmanager3ver.fragmenthome.adapter.GameListAdapter;
+import com.wons.wordmanager3ver.fragmenthome.dialogutils.CallBackInHomeFragment;
+import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragment;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
 
@@ -32,7 +34,15 @@ public class HomeFragment extends Fragment {
 
 
     private void onC() {
+        binding.btnSetting.setOnClickListener(v -> {
+            AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(this.getContext(), 1,1, new CallBackInHomeFragment() {
+                @Override
+                public void callback(int setting, int listCount) {
 
+                }
+            });
+            alertDialog.show();
+        });
     }
 
     private void setGameList() {

@@ -12,6 +12,15 @@ public class UserInfo {
     private int userId;
     private int userGradeInt;
     private int expInt;
+    private int languageCodeSettingInt;
+
+    public void setLanguageCodeSettingInt(int languageCodeSettingInt) {
+        this.languageCodeSettingInt = languageCodeSettingInt;
+    }
+
+    public int getLanguageCodeSettingInt() {
+        return languageCodeSettingInt;
+    }
 
     public int getExpInt() {
         return expInt;
