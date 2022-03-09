@@ -9,7 +9,7 @@ import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
-@Database(entities = {Setting.class, UserInfo.class, Word.class, WordInfo.class, WordList.class}, version = 0)
+@Database(entities = {Setting.class, UserInfo.class, Word.class, WordInfo.class, WordList.class}, version = 1)
 public abstract class MainDatabase extends RoomDatabase {
     abstract MyDao getDao();
 }

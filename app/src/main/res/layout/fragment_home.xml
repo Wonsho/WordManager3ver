@@ -4,17 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBFBFB"
     tools:context=".fragmenthome.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay_title"
+            android:elevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme3"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/theme_black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
+                android:id="@+id/t"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/theme_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/theme_black"
+                app:layout_constraintBottom_toBottomOf="@id/t"
+                app:layout_constraintTop_toTopOf="@id/t"
+                app:layout_constraintLeft_toRightOf="@id/t"
+                android:text="Word Manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/lay_userinfo"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/lay_title">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +97,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="5dp"
                             android:background="@color/theme_black"
-                            app:layout_constraintTop_toBottomOf="@id/btn_test" />
+                            app:layout_constraintTop_toBottomOf="@id/lay1" />
 
                         <TextView
                             android:id="@+id/tv1"
@@ -107,7 +149,7 @@
                             app:layout_constraintTop_toBottomOf="@id/line1" />
 
                         <LinearLayout
-                            android:id="@+id/btn_test"
+                            android:id="@+id/lay1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -118,6 +160,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
+                                android:id="@+id/btn_test"
                                 android:textColor="@color/theme_black"
                                 android:clickable="true"
                                 android:focusable="true"
@@ -146,9 +189,21 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:src="@drawable/ic_baseline_settings_24"
-                            app:layout_constraintBottom_toBottomOf="@id/text"
+                            app:layout_constraintBottom_toBottomOf="@id/btn_replace"
+                            app:layout_constraintLeft_toRightOf="@id/btn_replace"
+                            app:layout_constraintTop_toTopOf="@id/btn_replace" />
+                        <ImageView
+                            android:id="@+id/btn_replace"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_baseline_replay_24"
                             app:layout_constraintLeft_toRightOf="@id/text"
-                            app:layout_constraintTop_toTopOf="@id/text" />
+                            app:layout_constraintBottom_toBottomOf="@id/text"
+                            app:layout_constraintTop_toTopOf="@id/text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -156,7 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -181,7 +236,7 @@
                             android:layout_marginBottom="15dp"/>
 
                         <LinearLayout
-                            android:id="@+id/btn_study"
+                            android:id="@+id/lay2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -192,6 +247,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
+                                android:id="@+id/btn_study"
                                 android:textColor="@color/theme_black"
                                 android:clickable="true"
                                 android:focusable="true"
@@ -219,7 +275,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -288,7 +344,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="성실LV : "
+                android:text="나의 LV : "
                 android:textColor="@color/theme_black"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -20,12 +21,12 @@ import com.wons.wordmanager3ver.fragmentinfo.InfoFragment;
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
-    private HomeFragment homeFragment;
     private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         BottomNavigationView navigationView = findViewById(R.id.btN);
         navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -34,13 +35,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.buildDataBase(getApplicationContext());
+        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(), new HomeFragment()).commit();
     }
 
 
-    public void setFragment(int id) {
+    @SuppressLint({"SetTextI18n", "NonConstantResourceId"})
+    private void setFragment(int id) {
         FrameLayout frame = binding.fragmentContain;
        switch (id) {
             case R.id.menu_add :{
@@ -56,5 +58,9 @@ public class MainActivity extends AppCompatActivity {
                break;
            }
         }
+    }
+    public void setFragmentAddWord() {
+        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(), new AddWordFragment()).commit();
+        binding.btN.setSelectedItemId(R.id.menu_add);
     }
 }

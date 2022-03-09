@@ -11,6 +11,10 @@ public class Setting {
     private int settingCode;
     public int settingValue;
 
+    public Setting(int settingCode, int settingValue) {
+        this.settingCode = settingCode;
+        this.settingValue = settingValue;
+    }
     public int getSettingCode() {
         return settingCode;
     }

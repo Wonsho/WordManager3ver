@@ -4,7 +4,8 @@ public enum EnumSetting {
     DIALOG_SHOW(0),
     TTS_SPEED(1),
     USER_RECOMMEND_TODAY_LIST_COUNT(2),
-    USER_RECOMMEND_STYLE(3);
+    USER_RECOMMEND_STYLE(3),
+    LANGUAGE(4);
 
     public int settingCodeId;
 

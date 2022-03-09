@@ -3,12 +3,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentaddword.AddWordFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="33" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay_title"
+            android:elevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme3"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/line"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/theme_black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
+                android:id="@+id/t"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/theme_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/theme_black"
+                app:layout_constraintBottom_toBottomOf="@id/t"
+                app:layout_constraintTop_toTopOf="@id/t"
+                app:layout_constraintLeft_toRightOf="@id/t"
+                android:text="단어장"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/btn_addList"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_baseline_add_list"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:textSize="12dp"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/theme_black"
+                app:layout_constraintTop_toTopOf="@id/btn_addList"
+                app:layout_constraintBottom_toBottomOf="@id/btn_addList"
+                app:layout_constraintLeft_toLeftOf="@id/btn_addList"
+                app:layout_constraintRight_toRightOf="@id/btn_addList"
+                android:text="추가"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ListView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line"
+                android:id="@+id/lv_wordList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
