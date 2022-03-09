@@ -33,4 +33,20 @@ public class WordList {
     public int getWordCountInt() {
         return wordCountInt;
     }
+
+    public int getListCodeInt() {
+        return listCodeInt;
+    }
+
+    public void setListCodeInt(int listCodeInt) {
+        this.listCodeInt = listCodeInt;
+    }
+
+    public int getListGradeInt() {
+        return listGradeInt;
+    }
+
+    public void setListGradeInt(int listGradeInt) {
+        this.listGradeInt = listGradeInt;
+    }
 }

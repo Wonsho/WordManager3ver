@@ -41,4 +41,19 @@ public class WordInfo {
         this.wordEnglish = wordEnglish;
     }
 
+    public int getTestedTimes() {
+        return testedTimes;
+    }
+
+    public int getCorrectTimes() {
+        return correctTimes;
+    }
+
+    public void setTestedTimes(int testedTimes) {
+        this.testedTimes = testedTimes;
+    }
+
+    public void setCorrectTimes(int correctTimes) {
+        this.correctTimes = correctTimes;
+    }
 }

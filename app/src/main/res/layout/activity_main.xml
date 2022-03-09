@@ -10,6 +10,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lay_title"
         android:elevation="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,39 +57,18 @@
         app:menu="@menu/main_menu"
       />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_contain"
+        app:layout_constraintTop_toBottomOf="@id/lay_title"
+        app:layout_constraintBottom_toTopOf="@id/btN"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@id/btN">
+        android:layout_height="0dp"/>
 
-        <TextView
-            android:id="@+id/t2"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/theme_black"
-            android:text="성실 등급 : "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/mv_grade"
-            app:layout_constraintLeft_toRightOf="@id/t2"
-            app:layout_constraintBottom_toBottomOf="@id/t2"
-            app:layout_constraintTop_toTopOf="@id/t2"
-            android:src="@drawable/ic_gold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textSize="10sp"
-            android:textColor="@color/theme_black"
-            app:layout_constraintLeft_toLeftOf="@id/mv_grade"
-            app:layout_constraintRight_toRightOf="@id/mv_grade"
-            app:layout_constraintBottom_toBottomOf="@id/mv_grade"
-            app:layout_constraintTop_toTopOf="@id/mv_grade"
-            android:text="G"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:background="@color/theme_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
