@@ -9,6 +9,7 @@ public class WordList {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int listCodeInt;
+    private int languageCode;
     public String listName;
     private int listGradeInt;
     private int wordCountInt;
@@ -16,6 +17,15 @@ public class WordList {
 
     WordList(String listName) {
         this.listName = listName;
+    }
+
+
+    public int getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(int languageCode) {
+        this.languageCode = languageCode;
     }
 
     public int getListGrade() {

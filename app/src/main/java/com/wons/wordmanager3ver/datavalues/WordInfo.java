@@ -11,6 +11,7 @@ public class WordInfo {
     @PrimaryKey
     @NonNull
     private String wordEnglish;
+    private int languageCode;
     public String wordMemo;
     public String wordKorean;
     private int testedTimes;
@@ -22,6 +23,14 @@ public class WordInfo {
         this.wordMemo = wordMemo;
         this.testedTimes = 0;
         this.correctTimes = 0;
+    }
+
+    public int getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(int languageCode) {
+        this.languageCode = languageCode;
     }
 
     public void addCorrectCount() {
@@ -55,5 +64,15 @@ public class WordInfo {
 
     public void setCorrectTimes(int correctTimes) {
         this.correctTimes = correctTimes;
+    }
+
+    public int getCorrectPercentage() {
+        return (int)((double) correctTimes / (double) testedTimes) * 100;
+    }
+    public void addTestedTimes() {
+        this.testedTimes++;
+    }
+    public void addCorrectTimes() {
+        this.correctTimes++;
     }
 }

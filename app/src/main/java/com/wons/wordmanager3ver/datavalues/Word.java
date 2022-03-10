@@ -9,9 +9,18 @@ public class Word {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int wordId;
+    private int languageCode;
     private String wordEnglish;
     private int wordInfoInt;
     private int wordListCodeInt;
+
+    public int getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(int languageCode) {
+        this.languageCode = languageCode;
+    }
 
     public void setWordEnglish(String wordEnglish) {
         this.wordEnglish = wordEnglish;

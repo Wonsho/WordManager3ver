@@ -10,4 +10,19 @@ public enum EnumLanguage {
     EnumLanguage(int code) {
         this.languageCodeInt = code;
     }
+
+    public String getLanguage() {
+        switch (languageCodeInt) {
+            case 0 : {
+                return "English";
+            }
+            case 1 : {
+                return "Chinese";
+            }
+            case 2 : {
+                return "Japanese";
+            }
+        }
+        return null;
+    }
 }

@@ -7,60 +7,53 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.wons.wordmanager3ver.R;
+import com.wons.wordmanager3ver.databinding.FragmentInfoBinding;
+import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
+import com.wons.wordmanager3ver.fragmentinfo.adapter.MyWayAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class InfoFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public InfoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment InfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static InfoFragment newInstance(String param1, String param2) {
-        InfoFragment fragment = new InfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private FragmentInfoBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        binding = FragmentInfoBinding.inflate(inflater, container, false);
+        setWayList();
+        getUserFlagData();
+        setLanguageSpinner();
+        return binding.getRoot();
+    }
+
+    private void setLanguageSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.language, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerLanguage.setAdapter(adapter);
+    }
+
+
+    private void getUserFlagData() {
+        ArrayList<FlagUserLevelData> arrayList = new ArrayList<>();
+        arrayList.add(new FlagUserLevelData(0, "2022-03-10", 1));
+        arrayList.add(new FlagUserLevelData(0, "2022-03-11", 2));
+        arrayList.add(new FlagUserLevelData(0, "2022-03-12", 3));
+        arrayList.add(new FlagUserLevelData(0, "2022-03-13", 4));
+        arrayList.add(new FlagUserLevelData(0, "2022-03-14", 5));
+        arrayList.add(new FlagUserLevelData(0, "2022-03-15", 6));
+        arrayList.add(new FlagUserLevelData(0, "2022-03-16", 7));
+        ((MyWayAdapter) binding.lvMyWay.getAdapter()).setUserData(arrayList);
+        setWayList();
+    }
+
+    private void setWayList() {
+        if (binding.lvMyWay.getAdapter() == null) {
+            binding.lvMyWay.setAdapter(new MyWayAdapter());
+        }
+        ((MyWayAdapter) binding.lvMyWay.getAdapter()).notifyDataSetChanged();
     }
 }

@@ -9,13 +9,63 @@ import androidx.room.PrimaryKey;
 public class UserInfo {
     @PrimaryKey
     @NonNull
-    private int userId;
-    private int userGradeInt;
-    private int expInt;
     private int languageCodeSettingInt;
+    private int userGradeInt;
+    private int lv;
+    private int expInt;
+    private int savedWord;
+    private int savedWordList;
+
+
+    UserInfo(int userGradeInt, int languageCodeSettingInt) {
+        this.userGradeInt = userGradeInt;
+        this.lv = 1;
+        this.expInt = 0;
+        this.languageCodeSettingInt = languageCodeSettingInt;
+        this.savedWord = 0;
+        this.savedWordList = 0;
+    }
 
     public void setLanguageCodeSettingInt(int languageCodeSettingInt) {
         this.languageCodeSettingInt = languageCodeSettingInt;
+    }
+
+    public int getLv() {
+        return lv;
+    }
+
+    public void setLv(int lv) {
+        this.lv = lv;
+    }
+
+    public void addLevel() {
+        this.lv = lv++;
+    }
+
+    public void addExp() {
+        this.expInt = expInt + 10;
+    }
+
+    public void reduceExp() {
+        if (expInt != 0) {
+            this.expInt = expInt - 10;
+        }
+    }
+
+    public int getSavedWord() {
+        return savedWord;
+    }
+
+    public int getSavedWordList() {
+        return savedWordList;
+    }
+
+    public void setSavedWord(int savedWord) {
+        this.savedWord = savedWord;
+    }
+
+    public void setSavedWordList(int savedWordList) {
+        this.savedWordList = savedWordList;
     }
 
     public int getLanguageCodeSettingInt() {
@@ -38,12 +88,5 @@ public class UserInfo {
         this.userGradeInt = userGradeInt;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }
 
