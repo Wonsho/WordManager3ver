@@ -19,6 +19,10 @@ import com.wons.wordmanager3ver.fragmentinfo.InfoFragment;
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private ActivityMainBinding binding;
+    private AddWordFragment addWordFragment;
+    private InfoFragment infoFragment;
+    private HomeFragment homeFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         });
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.buildDataBase(getApplicationContext());
-        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(), new HomeFragment()).commit();
+        addWordFragment = new AddWordFragment();
+        infoFragment = new InfoFragment();
+        homeFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(),homeFragment).commit();
     }
 
 
@@ -43,15 +50,15 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout frame = binding.fragmentContain;
        switch (id) {
             case R.id.menu_add :{
-                getSupportFragmentManager().beginTransaction().replace(frame.getId(), new AddWordFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(frame.getId(), addWordFragment).commit();
                 break;
             }
            case R.id.menu_home: {
-               getSupportFragmentManager().beginTransaction().replace(frame.getId(), new HomeFragment()).commit();
+               getSupportFragmentManager().beginTransaction().replace(frame.getId(), homeFragment).commit();
                break;
            }
            case R.id.menu_info: {
-               getSupportFragmentManager().beginTransaction().replace(frame.getId(), new InfoFragment()).commit();
+               getSupportFragmentManager().beginTransaction().replace(frame.getId(), infoFragment).commit();
                break;
            }
         }

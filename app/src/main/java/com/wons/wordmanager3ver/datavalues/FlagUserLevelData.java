@@ -13,6 +13,7 @@ public class FlagUserLevelData {
     private String date;
     private int levelOfDate;
 
+
     public FlagUserLevelData(int languageCode, String date, int levelOfDate) {
         this.levelOfDate = levelOfDate;
         this.date = date;

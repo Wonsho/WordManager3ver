@@ -61,7 +61,11 @@ public class MyWayAdapter extends BaseAdapter {
             underBar.setVisibility(View.VISIBLE);
             circle.setImageResource(R.drawable.ic_baseline_circle_24);
         }
-        tv_userFlag.setText(userData.get(i).getDate() + "레벨업\n"+"Lv : "+userData.get(i).getLevelOfDate());
+        if(i == 0) {
+            tv_userFlag.setText(userData.get(i).getDate() + " 여정의 시작\n"+"Lv : "+userData.get(i).getLevelOfDate());
+        } else {
+            tv_userFlag.setText(userData.get(i).getDate() + " 레벨업\n"+"Lv : "+userData.get(i).getLevelOfDate());
+        }
         return view;
     }
 

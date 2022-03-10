@@ -10,12 +10,16 @@ public class Word {
     @NonNull
     private int wordId;
     private int languageCode;
-    private String wordEnglish;
+    private String wordTitle;
     private int wordListCodeInt;
+
+    public Word() {
+
+    }
 
     Word(int languageCode, String wordEnglish, int wordListCodeInt) {
         this.languageCode = languageCode;
-        this.wordEnglish = wordEnglish;
+        this.wordTitle = wordEnglish;
         this.wordListCodeInt = wordListCodeInt;
     }
     public int getLanguageCode() {
@@ -26,8 +30,8 @@ public class Word {
         this.languageCode = languageCode;
     }
 
-    public void setWordEnglish(String wordEnglish) {
-        this.wordEnglish = wordEnglish;
+    public void setWordTitle(String wordTitle) {
+        this.wordTitle = wordTitle;
     }
 
     public void setWordId(int wordId) {
@@ -46,7 +50,7 @@ public class Word {
         return wordListCodeInt;
     }
 
-    public String getWordEnglish() {
-        return wordEnglish;
+    public String getWordTitle() {
+        return wordTitle;
     }
 }

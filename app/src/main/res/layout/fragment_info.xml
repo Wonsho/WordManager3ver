@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="내가 만든 단어장 총개수 : "
+                    android:text="단어장 총 개수 : "
                     android:textColor="@color/theme_black"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/t2" />
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="내가 저장한 단어 총개수 : "
+                    android:text="단어 총 개수 : "
                     android:textColor="@color/theme_black"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/t3" />

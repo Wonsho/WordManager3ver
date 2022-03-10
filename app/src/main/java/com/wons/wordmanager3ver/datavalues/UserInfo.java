@@ -17,8 +17,8 @@ public class UserInfo {
     private int savedWordList;
 
 
-    UserInfo(int userGradeInt, int languageCode) {
-        this.userGradeInt = userGradeInt;
+    public UserInfo(int languageCode) {
+        this.userGradeInt = 0;
         this.lv = 1;
         this.expInt = 0;
         this.languageCode = languageCode;
@@ -43,12 +43,11 @@ public class UserInfo {
     }
 
     public void addExp() {
-        this.expInt = expInt + 10;
-    }
 
-    public void reduceExp() {
-        if (expInt != 0) {
-            this.expInt = expInt - 10;
+        this.expInt = expInt + 10;
+        if(this.expInt == 100) {
+            this.expInt = 0;
+            this.lv++;
         }
     }
 
