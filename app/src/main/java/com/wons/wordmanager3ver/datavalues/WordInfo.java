@@ -17,12 +17,13 @@ public class WordInfo {
     private int testedTimes;
     private int correctTimes;
 
-    WordInfo(String wordEnglish, String wordKorean, String wordMemo) {
+    WordInfo(String wordEnglish, String wordKorean, String wordMemo, int languageCode) {
         this.wordEnglish = wordEnglish;
         this.wordKorean = wordKorean;
         this.wordMemo = wordMemo;
         this.testedTimes = 0;
         this.correctTimes = 0;
+        this.languageCode = languageCode;
     }
 
     public int getLanguageCode() {

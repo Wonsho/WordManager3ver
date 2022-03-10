@@ -5,7 +5,7 @@
 
     <string-array name="language">
         <item>English</item>
-        <item>Japanese</item>
         <item>Chinese</item>
+        <item>Japanese</item>
     </string-array>
 </resources>

@@ -11,9 +11,13 @@ public class Word {
     private int wordId;
     private int languageCode;
     private String wordEnglish;
-    private int wordInfoInt;
     private int wordListCodeInt;
 
+    Word(int languageCode, String wordEnglish, int wordListCodeInt) {
+        this.languageCode = languageCode;
+        this.wordEnglish = wordEnglish;
+        this.wordListCodeInt = wordListCodeInt;
+    }
     public int getLanguageCode() {
         return languageCode;
     }
@@ -30,20 +34,12 @@ public class Word {
         this.wordId = wordId;
     }
 
-    public void setWordInfoInt(int wordInfoInt) {
-        this.wordInfoInt = wordInfoInt;
-    }
-
     public void setWordListCodeInt(int wordListCodeInt) {
         this.wordListCodeInt = wordListCodeInt;
     }
 
     public int getWordId() {
         return wordId;
-    }
-
-    public int getWordInfoInt() {
-        return wordInfoInt;
     }
 
     public int getWordListCodeInt() {

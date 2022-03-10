@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 public class UserInfo {
     @PrimaryKey
     @NonNull
-    private int languageCodeSettingInt;
+    private int languageCode;
     private int userGradeInt;
     private int lv;
     private int expInt;
@@ -17,17 +17,17 @@ public class UserInfo {
     private int savedWordList;
 
 
-    UserInfo(int userGradeInt, int languageCodeSettingInt) {
+    UserInfo(int userGradeInt, int languageCode) {
         this.userGradeInt = userGradeInt;
         this.lv = 1;
         this.expInt = 0;
-        this.languageCodeSettingInt = languageCodeSettingInt;
+        this.languageCode = languageCode;
         this.savedWord = 0;
         this.savedWordList = 0;
     }
 
-    public void setLanguageCodeSettingInt(int languageCodeSettingInt) {
-        this.languageCodeSettingInt = languageCodeSettingInt;
+    public void setLanguageCode(int languageCode) {
+        this.languageCode = languageCode;
     }
 
     public int getLv() {
@@ -68,8 +68,8 @@ public class UserInfo {
         this.savedWordList = savedWordList;
     }
 
-    public int getLanguageCodeSettingInt() {
-        return languageCodeSettingInt;
+    public int getLanguageCode() {
+        return languageCode;
     }
 
     public int getExpInt() {

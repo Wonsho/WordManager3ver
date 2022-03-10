@@ -15,8 +15,12 @@ public class WordList {
     private int wordCountInt;
     public String insertDate;
 
-    WordList(String listName) {
+    WordList(String listName, int languageCode, String insertDate) {
         this.listName = listName;
+        this.languageCode = languageCode;
+        this.listGradeInt = 0;
+        this.wordCountInt = 0;
+        this.insertDate = insertDate;
     }
 
 

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,8 +39,9 @@ public class HomeFragment extends Fragment {
 
 
     private void onC() {
+
         binding.btnSetting.setOnClickListener(v -> {
-            AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(this.getContext(), 1,1, new CallBackInHomeFragment() {
+            AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(this.getContext(), 1, 1, new CallBackInHomeFragment() {
                 @Override
                 public void callback(int setting, int listCount) {
 
@@ -47,19 +49,33 @@ public class HomeFragment extends Fragment {
             });
             alertDialog.show();
         });
+
         binding.btnStudy.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), StudyActivity.class));
         });
-        binding.btnTest.setOnClickListener( v -> {
+
+        binding.btnTest.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), TestActivity.class));
         });
+
         binding.btnAddList.setOnClickListener(v -> {
-            ((MainActivity)getActivity()).setFragmentAddWord();
+            ((MainActivity) getActivity()).setFragmentAddWord();
         });
+
+        binding.btnReplace.setOnClickListener(v -> {
+
+        });
+
+    }
+
+    private void setTodayWordList() {
+        if (binding.lvList.getAdapter() == null) {
+
+        }
     }
 
     private void setGameList() {
-        if(binding.lvGame3.getAdapter() == null) {
+        if (binding.lvGame3.getAdapter() == null) {
             binding.lvGame3.setAdapter(new GameListAdapter());
         }
         ArrayList<GameValue> gameValues = new ArrayList<>();
@@ -73,7 +89,7 @@ public class HomeFragment extends Fragment {
         gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
         gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
         gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        ((GameListAdapter)binding.lvGame3.getAdapter()).setData(gameValues);
-        ((GameListAdapter)binding.lvGame3.getAdapter()).notifyDataSetChanged();
+        ((GameListAdapter) binding.lvGame3.getAdapter()).setData(gameValues);
+        ((GameListAdapter) binding.lvGame3.getAdapter()).notifyDataSetChanged();
     }
 }

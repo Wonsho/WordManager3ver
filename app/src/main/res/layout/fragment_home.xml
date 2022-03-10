@@ -131,8 +131,8 @@
                             android:text="아직 만든 단어장이 없습니다. \n단어장을 먼저 만들어 주세요."
                             android:textColor="@color/theme_black"
                             android:textSize="15sp"
+                            android:layout_marginTop="15dp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/line1" />
@@ -145,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="15dp"
                             android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="@id/tv1"
@@ -165,7 +165,7 @@
                                 android:src="@drawable/ic_baseline_double_arrow_24" />
                         </LinearLayout>
 
-                        <ListView
+                        <com.wons.wordmanager3ver.view.MyVerticalExpandableListView
                             android:id="@+id/lv_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

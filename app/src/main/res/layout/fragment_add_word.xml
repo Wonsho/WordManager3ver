@@ -111,6 +111,7 @@
                         android:background="@drawable/list_theme">
 
                         <EditText
+                            android:id="@+id/et_search"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="10dp"
@@ -139,6 +140,16 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
+                <ProgressBar
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="81dp"
+                    tools:layout_editor_absoluteY="35dp" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/c2"
