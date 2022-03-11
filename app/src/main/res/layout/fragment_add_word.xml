@@ -27,7 +27,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
-                android:id="@+id/t"
+                android:id="@+id/btn_back"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
@@ -47,9 +47,9 @@
                 android:textColor="@color/theme_black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/t"
-                app:layout_constraintLeft_toRightOf="@id/t"
-                app:layout_constraintTop_toTopOf="@id/t" />
+                app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                app:layout_constraintLeft_toRightOf="@id/btn_back"
+                app:layout_constraintTop_toTopOf="@id/btn_back" />
 
             <TextView
                 android:id="@+id/t1"

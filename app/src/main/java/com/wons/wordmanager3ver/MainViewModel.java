@@ -85,6 +85,7 @@ public class MainViewModel extends ViewModel {
                 dao.upDateUsedDay(usedCount);
             }
         }
+
     }
 }
 

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 @Entity
 public class Word {
     @PrimaryKey(autoGenerate = true)
@@ -17,9 +19,25 @@ public class Word {
 
     }
 
-    Word(int languageCode, String wordEnglish, int wordListCodeInt) {
+    Word(int languageCode, String wordTitle, int wordListCodeInt) {
         this.languageCode = languageCode;
-        this.wordTitle = wordEnglish;
+        String title = wordTitle.trim();
+        char[] cString = title.toCharArray();
+        ArrayList<String> strArr = new ArrayList<>();
+        for(int i = 0 ; i <cString.length ; i++) {
+            if(cString[i] == ' ') {
+                if(cString[i+1] != ' ') {
+                    strArr.add(String.valueOf(cString[i]));
+                }
+            } else {
+                strArr.add(String.valueOf(cString[i]));
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        for(String s : strArr) {
+            builder.append(s);
+        }
+        this.wordTitle = builder.toString();
         this.wordListCodeInt = wordListCodeInt;
     }
     public int getLanguageCode() {
