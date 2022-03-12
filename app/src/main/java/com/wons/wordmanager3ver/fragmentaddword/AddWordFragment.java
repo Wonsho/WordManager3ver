@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.fragmentaddword;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.FragmentAddWordBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
+import com.wons.wordmanager3ver.fragmentaddword.adapter.WordListAdapter;
+import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 
 public class AddWordFragment extends Fragment {
 
@@ -41,6 +44,10 @@ public class AddWordFragment extends Fragment {
         });
     }
 
+    private void showDialogForMakeWordList() {
+
+    }
+
     private void setLanguageTitle() {
         String language = EnumLanguage.ENGLISH.getLanguage();
         binding.tvLanguage.setText(language);
@@ -54,7 +61,7 @@ public class AddWordFragment extends Fragment {
 
     private void setWordlist() {
         if(binding.lvMyWordList.getAdapter() == null) {
-
+            binding.lvMyWordList.setAdapter(new WordListAdapter());
         }
     }
 }

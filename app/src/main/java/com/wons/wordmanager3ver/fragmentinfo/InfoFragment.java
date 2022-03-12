@@ -40,29 +40,8 @@ public class InfoFragment extends Fragment {
     }
 
     private void setUserGrade() {
-        int userGrade = 45; // 총 단어의 합격 평균
-        StringBuilder grade = new StringBuilder();
-
-        if (userGrade < 10) {
-            grade.append(EnumGrade.F.grade);
-        } else if (userGrade >= 10 && userGrade < 20) {
-            grade.append(EnumGrade.D.grade);
-        } else if (userGrade >= 20 && userGrade < 25) {
-            grade.append(EnumGrade.D_PLUS.grade);
-        } else if (userGrade >= 25 && userGrade < 35) {
-            grade.append(EnumGrade.C.grade);
-        } else if (userGrade >= 35 && userGrade < 40) {
-            grade.append(EnumGrade.C_PLUS.grade);
-        } else if (userGrade >= 40 && userGrade < 60) {
-            grade.append(EnumGrade.B.grade);
-        } else if (userGrade >= 60 && userGrade < 70) {
-            grade.append(EnumGrade.B_PLUS.grade);
-        } else if (userGrade >= 70 && userGrade < 85) {
-            grade.append(EnumGrade.A.grade);
-        } else {
-            grade.append(EnumGrade.A_PLUS.grade);
-        }
-        binding.tvUserGrade.setText(grade.toString());
+        int userGrade = 1; // 총 단어의 합격 평균
+        binding.tvUserGrade.setText(EnumGrade.A.getGradeToString(userGrade));
 
     }
 

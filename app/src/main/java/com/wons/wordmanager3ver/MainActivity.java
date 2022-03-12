@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         });
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.buildDataBase(getApplicationContext());
+        viewModel.getUserInfo().observe(this, value -> {
+
+        });
         addWordFragment = new AddWordFragment();
         infoFragment = new InfoFragment();
         homeFragment = new HomeFragment();

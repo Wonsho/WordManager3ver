@@ -2,6 +2,7 @@ package com.wons.wordmanager3ver;
 
 import android.content.Context;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -21,12 +22,12 @@ import java.util.Date;
 public class MainViewModel extends ViewModel {
     public static MainDatabase database;
     public static MyDao dao;
+    public static MutableLiveData<UserInfo> userInfo;
+    public static MutableLiveData<Integer> nowLanguage;
 
     public void buildDataBase(Context context) {
-
         database = Room.databaseBuilder(context, MainDatabase.class, "MainDataBase").allowMainThreadQueries().build();
         dao = database.getDao();
-
         EnumSetting[] enumSettings = EnumSetting.values();
 
         for (EnumSetting enumSetting : enumSettings) {
@@ -85,7 +86,26 @@ public class MainViewModel extends ViewModel {
                 dao.upDateUsedDay(usedCount);
             }
         }
+    }
+
+    public void setNowLanguageDataAndUserInfo() {
+
+        if(nowLanguage == null) {
+            nowLanguage = new MutableLiveData<>();
+        }
+
+        nowLanguage.setValue(dao.getSetting(EnumSetting.LANGUAGE.settingCodeId).getSettingCode());
+
+        if(userInfo == null || userInfo.getValue() == null) {
+            userInfo = new MutableLiveData<>();
+        }
+        userInfo.setValue(dao.getUserInfoByLanguageCode(nowLanguage.getValue()));
+    }
+
+    public void changeLanguage() {
 
     }
+
+
 }
 

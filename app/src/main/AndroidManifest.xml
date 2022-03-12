@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
         <activity
+            android:name=".fragmentaddword.addword.AddWordActivity"
+            android:exported="true" />
+        <activity
             android:name=".testword.TestActivity"
             android:exported="true" />
         <activity
