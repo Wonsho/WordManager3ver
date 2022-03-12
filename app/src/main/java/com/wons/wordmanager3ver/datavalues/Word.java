@@ -15,11 +15,7 @@ public class Word {
     private String wordTitle;
     private int wordListCodeInt;
 
-    public Word() {
-
-    }
-
-    Word(int languageCode, String wordTitle, int wordListCodeInt) {
+    public Word(int languageCode, String wordTitle, int wordListCodeInt) {
         this.languageCode = languageCode;
         String title = wordTitle.trim();
         char[] cString = title.toCharArray();

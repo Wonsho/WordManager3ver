@@ -91,7 +91,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp">
 
                 <TextView
                     android:id="@+id/title"
@@ -111,6 +112,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     app:cardCornerRadius="3dp"
+                    android:layout_marginBottom="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_listCount">
@@ -145,7 +148,7 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_wordTitle"
                             android:textColor="@color/theme_black"
-                            android:text="사과 \n 아무노래나 틀어!"
+                            android:text="사과 \n 아무노래나 틀어!\n 뜻 하나더 추가 \n 한개더 있음 \n 한개더 있음\n 한개더 있음\n 한개더 있음\n 한개더 있음"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -179,11 +182,12 @@
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"/>
                            <TextView
+                               android:id="@+id/tv_memo"
                                android:textColor="@color/theme_black"
+                               android:layout_marginTop="3dp"
                                app:layout_constraintRight_toRightOf="parent"
                                app:layout_constraintLeft_toLeftOf="parent"
-                               android:text="원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 치파는 빨라 빠르면 비행기 비행기는 높아 노ㅍ으면 백두산 "
-                               android:layout_marginTop="15dp"
+                               android:text="빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라"
                                android:layout_marginRight="10dp"
                                android:layout_marginLeft="10dp"
                                app:layout_constraintTop_toBottomOf="@id/line4"
@@ -252,6 +256,7 @@
                                 android:background="@drawable/list_theme">
 
                                 <ImageView
+                                    android:id="@+id/btn_wordLeft"
                                     android:background="?attr/selectableItemBackgroundBorderless"
                                     android:clickable="true"
                                     android:focusable="true"
@@ -280,6 +285,7 @@
                                 android:background="@drawable/list_theme">
 
                                 <ImageView
+                                    android:id="@+id/btn_wordSound"
                                     android:background="?attr/selectableItemBackgroundBorderless"
                                     android:clickable="true"
                                     android:focusable="true"
@@ -309,6 +315,7 @@
                                 android:background="@drawable/list_theme">
 
                                 <ImageView
+                                    android:id="@+id/btn_wordRight"
                                     android:background="?attr/selectableItemBackgroundBorderless"
                                     android:clickable="true"
                                     android:focusable="true"

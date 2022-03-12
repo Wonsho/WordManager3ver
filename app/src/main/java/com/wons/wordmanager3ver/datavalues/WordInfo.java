@@ -12,15 +12,15 @@ public class WordInfo {
     @NonNull
     private String wordEnglish;
     private int languageCode;
-    public String wordMemo;
+    private String wordMemo;
     public String wordKorean;
     private int testedTimes;
     private int correctTimes;
 
-    WordInfo(String wordEnglish, String wordKorean, String wordMemo, int languageCode) {
+    WordInfo(String wordEnglish, String wordKorean, int languageCode) {
         this.wordEnglish = wordEnglish;
         this.wordKorean = wordKorean;
-        this.wordMemo = wordMemo;
+        this.wordMemo = null;
         this.testedTimes = 0;
         this.correctTimes = 0;
         this.languageCode = languageCode;
@@ -75,5 +75,13 @@ public class WordInfo {
     }
     public void addCorrectTimes() {
         this.correctTimes++;
+    }
+
+    public String getWordMemo() {
+        return wordMemo;
+    }
+
+    public void setWordMemo(String wordMemo) {
+        this.wordMemo = wordMemo;
     }
 }
