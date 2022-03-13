@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.FragmentInfoBinding;
 import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
+import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.fragmentinfo.adapter.MyWayAdapter;
 
 import java.util.ArrayList;
@@ -61,8 +64,13 @@ public class InfoFragment extends Fragment {
     }
 
     private void setTitleLanguage() {
-        String language = EnumLanguage.ENGLISH.getLanguage();
-        binding.tvLanguage.setText(language);
+        int languageCode = MainViewModel.getUserInfo().getLanguageCode();
+        EnumLanguage[] enumLanguages = EnumLanguage.values();
+        for(EnumLanguage enumLanguage : enumLanguages) {
+            if(enumLanguage.languageCodeInt == languageCode) {
+                binding.tvLanguage.setText(enumLanguage.getLanguage());
+            }
+        }
     }
 
     private void setStartDate() {
@@ -79,8 +87,27 @@ public class InfoFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.language, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerLanguage.setAdapter(adapter);
-        int language = EnumLanguage.ENGLISH.languageCodeInt;
+        int language = MainViewModel.getUserInfo().getLanguageCode();
         binding.spinnerLanguage.setSelection(language);
+        binding.spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                int languageCode = i;
+                EnumLanguage[] enumLanguages = EnumLanguage.values();
+                for(EnumLanguage enumLanguage : enumLanguages) {
+                    if(enumLanguage.languageCodeInt == languageCode) {
+                        MainViewModel.changeLanguageSetting(enumLanguage.languageCodeInt);
+                        setTitleLanguage();
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setWayList() {

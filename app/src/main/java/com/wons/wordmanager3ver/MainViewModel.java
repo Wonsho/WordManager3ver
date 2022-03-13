@@ -22,8 +22,6 @@ import java.util.Date;
 public class MainViewModel extends ViewModel {
     public static MainDatabase database;
     public static MyDao dao;
-    public static MutableLiveData<UserInfo> userInfo;
-    public static MutableLiveData<Integer> nowLanguage;
 
     public void buildDataBase(Context context) {
         database = Room.databaseBuilder(context, MainDatabase.class, "MainDataBase").allowMainThreadQueries().build();
@@ -66,7 +64,7 @@ public class MainViewModel extends ViewModel {
                 }
             }
         }
-        if(dao.getUsedCount() == null) {
+        if (dao.getUsedCount() == null) {
             UsedCount usedCount = new UsedCount();
             long now = System.currentTimeMillis();
             Date mDate = new Date(now);
@@ -79,7 +77,7 @@ public class MainViewModel extends ViewModel {
             Date mDate = new Date(now);
             SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
             String getTime = simpleDate.format(mDate);
-            if(!dao.getUsedCount().usedDay.equals(getTime)) {
+            if (!dao.getUsedCount().usedDay.equals(getTime)) {
                 UsedCount usedCount = dao.getUsedCount();
                 usedCount.addCount();
                 usedCount.usedDay = getTime;
@@ -88,24 +86,17 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    public void setNowLanguageDataAndUserInfo() {
-
-        if(nowLanguage == null) {
-            nowLanguage = new MutableLiveData<>();
-        }
-
-        nowLanguage.setValue(dao.getSetting(EnumSetting.LANGUAGE.settingCodeId).getSettingCode());
-
-        if(userInfo == null || userInfo.getValue() == null) {
-            userInfo = new MutableLiveData<>();
-        }
-        userInfo.setValue(dao.getUserInfoByLanguageCode(nowLanguage.getValue()));
+    public static UserInfo getUserInfo() {
+        return dao.getUserInfoByLanguageCode(dao.getSetting(EnumSetting.LANGUAGE.settingCodeId).settingValue);
     }
 
-    public void changeLanguage() {
+    public static void upDateUserInfo(UserInfo userInfo) {
+        dao.updateUserInfo(userInfo);
+    }
 
+    public static void changeLanguageSetting(int languageCode) {
+        dao.updateUserSetting(new Setting(EnumSetting.LANGUAGE.settingCodeId, languageCode));
     }
 
 
 }
-

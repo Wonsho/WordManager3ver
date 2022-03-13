@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wons.wordmanager3ver.MainActivity;
+import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.databinding.FragmentHomeBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
+import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.fragmenthome.adapter.GameListAdapter;
 import com.wons.wordmanager3ver.fragmenthome.dialogutils.CallBackInHomeFragment;
 import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragment;
@@ -34,10 +36,8 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         onC();
         setGameList();
-        setUserLevel();
+        setUserInfo();
         setTodayWordList();
-        setUserExp();
-        setLanguageTitle();
         return binding.getRoot();
     }
 
@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
 
         binding.btnReplace.setOnClickListener(v -> {
 
+            //todo 만약 추천에 고르는것이면 고르는 액티비티를 띄우고 아닐경우 알아서 추천
         });
 
     }
@@ -78,10 +79,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setUserLevel() {
-        int userLevel = 4;
-        binding.tvLvValue.setText(String.valueOf(userLevel));
-    }
 
     private void setGameList() {
         if (binding.lvGame3.getAdapter() == null) {
@@ -102,19 +99,22 @@ public class HomeFragment extends Fragment {
         ((GameListAdapter) binding.lvGame3.getAdapter()).notifyDataSetChanged();
     }
 
-    private void setUserExp() {
-        int exp = 45;
+
+    private void setUserInfo() {
+
+        UserInfo userInfo = MainViewModel.getUserInfo();
+        int languageCode = userInfo.getLanguageCode();
+        int exp = userInfo.getExpInt();
+        int userLevel = userInfo.getLv();
+
+        EnumLanguage[] enumLanguages = EnumLanguage.values();
+        for (EnumLanguage enumLanguage : enumLanguages) {
+            if (enumLanguage.languageCodeInt == languageCode) {
+                binding.tvLanguage.setText(enumLanguage.getLanguage());
+            }
+        }
         binding.progressBar.setProgress(exp);
+        binding.tvLvValue.setText(String.valueOf(userLevel));
     }
 
-    private void setLanguageTitle() {
-        String language = EnumLanguage.ENGLISH.getLanguage();
-        binding.tvLanguage.setText(language);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("Frag", "D");
-    }
 }

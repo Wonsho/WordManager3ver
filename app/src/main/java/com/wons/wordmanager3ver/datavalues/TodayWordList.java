@@ -8,16 +8,18 @@ import java.util.ArrayList;
 
 @Entity
 public class TodayWordList {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id = 0;
+    public int id;
     private int listCode;
+    private int listLanguageCode;
     public boolean passOrNo;
 
 
-    TodayWordList(int listCode, boolean passOrNo) {
+    TodayWordList(int languageCode, int listCode, boolean passOrNo) {
         this.listCode = listCode;
         this.passOrNo = passOrNo;
+        this.listLanguageCode = languageCode;
     }
 
     public int getListCode() {
@@ -28,4 +30,7 @@ public class TodayWordList {
         this.listCode = listCode;
     }
 
+    public int getListLanguageCode() { return listLanguageCode; }
+
+    public void setListLanguageCode(int listLanguageCode) { this.listLanguageCode = listLanguageCode; }
 }

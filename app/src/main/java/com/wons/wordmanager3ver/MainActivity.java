@@ -38,34 +38,32 @@ public class MainActivity extends AppCompatActivity {
         });
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.buildDataBase(getApplicationContext());
-        viewModel.getUserInfo().observe(this, value -> {
-
-        });
         addWordFragment = new AddWordFragment();
         infoFragment = new InfoFragment();
         homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(),homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(), homeFragment).commit();
     }
 
 
     @SuppressLint({"SetTextI18n", "NonConstantResourceId"})
     private void setFragment(int id) {
         FrameLayout frame = binding.fragmentContain;
-       switch (id) {
-            case R.id.menu_add :{
+        switch (id) {
+            case R.id.menu_add: {
                 getSupportFragmentManager().beginTransaction().replace(frame.getId(), addWordFragment).commit();
                 break;
             }
-           case R.id.menu_home: {
-               getSupportFragmentManager().beginTransaction().replace(frame.getId(), homeFragment).commit();
-               break;
-           }
-           case R.id.menu_info: {
-               getSupportFragmentManager().beginTransaction().replace(frame.getId(), infoFragment).commit();
-               break;
-           }
+            case R.id.menu_home: {
+                getSupportFragmentManager().beginTransaction().replace(frame.getId(), homeFragment).commit();
+                break;
+            }
+            case R.id.menu_info: {
+                getSupportFragmentManager().beginTransaction().replace(frame.getId(), infoFragment).commit();
+                break;
+            }
         }
     }
+
     public void setFragmentAddWord() {
         getSupportFragmentManager().beginTransaction().replace(binding.fragmentContain.getId(), new AddWordFragment()).commit();
         binding.btN.setSelectedItemId(R.id.menu_add);

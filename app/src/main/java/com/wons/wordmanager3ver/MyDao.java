@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.Setting;
+import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.Word;
@@ -88,4 +89,17 @@ public interface MyDao {
 
     @Query("SELECT * FROM usedcount")
     UsedCount getUsedCount();
+
+    //오늘의 단어장
+    @Insert
+    void insertTodayList(TodayWordList todayWordList);
+
+    @Update
+    void updateTodayList(TodayWordList todayWordList);
+
+    @Delete
+    void deleteTodayList(TodayWordList todayWordList);
+
+    @Query("SELECT * FROM todaywordlist WHERE listLanguageCode = :languageCode")
+    TodayWordList[] getAllTodayListByLanguageCode(int languageCode);
 }
