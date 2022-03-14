@@ -6,4 +6,142 @@
     android:layout_height="match_parent"
     tools:context=".testword.TestActivity">
 
+
+    <androidx.cardview.widget.CardView
+        app:layout_constraintBottom_toTopOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/list_theme"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/title"
+                app:layout_constraintTop_toTopOf="@id/title"
+                android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/title"
+                android:textColor="@color/theme_black"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="단어 시험"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginRight="10dp"
+                android:text="1/32"
+                app:layout_constraintBottom_toBottomOf="@id/title"
+                app:layout_constraintTop_toTopOf="@id/title"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/line"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:background="@color/theme_black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <ScrollView
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                app:layout_constraintBottom_toTopOf="@id/et_wordTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line"
+                android:layout_marginBottom="10dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:id="@+id/tv_wordKorean"
+                    android:textSize="20sp"
+                    android:textColor="@color/theme_black"
+                    android:text="사과라는 뜻을 가지고 있는 단어는??"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/line4"
+                app:layout_constraintBottom_toTopOf="@id/et_wordTitle"
+                android:backgroundTint="@color/theme_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@color/theme_black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <EditText
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:layout_margin="2dp"
+                android:gravity="center"
+                android:hint="단어를 적어주세요"
+                android:id="@+id/et_wordTitle"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/line2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/line2"
+                android:background="@color/theme_black"
+                app:layout_constraintRight_toLeftOf="@id/btn_enter"
+                app:layout_constraintTop_toBottomOf="@id/line4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="1dp"
+                android:layout_height="0dp"/>
+           <TextView
+               android:background="?attr/selectableItemBackgroundBorderless"
+               android:clickable="true"
+               android:focusable="true"
+               android:padding="10dp"
+               app:layout_constraintTop_toBottomOf="@id/line4"
+               app:layout_constraintLeft_toLeftOf="@id/line2"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               android:textSize="18dp"
+               android:textColor="@color/theme_black"
+               android:text="Enter"
+               android:id="@+id/btn_enter"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

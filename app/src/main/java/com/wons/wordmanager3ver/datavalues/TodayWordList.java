@@ -15,8 +15,10 @@ public class TodayWordList {
     private int listLanguageCode;
     public boolean passOrNo;
 
+    public TodayWordList() {
 
-    TodayWordList(int languageCode, int listCode, boolean passOrNo) {
+    }
+     TodayWordList(int languageCode, int listCode, boolean passOrNo) {
         this.listCode = listCode;
         this.passOrNo = passOrNo;
         this.listLanguageCode = languageCode;
