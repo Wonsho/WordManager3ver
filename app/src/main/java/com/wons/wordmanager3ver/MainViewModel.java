@@ -14,9 +14,11 @@ import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
+import com.wons.wordmanager3ver.datavalues.WordList;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class MainViewModel extends ViewModel {
@@ -96,6 +98,22 @@ public class MainViewModel extends ViewModel {
 
     public static void changeLanguageSetting(int languageCode) {
         dao.updateUserSetting(new Setting(EnumSetting.LANGUAGE.settingCodeId, languageCode));
+    }
+
+    public static ArrayList<WordList> getAllWordListByLanguageCode(int languageCode) {
+        return new ArrayList<>(Arrays.asList(dao.getAllWordlistByLanguageCode(languageCode)));
+    }
+
+    public static int checkSameWordList(int languageCode, String listName) {
+        if(dao.getSelectedWordlist(languageCode, listName) == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    public static void insertWordList(WordList wordList) {
+        dao.insertWordList(wordList);
     }
 
 
