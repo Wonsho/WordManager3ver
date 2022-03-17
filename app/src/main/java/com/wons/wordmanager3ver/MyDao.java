@@ -12,6 +12,7 @@ import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
 @Dao
@@ -105,4 +106,19 @@ public interface MyDao {
 
     @Query("SELECT * FROM todaywordlist WHERE listLanguageCode = :languageCode")
     TodayWordList[] getAllTodayListByLanguageCode(int languageCode);
+
+
+
+    //단어 정보
+    @Insert
+    void insertWordInfo(WordInfo wordInfo);
+
+    @Delete
+    void deleteWordInfo(WordInfo wordInfo);
+
+    @Update
+    void updateWordInfo(WordInfo wordInfo);
+
+    @Query("SELECT * FROM WordInfo WHERE wordEnglish = :wordTitle")
+    WordInfo getWordInfo(String wordTitle);
 }

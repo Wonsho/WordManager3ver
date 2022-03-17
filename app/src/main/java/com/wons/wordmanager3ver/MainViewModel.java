@@ -16,6 +16,7 @@ import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.tool.Tools;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,17 +70,11 @@ public class MainViewModel extends ViewModel {
         }
         if (dao.getUsedCount() == null) {
             UsedCount usedCount = new UsedCount();
-            long now = System.currentTimeMillis();
-            Date mDate = new Date(now);
-            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-            String getTime = simpleDate.format(mDate);
+            String getTime = new Tools().getNoWDate();
             usedCount.usedDay = getTime;
             dao.insertUsedDay(usedCount);
         } else {
-            long now = System.currentTimeMillis();
-            Date mDate = new Date(now);
-            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-            String getTime = simpleDate.format(mDate);
+            String getTime = new Tools().getNoWDate();
             if (!dao.getUsedCount().usedDay.equals(getTime)) {
                 UsedCount usedCount = dao.getUsedCount();
                 usedCount.addCount();

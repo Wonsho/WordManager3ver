@@ -13,8 +13,10 @@ import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.WordList;
 import com.wons.wordmanager3ver.fragmentaddword.EnumDo;
+import com.wons.wordmanager3ver.tool.Tools;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DialogInAddWordFragments {
@@ -42,7 +44,7 @@ public class DialogInAddWordFragments {
 
         btn_add.setOnClickListener(v -> {
             if (!et_listName.getText().toString().isEmpty()) {
-                   callback.callBack(et_listName.getText().toString().trim());
+                   callback.callBack(new Tools().removeOverSpace(et_listName.getText().toString().trim()));
             } else {
                 callback.callBack("");
             }

@@ -29,6 +29,7 @@ import com.wons.wordmanager3ver.fragmentaddword.adapter.WordListAdapter;
 import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 import com.wons.wordmanager3ver.fragmentaddword.dialogutils.DialogAddWodCallback;
 import com.wons.wordmanager3ver.fragmentaddword.dialogutils.DialogInAddWordFragments;
+import com.wons.wordmanager3ver.tool.Tools;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,9 +61,7 @@ public class AddWordFragment extends Fragment {
             public void callBack(String name) {
                 if (!name.isEmpty()) {
                     if (MainViewModel.checkSameWordList(MainViewModel.getUserInfo().getLanguageCode(), name.trim()) == 0) {
-                        Date date = new Date();
-                        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
-                        MainViewModel.insertWordList(new WordList(name.trim(), MainViewModel.getUserInfo().getLanguageCode(), fm.format(date)));
+                        MainViewModel.insertWordList(new WordList(name.trim(), MainViewModel.getUserInfo().getLanguageCode(), new Tools().getNoWDate()));
                         setWordlist();
                         Toast.makeText(getContext(), "추가 되었습니다", Toast.LENGTH_SHORT).show();
                         ((TextView) dialogForAddList.findViewById(R.id.et_wordTitle)).setText("");

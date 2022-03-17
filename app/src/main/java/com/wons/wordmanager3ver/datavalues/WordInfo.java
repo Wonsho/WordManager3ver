@@ -17,7 +17,7 @@ public class WordInfo {
     private int testedTimes;
     private int correctTimes;
 
-    WordInfo(String wordEnglish, String wordKorean, int languageCode) {
+    public WordInfo(String wordEnglish, String wordKorean, int languageCode) {
         this.wordEnglish = wordEnglish;
         this.wordKorean = wordKorean;
         this.wordMemo = null;

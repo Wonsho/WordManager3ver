@@ -96,4 +96,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
+    <TextView
+        android:id="@+id/tv_info"
+        android:textSize="18sp"
+        app:layout_constraintRight_toRightOf="@id/lv_word"
+        app:layout_constraintLeft_toLeftOf="@id/lv_word"
+        app:layout_constraintBottom_toBottomOf="@id/lv_word"
+        app:layout_constraintTop_toTopOf="@id/lv_word"
+        android:text="단어장에 단어가 없습니다\n단어를 추가해 주세요"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

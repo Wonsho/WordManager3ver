@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 @Entity
 public class WordList {
     @PrimaryKey(autoGenerate = true)
@@ -16,7 +18,23 @@ public class WordList {
     public String insertDate;
 
     public WordList(String listName, int languageCode, String insertDate) {
-        this.listName = listName;
+        String title = listName.trim();
+        char[] cString = title.toCharArray();
+        ArrayList<String> strArr = new ArrayList<>();
+        for(int i = 0 ; i <cString.length ; i++) {
+            if(cString[i] == ' ') {
+                if(cString[i+1] != ' ') {
+                    strArr.add(String.valueOf(cString[i]));
+                }
+            } else {
+                strArr.add(String.valueOf(cString[i]));
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        for(String s : strArr) {
+            builder.append(s);
+        }
+        this.listName = builder.toString();
         this.languageCode = languageCode;
         this.listGradeInt = 0;
         this.wordCountInt = 0;
