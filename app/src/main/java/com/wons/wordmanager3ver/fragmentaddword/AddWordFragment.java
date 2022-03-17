@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +21,14 @@ import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.FragmentAddWordBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
+import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.fragmentaddword.adapter.AdapterCallback;
+import com.wons.wordmanager3ver.fragmentaddword.adapter.EnumAction;
 import com.wons.wordmanager3ver.fragmentaddword.adapter.WordListAdapter;
 import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
+import com.wons.wordmanager3ver.fragmentaddword.dialogutils.DialogAddWodCallback;
+import com.wons.wordmanager3ver.fragmentaddword.dialogutils.DialogInAddWordFragments;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +39,7 @@ public class AddWordFragment extends Fragment {
 
     private FragmentAddWordBinding binding;
     private AlertDialog dialogForAddList;
+    private Dialog dialogForReName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +49,34 @@ public class AddWordFragment extends Fragment {
         onClick();
         setSearchList();
         setWordlist();
-        dialogForAddList = makeDialogForAddList();
-        dialogForAddList.setContentView(R.layout.dialog_add_list);
+
+        dialogForAddList = new DialogInAddWordFragments().makeDialogForAddList(getContext(), new DialogAddWodCallback() {
+            @Override
+            public void callBack(Boolean check) {
+                dialogForAddList.dismiss();
+            }
+
+            @Override
+            public void callBack(String name) {
+                if (!name.isEmpty()) {
+                    if (MainViewModel.checkSameWordList(MainViewModel.getUserInfo().getLanguageCode(), name.trim()) == 0) {
+                        Date date = new Date();
+                        SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+                        MainViewModel.insertWordList(new WordList(name.trim(), MainViewModel.getUserInfo().getLanguageCode(), fm.format(date)));
+                        setWordlist();
+                        Toast.makeText(getContext(), "추가 되었습니다", Toast.LENGTH_SHORT).show();
+                        ((TextView) dialogForAddList.findViewById(R.id.et_wordTitle)).setText("");
+                        dialogForAddList.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "중복되는 리스트가 존재합니다", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    ((TextView) dialogForAddList.findViewById(R.id.et_wordTitle)).setText("");
+                    Toast.makeText(getContext(), "이름을 적어주세요", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, EnumDo.ADD);
+
         return binding.getRoot();
     }
 
@@ -59,6 +92,14 @@ public class AddWordFragment extends Fragment {
         binding.btnAddList.setOnClickListener(v -> {
             dialogForAddList.show();
         });
+
+        binding.lvMyWordList.setOnItemClickListener((adapterView, view, i, l) -> {
+            int listCode = ((WordList)((WordListAdapter)binding.lvMyWordList.getAdapter()).getItem(i)).getListCodeInt();
+            Intent intent = new Intent(getActivity(), AddWordActivity.class);
+            intent.putExtra("listCode",listCode);
+            startActivity(intent);
+        });
+
     }
 
 
@@ -80,7 +121,37 @@ public class AddWordFragment extends Fragment {
 
     private void setWordlist() {
         if (binding.lvMyWordList.getAdapter() == null) {
-            binding.lvMyWordList.setAdapter(new WordListAdapter());
+            binding.lvMyWordList.setAdapter(new WordListAdapter(new AdapterCallback() {
+                @Override
+                public void callback(WordList wordList, EnumAction action) {
+
+                    switch (action) {
+                        case DELETE: {
+                            AlertDialog alertDialog = new DialogInAddWordFragments().getAlertDialogForCheck(getContext(), new DialogAddWodCallback() {
+                                @Override
+                                public void callBack(Boolean check) {
+                                    if (check) {
+                                        MainViewModel.deleteWordList(wordList);
+                                        Toast.makeText(getContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                        setWordlist();
+                                    }
+                                }
+
+                                @Override
+                                public void callBack(String name) {
+
+                                }
+                            }, wordList.listName);
+                            alertDialog.show();
+                            break;
+                        }
+                        case RENAME: {
+                            updateListName(wordList);
+                            break;
+                        }
+                    }
+                }
+            }));
         }
 
         ((WordListAdapter) binding.lvMyWordList.getAdapter()).setLists(MainViewModel.getAllWordListByLanguageCode(
@@ -93,41 +164,40 @@ public class AddWordFragment extends Fragment {
             binding.tvWordList.setVisibility(View.GONE);
         }
 
+        int listCount = ((WordListAdapter) binding.lvMyWordList.getAdapter()).getCount();
+        binding.tvListCount.setText(String.valueOf(listCount));
         ((WordListAdapter) binding.lvMyWordList.getAdapter()).notifyDataSetChanged();
     }
 
-    private AlertDialog makeDialogForAddList() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_list, null);
-        TextView btn_cancel = view.findViewById(R.id.btn_cancel);
-        TextView btn_add = view.findViewById(R.id.btn_add);
-        EditText et_listName = view.findViewById(R.id.et_wordTitle);
-
-        btn_cancel.setOnClickListener(v -> {
-            et_listName.setText("");
-            dialogForAddList.dismiss();
-        });
-
-        btn_add.setOnClickListener(v -> {
-            Date time = new Date();
-            SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
-            String date = fm.format(time);
-            if (!et_listName.getText().toString().isEmpty()) {
-                if (MainViewModel.checkSameWordList(MainViewModel.getUserInfo().getLanguageCode(), et_listName.getText().toString().trim()) == 0) {
-                    MainViewModel.insertWordList(new WordList(et_listName.getText().toString().trim(),
-                            MainViewModel.getUserInfo().getLanguageCode(), date));
-                    setWordlist();
-                    et_listName.setText("");
-                    dialogForAddList.dismiss();
-                } else {
-                    Toast.makeText(getContext(), "중복되는 단어장이 존재합니다", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getContext(), "이름을 적어주세요", Toast.LENGTH_SHORT).show();
+    private void updateListName(WordList list) {
+         dialogForReName = new DialogInAddWordFragments().makeDialogForAddList(getContext(), new DialogAddWodCallback() {
+            @Override
+            public void callBack(Boolean check) {
+                dialogForReName.dismiss();
             }
-        });
-        builder.setView(view);
-        return builder.create();
+            @Override
+            public void callBack(String name) {
+                if (!name.isEmpty()) {
+                    if (MainViewModel.checkSameWordList(MainViewModel.getUserInfo().getLanguageCode(), name.trim()) == 0) {
+                        list.listName = name.trim();
+                        MainViewModel.updateWordList(list);
+                        setWordlist();
+                        Toast.makeText(getContext(), "변경 되었습니다", Toast.LENGTH_SHORT).show();
+                        ((TextView) dialogForReName.findViewById(R.id.et_wordTitle)).setText("");
+                        dialogForReName.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "중복되는 리스트가 존재합니다", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    ((TextView) dialogForReName.findViewById(R.id.et_wordTitle)).setText("");
+                    Toast.makeText(getContext(), "이름을 적어주세요", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, EnumDo.RENAME);
+        dialogForReName.show();
     }
+
+
+
+
 }

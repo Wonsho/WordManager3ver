@@ -49,6 +49,9 @@ public interface MyDao {
     @Query("SELECT * FROM (SELECT * FROM wordlist WHERE languageCode = :languageCode) WHERE listName = :listName")
     WordList getSelectedWordlist(int languageCode, String listName);
 
+    @Query("SELECT * FROM wordlist WHERE listCodeInt = :listCode")
+    WordList getSelectedWordlist(int listCode);
+
 
     //유저 정보
     @Insert

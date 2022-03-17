@@ -8,7 +8,8 @@ public enum EnumLanguage {
     public int languageCodeInt;
 
     EnumLanguage(int code) {
-        this.languageCodeInt = code;
+        this.languageCodeInt
+                = code;
     }
     EnumLanguage() {}
 

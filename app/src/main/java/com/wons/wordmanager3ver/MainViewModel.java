@@ -14,6 +14,7 @@ import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
+import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
 import java.text.SimpleDateFormat;
@@ -116,5 +117,12 @@ public class MainViewModel extends ViewModel {
         dao.insertWordList(wordList);
     }
 
+    public static void deleteWordList(WordList wordList) {
+        dao.deleteWordList(wordList);
+    }
+
+    public static void updateWordList(WordList list) {
+        dao.updateWordList(list);
+    }
 
 }

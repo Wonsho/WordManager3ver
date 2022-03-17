@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wons.wordmanager3ver.R;
@@ -16,10 +17,15 @@ import java.util.ArrayList;
 
 public class WordListAdapter extends BaseAdapter {
     private ArrayList<WordList> lists;
+    private AdapterCallback callback;
 
-    public WordListAdapter() {
+    public WordListAdapter(AdapterCallback callback) {
+
         this.lists = new ArrayList<>();
+        this.callback = callback;
+
     }
+
     @Override
     public int getCount() {
         return lists.size();
@@ -37,7 +43,7 @@ public class WordListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if(view == null) {
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
             view = inflater.inflate(R.layout.list_word_list_add_wordlist, viewGroup, false);
         }
@@ -45,15 +51,31 @@ public class WordListAdapter extends BaseAdapter {
         TextView tv_wordCount = view.findViewById(R.id.tv_wordCount);
         TextView tv_listTitle = view.findViewById(R.id.tv_listTitle);
         TextView tv_listGrade = view.findViewById(R.id.tv_listGrade);
+        TextView tv_notice = view.findViewById(R.id.tv_notice);
 
         tv_wordCount.setText(String.valueOf(lists.get(i).getWordCountInt()));
         tv_listTitle.setText(lists.get(i).listName);
         String listGrade = EnumGrade.A.getGradeToString(lists.get(i).getListGradeInt());
-        if(lists.get(i).getListGradeInt() == 0) {
+        if (lists.get(i).getListGradeInt() == 0) {
             tv_listGrade.setText("데이터 없음");
         } else {
             tv_listGrade.setText(listGrade);
         }
+
+        if (lists.get(i).getWordCountInt() == 0) {
+            tv_notice.setVisibility(View.VISIBLE);
+        } else {
+            tv_notice.setVisibility(View.GONE);
+        }
+
+        ((ImageView) view.findViewById(R.id.btn_delete)).setOnClickListener(v -> {
+            callback.callback(lists.get(i), EnumAction.DELETE);
+        });
+
+        ((ImageView) view.findViewById(R.id.btn_rename)).setOnClickListener(v -> {
+            callback.callback(lists.get(i), EnumAction.RENAME);
+        });
+
         return view;
     }
 
