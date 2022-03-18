@@ -88,10 +88,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ListView
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:layout_margin="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/theme_black"
         app:layout_constraintTop_toBottomOf="@id/lay_title"
+        android:id="@+id/tv11"
+        android:text="단어 개수 : "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textColor="@color/theme_black"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintLeft_toRightOf="@id/tv11"
+        app:layout_constraintBottom_toBottomOf="@id/tv11"
+        app:layout_constraintTop_toTopOf="@id/tv11"
+        android:id="@+id/tv_wordCount"
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ListView
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv11"
         android:id="@+id/lv_word"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>

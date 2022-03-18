@@ -80,8 +80,8 @@ public interface MyDao {
     @Query("SELECT * FROM (SELECT * FROM word WHERE languageCode = :languageCode) WHERE wordListCodeInt = :listCode")
     Word[] getAllWordByLanguageByListCode(int languageCode, int listCode);
 
-    @Query("SELECT * FROM (SELECT * FROM word WHERE languageCode = :languageCode) WHERE wordTitle = :wordTitle")
-    Word[] getAllSameWordByLanguage(int languageCode, String wordTitle);
+    @Query("SELECT * FROM (SELECT * FROM word WHERE wordListCodeInt = :wordListCodeInt) WHERE wordTitle = :wordTitle")
+    Word[] getAllSameWordByListCode(int wordListCodeInt, String wordTitle);
 
 
     // 사용 일자
