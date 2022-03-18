@@ -46,7 +46,7 @@ public class AddWordAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            LayoutInflater.from(view.getContext()).inflate(R.layout.list_word_add_list, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_word_add_list, viewGroup, false);
         }
 
         TextView tv_language = view.findViewById(R.id.tv_language);

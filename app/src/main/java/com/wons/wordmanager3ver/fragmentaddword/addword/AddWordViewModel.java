@@ -1,5 +1,8 @@
 package com.wons.wordmanager3ver.fragmentaddword.addword;
 
+import android.util.Log;
+
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -57,15 +60,52 @@ public class AddWordViewModel extends ViewModel {
         return wordInfoArr;
     }
 
-    public int insertWord(ArrayList<String> word) {
-        if (dao.getAllSameWordByListCode(getWordListMutableLiveData().getValue().getListCodeInt(), word.get(WORD_TITLE)) == null) {
-            // 중복 되는 단어가 없는 경우 로직
-            return 0;
-        } else {
-            // 중복되는 단어가 리스트에 존재
+    public int checkWord(ArrayList<String> word) {
+        if (dao.getAllSameWordByListCode(getWordListMutableLiveData().getValue().getListCodeInt(), word.get(WORD_TITLE)).length != 0) {
             return 2;
         }
+        if (dao.getAllWordByLanguageWordTitle(
+                getWordListMutableLiveData().getValue().getLanguageCode(), word.get(WORD_TITLE)).length != 0
+        ) {
+            // DB에 중복 단어
+            return 1;
+        }
+        return 0;
+    }
 
+    public void insertWord(ArrayList<String> word) {
+        if (dao.getWordInfo(word.get(WORD_TITLE)) == null) {
+
+            Word word1 = new Word(
+                    getWordListMutableLiveData().getValue().getLanguageCode(),
+                    word.get(WORD_TITLE),
+                    getWordListMutableLiveData().getValue().getListCodeInt()
+            );
+
+            WordInfo info = new WordInfo(word.get(WORD_TITLE), word.get(WORD_KOREAN),
+                    getWordListMutableLiveData().getValue().getLanguageCode());
+
+            dao.insertWord(word1);
+            dao.insertWordInfo(info);
+
+            WordList wordList = getWordListMutableLiveData().getValue();
+            wordList.addWordCount();
+            this.wordListMutableLiveData.setValue(wordList);
+
+
+        } else {
+
+            Word word1 = new Word(
+                    getWordListMutableLiveData().getValue().getLanguageCode(),
+                    word.get(WORD_TITLE),
+                    getWordListMutableLiveData().getValue().getListCodeInt()
+            );
+
+            dao.insertWord(word1);
+            WordInfo info = dao.getWordInfo(word.get(WORD_TITLE));
+            info.wordKorean = word.get(WORD_KOREAN);
+            dao.updateWordInfo(info);
+        }
     }
 
     //todo 3가지 경우

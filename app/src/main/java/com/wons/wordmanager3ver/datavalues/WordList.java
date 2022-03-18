@@ -21,9 +21,9 @@ public class WordList {
         String title = listName.trim();
         char[] cString = title.toCharArray();
         ArrayList<String> strArr = new ArrayList<>();
-        for(int i = 0 ; i <cString.length ; i++) {
-            if(cString[i] == ' ') {
-                if(cString[i+1] != ' ') {
+        for (int i = 0; i < cString.length; i++) {
+            if (cString[i] == ' ') {
+                if (cString[i + 1] != ' ') {
                     strArr.add(String.valueOf(cString[i]));
                 }
             } else {
@@ -31,7 +31,7 @@ public class WordList {
             }
         }
         StringBuilder builder = new StringBuilder();
-        for(String s : strArr) {
+        for (String s : strArr) {
             builder.append(s);
         }
         this.listName = builder.toString();
@@ -80,5 +80,15 @@ public class WordList {
 
     public void setListGradeInt(int listGradeInt) {
         this.listGradeInt = listGradeInt;
+    }
+
+    public void addWordCount() {
+        this.wordCountInt++;
+    }
+
+    public void discountWordCount() {
+        if (this.wordCountInt > 0) {
+            wordCountInt--;
+        }
     }
 }

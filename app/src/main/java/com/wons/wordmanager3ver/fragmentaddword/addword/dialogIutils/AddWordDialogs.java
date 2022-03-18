@@ -32,17 +32,20 @@ public class AddWordDialogs {
                 word.add(wordTitle);
                 word.add(wordKorean);
                 callback.callback(word);
-
+                et_wordTitle.setText("");
+                et_wordKorean.setText("");
             } else if (et_wordTitle.getText().toString().isEmpty()) {
-                et_wordTitle.setError("적어주세요");
+                et_wordTitle.setError("필수 입니다");
             } else if (et_wordKorean.getText().toString().isEmpty()) {
-                et_wordKorean.setError("적어주세요");
+                et_wordKorean.setError("필수 입니다");
             }  else {
-                et_wordKorean.setError("적어주세요");
-                et_wordTitle.setError("적어주세요");
+                et_wordKorean.setError("필수 입니다");
+                et_wordTitle.setError("필수 입니다");
             }
         });
         btn_cancel.setOnClickListener(v -> {
+            et_wordTitle.setText("");
+            et_wordKorean.setText("");
             callback.callback();
         });
 

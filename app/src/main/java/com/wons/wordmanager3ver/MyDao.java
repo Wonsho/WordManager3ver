@@ -83,6 +83,9 @@ public interface MyDao {
     @Query("SELECT * FROM (SELECT * FROM word WHERE wordListCodeInt = :wordListCodeInt) WHERE wordTitle = :wordTitle")
     Word[] getAllSameWordByListCode(int wordListCodeInt, String wordTitle);
 
+    @Query("SELECT * FROM (SELECT * FROM word WHERE languageCode = :languageCode) WHERE wordTitle = :wordTitle")
+    Word[] getAllWordByLanguageWordTitle(int languageCode, String wordTitle);
+
 
     // 사용 일자
     @Insert
