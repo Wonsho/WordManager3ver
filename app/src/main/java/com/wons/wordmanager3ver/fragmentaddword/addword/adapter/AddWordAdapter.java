@@ -95,12 +95,8 @@ public class AddWordAdapter extends BaseAdapter {
         return view;
     }
 
-    public void setWords(ArrayList<Word> words, ArrayList<WordInfo> wordInfoArr) {
+    public void setWords(ArrayList<Word> words, HashMap<String, WordInfo> hashMap) {
         this.words = words;
-        HashMap<String, WordInfo> hashMap = new HashMap<>();
-        for(WordInfo info : wordInfoArr) {
-            hashMap.put(info.getWordEnglish(), info);
-        }
         this.infoMap = hashMap;
     }
 }

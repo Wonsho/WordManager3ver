@@ -29,6 +29,7 @@ import com.wons.wordmanager3ver.fragmentaddword.adapter.WordListAdapter;
 import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 import com.wons.wordmanager3ver.fragmentaddword.dialogutils.DialogAddWodCallback;
 import com.wons.wordmanager3ver.fragmentaddword.dialogutils.DialogInAddWordFragments;
+import com.wons.wordmanager3ver.fragmentaddword.sameword.CheckSameWordActivity;
 import com.wons.wordmanager3ver.tool.Tools;
 
 import java.text.SimpleDateFormat;

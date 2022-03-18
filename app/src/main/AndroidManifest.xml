@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
         <activity
+            android:name=".fragmentaddword.sameword.CheckSameWordActivity"
+            android:exported="true" />
+        <activity
             android:name=".testword.TestResultActivity"
             android:exported="true" />
         <activity

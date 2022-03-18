@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp">
+    tools:context=".fragmentaddword.sameword.CheckSameWordActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -136,7 +137,6 @@
                     <TextView
                         android:id="@+id/tv_origin_word_title"
                         android:layout_width="0dp"
-                        app:layout_constraintRight_toRightOf="parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
@@ -144,21 +144,22 @@
                         android:textColor="@color/theme_black"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        app:layout_goneMarginRight="5dp"
                         android:id="@+id/tv_origin_word_mean"
-                        android:layout_marginRight="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/theme_black"
+                        android:layout_marginRight="5dp"
                         android:text="기존 단어의 뜻"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:textColor="@color/theme_black"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_origin_word_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        app:layout_goneMarginRight="5dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
@@ -183,7 +184,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="@integer/material_motion_duration_long_1" >
+                android:layout_weight="@integer/material_motion_duration_long_1">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -192,7 +193,6 @@
                     <TextView
                         android:id="@+id/tv_new_word_title"
                         android:layout_width="0dp"
-                        app:layout_constraintRight_toRightOf="parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
@@ -200,21 +200,22 @@
                         android:textColor="@color/theme_black"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        app:layout_goneMarginRight="5dp"
                         android:id="@+id/tv_new_word_mean"
-                        android:layout_marginRight="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/theme_black"
+                        android:layout_marginRight="5dp"
                         android:text="기존 단어의 뜻"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:textColor="@color/theme_black"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_new_word_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        app:layout_goneMarginRight="5dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>
@@ -238,59 +239,83 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline5">
 
-            <TextView
-                android:id="@+id/btn_newWord"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/list_theme2"
-                android:backgroundTint="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:elevation="10dp"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="내가 쓴 단어로 덮어씌우고 저장하기"
-                android:textColor="@color/theme_black" />
 
-            <TextView
-                android:id="@+id/btn_originWord"
+            <LinearLayout
+                android:elevation="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/list_theme2"
-                android:backgroundTint="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
+                android:background="@drawable/list_theme2">
+
+                <TextView
+                    android:id="@+id/btn_newWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="내가 쓴 단어로 덮어씌우고 저장하기"
+                    android:textColor="@color/theme_black" />
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:elevation="10dp"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="기존 단어로 저장하기"
-                android:textColor="@color/theme_black" />
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/list_theme2">
+
+                <TextView
+                    android:id="@+id/btn_originWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="기존 단어로 저장하기"
+                    android:textColor="@color/theme_black" />
+            </LinearLayout>
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            android:background="@drawable/list_theme2">
 
             <TextView
                 android:id="@+id/btn_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/list_theme2"
-                android:backgroundTint="?attr/selectableItemBackgroundBorderless"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:elevation="10dp"
+
                 android:focusable="true"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="저장하지 않기"
-                android:textColor="@color/theme_black" />
+                android:textColor="@color/theme_black"
+                android:text="저장하지 않기" />
+
+        </LinearLayout>
+
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

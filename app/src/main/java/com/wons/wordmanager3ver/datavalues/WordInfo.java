@@ -18,7 +18,7 @@ public class WordInfo {
     private int correctTimes;
 
     public WordInfo(String wordEnglish, String wordKorean, int languageCode) {
-        this.wordEnglish = wordEnglish;
+        this.wordEnglish = wordEnglish.toUpperCase();
         this.wordKorean = wordKorean;
         this.wordMemo = null;
         this.testedTimes = 0;
