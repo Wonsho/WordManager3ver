@@ -16,6 +16,7 @@ public class CheckSameWordActivity extends AppCompatActivity {
     private String word_korean;
     private int languageCode;
     private CheckListViewModel viewModel;
+    private int listCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class CheckSameWordActivity extends AppCompatActivity {
         this.wordTitle = getIntent().getStringExtra("wordTitle");
         this.word_korean = getIntent().getStringExtra("wordKorean");
         this.languageCode = getIntent().getIntExtra("languageCode", -1);
+        this.listCode = getIntent().getIntExtra("listCode", -1);
         setView();
         setList();
 
@@ -38,22 +40,21 @@ public class CheckSameWordActivity extends AppCompatActivity {
         });
 
         binding.btnNewWord.setOnClickListener(v -> {
-
+            viewModel.insertNewWord(languageCode,listCode, wordTitle, word_korean);
             finish();
         });
 
         binding.btnOriginWord.setOnClickListener(v -> {
-
+            viewModel.insertOriginWord(listCode, languageCode, wordTitle);
             finish();
         });
     }
 
     private void setView() {
-        binding.tvNewWordTitle.setText(wordTitle);
-        binding.tvNewWordMean.setText(word_korean);
+        binding.tvNewWordKorean.setText(word_korean);
         WordInfo info = viewModel.getWordInfo(wordTitle.toUpperCase());
         binding.tvOriginWordTitle.setText(info.getWordEnglish());
-        binding.tvOriginWordMean.setText(info.wordKorean);
+        binding.tvOriginWordKorean.setText(info.wordKorean);
     }
 
     private void setList() {

@@ -117,6 +117,7 @@ public class AddWordActivity extends AppCompatActivity {
         intent.putExtra("wordTitle", words.get(AddWordViewModel.WORD_TITLE));
         intent.putExtra("wordKorean", words.get(AddWordViewModel.WORD_KOREAN));
         intent.putExtra("languageCode", viewModel.getWordListMutableLiveData().getValue().getLanguageCode());
+        intent.putExtra("listCode", viewModel.getWordListMutableLiveData().getValue().getListCodeInt());
         startActivity(intent);
     }
 
