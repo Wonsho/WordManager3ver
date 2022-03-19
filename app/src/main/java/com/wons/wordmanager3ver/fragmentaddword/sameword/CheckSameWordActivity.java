@@ -52,7 +52,7 @@ public class CheckSameWordActivity extends AppCompatActivity {
 
     private void setView() {
         binding.tvNewWordKorean.setText(word_korean);
-        WordInfo info = viewModel.getWordInfo(wordTitle.toUpperCase());
+        WordInfo info = viewModel.getWordInfo(wordTitle.toUpperCase(), languageCode);
         binding.tvOriginWordTitle.setText(info.getWordEnglish());
         binding.tvOriginWordKorean.setText(info.wordKorean);
     }

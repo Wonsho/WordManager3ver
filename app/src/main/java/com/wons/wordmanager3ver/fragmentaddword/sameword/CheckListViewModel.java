@@ -27,15 +27,16 @@ public class CheckListViewModel extends ViewModel {
         return listArr;
     }
 
-    public WordInfo getWordInfo(String wordTitle) {
-        return dao.getWordInfo(wordTitle.toUpperCase());
+    public WordInfo getWordInfo(String wordTitle, int languageCode) {
+        return dao.getWordInfo(wordTitle.toUpperCase(), languageCode);
     }
 
     public void insertNewWord(int languageCode, int listCode, String wordTitle, String wordKorean) {
-        WordInfo wordInfo = dao.getWordInfo(wordTitle.toUpperCase());
+        WordInfo wordInfo = dao.getWordInfo(wordTitle.toUpperCase(), languageCode);
         wordInfo.wordKorean = wordKorean;
         dao.updateWordInfo(wordInfo);
         insertOriginWord(listCode, languageCode, wordTitle);
+
     }
 
     public void insertOriginWord(int listCode, int languageCode, String wordTitle) {

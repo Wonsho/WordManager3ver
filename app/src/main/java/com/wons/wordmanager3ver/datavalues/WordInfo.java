@@ -8,8 +8,9 @@ import androidx.room.PrimaryKey;
 @Entity
 public class WordInfo {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
+    private int infoId;
     private String wordEnglish;
     private int languageCode;
     private String wordMemo;
@@ -24,6 +25,14 @@ public class WordInfo {
         this.testedTimes = 0;
         this.correctTimes = 0;
         this.languageCode = languageCode;
+    }
+
+    public int getInfoId() {
+        return infoId;
+    }
+
+    public void setInfoId(int infoId) {
+        this.infoId = infoId;
     }
 
     public int getLanguageCode() {

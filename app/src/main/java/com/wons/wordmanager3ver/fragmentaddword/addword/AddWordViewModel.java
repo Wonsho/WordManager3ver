@@ -59,7 +59,7 @@ public class AddWordViewModel extends ViewModel {
                 getWordListMutableLiveData().getValue().getLanguageCode(),
                 getWordListMutableLiveData().getValue().getListCodeInt())));
         for (Word word : wordArr) {
-            WordInfo info = dao.getWordInfo(word.getWordTitle().toUpperCase());
+            WordInfo info = dao.getWordInfo(word.getWordTitle().toUpperCase(), word.getLanguageCode());
             map.put(word.getWordTitle(), info);
         }
 
@@ -80,12 +80,19 @@ public class AddWordViewModel extends ViewModel {
                 return SAME_WORD_IN_LIST;
             }
         }
-        if (dao.getWordInfo(word.get(WORD_TITLE).toUpperCase()) != null) {
+        if (dao.getWordInfo(word.get(WORD_TITLE).toUpperCase(), getWordListMutableLiveData().getValue().getLanguageCode()) != null) {
             return SAME_WORD_IN_DB;
         }
 
         return NON;
     }
+
+    public void setLiveDataCount(ArrayList<Word> words) {
+        WordList list = getWordListMutableLiveData().getValue();
+        list.setWordCountInt(words.size());
+        this.wordListMutableLiveData.setValue(list);
+    }
+
 
     public void insertWord(ArrayList<String> word) {
         Word word1 = new Word(
@@ -100,10 +107,6 @@ public class AddWordViewModel extends ViewModel {
 
        dao.insertWord(word1);
        dao.insertWordInfo(info);
-
-       WordList wordList = getWordListMutableLiveData().getValue();
-       wordList.addWordCount();
-       this.getWordListMutableLiveData().setValue(wordList);
     }
 
     public static void updateWord(ArrayList<String> word) {

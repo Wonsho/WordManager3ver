@@ -11,9 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wons.wordmanager3ver.databinding.ActivityAddWordBinding;
+import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordList;
 import com.wons.wordmanager3ver.fragmentaddword.addword.adapter.AddWordAdapter;
+import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.ActionCallback;
 import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.AddWordCallbackGetString;
 import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.AddWordDialogs;
+import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.EnumAction;
+import com.wons.wordmanager3ver.fragmentaddword.memo.MemoActivity;
 import com.wons.wordmanager3ver.fragmentaddword.sameword.CheckSameWordActivity;
 
 import java.util.ArrayList;
@@ -87,7 +92,7 @@ public class AddWordActivity extends AppCompatActivity {
                     }
 
                     case AddWordViewModel.SAME_WORD_IN_LIST: {
-                        Toast.makeText(getApplicationContext(), "중복되는 단어가 리스트 안에 있습니다", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "중복되는 단어가 단어장 안에 있습니다", Toast.LENGTH_LONG).show();
                         break;
                     }
                 }
@@ -100,7 +105,33 @@ public class AddWordActivity extends AppCompatActivity {
 
     private void setWordListView() {
         if (binding.lvWord.getAdapter() == null) {
-            binding.lvWord.setAdapter(new AddWordAdapter());
+            binding.lvWord.setAdapter(new AddWordAdapter(new ActionCallback() {
+                @Override
+                public void callbackAction(EnumAction action, Word word) {
+                    switch (action) {
+                        case RENAME: {
+                            //todo 다이로그 띄우기
+                            break;
+                        }
+                        case DELETE: {
+                            // todo 삭제 다이로그 띄우기
+                            break;
+                        }
+
+                        case MEMO: {
+                            Intent intent = new Intent(getApplicationContext(), MemoActivity.class);
+                            intent.putExtra("wordTitle", word.getWordTitle());
+                            intent.putExtra("languageCode", viewModel.getWordListMutableLiveData().getValue().getLanguageCode());
+                            startActivity(intent);
+                            break;
+                        }
+                        case SOUND: {
+                            // todo TTS(언어코드 가져와서 객체 생성)
+                            break;
+                        }
+                    }
+                }
+            }));
         }
         ((AddWordAdapter) binding.lvWord.getAdapter()).setWords(viewModel.getAllWordInList(), viewModel.getWordInfo());
         if (binding.lvWord.getAdapter().getCount() == 0) {
@@ -108,9 +139,12 @@ public class AddWordActivity extends AppCompatActivity {
         } else {
             binding.tvInfo.setVisibility(View.GONE);
         }
+        viewModel.setLiveDataCount(viewModel.getAllWordInList());
         binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()));
         ((AddWordAdapter) binding.lvWord.getAdapter()).notifyDataSetChanged();
     }
+
+
 
     private void showCheckActivity(ArrayList<String> words) {
         Intent intent = new Intent(getApplicationContext(), CheckSameWordActivity.class);
@@ -121,4 +155,9 @@ public class AddWordActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setWordListView();
+    }
 }

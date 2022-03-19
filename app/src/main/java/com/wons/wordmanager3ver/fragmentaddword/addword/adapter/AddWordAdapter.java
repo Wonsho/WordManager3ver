@@ -12,6 +12,8 @@ import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
+import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.ActionCallback;
+import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.EnumAction;
 
 import org.w3c.dom.Text;
 
@@ -22,10 +24,12 @@ public class AddWordAdapter extends BaseAdapter {
     private ArrayList<Word> words;
     private HashMap<String, WordInfo> infoMap;
     private String language;
+    private ActionCallback actionCallback;
 
-    public AddWordAdapter() {
+    public AddWordAdapter(ActionCallback actionCallback) {
         this.words = new ArrayList<>();
         this.infoMap = new HashMap<>();
+        this.actionCallback = actionCallback;
     }
 
     @Override
@@ -70,6 +74,14 @@ public class AddWordAdapter extends BaseAdapter {
         tv_language.setText(language);
         tv_wordTitle.setText(words.get(i).getWordTitle());
         tv_wordKorean.setText(infoMap.get(words.get(i).getWordTitle()).wordKorean);
+        String memo = infoMap.get(words.get(i).getWordTitle()).getWordMemo();
+
+        if(memo == null || memo.isEmpty()) {
+            btn_memo.setImageResource(R.drawable.ic_baseline_playlist_add_24);
+        } else {
+            btn_memo.setImageResource(R.drawable.ic_baseline_playlist_add_check_24);
+        }
+
         if (percentage == 0) {
             tv_percentage.setText("데이터 없음");
         } else {
@@ -77,18 +89,21 @@ public class AddWordAdapter extends BaseAdapter {
         }
 
         btn_delete.setOnClickListener(v -> {
-
+            actionCallback.callbackAction(EnumAction.DELETE, words.get(i));
         });
 
         btn_memo.setOnClickListener(v -> {
+            actionCallback.callbackAction(EnumAction.MEMO, words.get(i));
 
         });
 
         btn_rename.setOnClickListener(v -> {
+            actionCallback.callbackAction(EnumAction.RENAME, words.get(i));
 
         });
 
         btn_sound.setOnClickListener(v -> {
+            actionCallback.callbackAction(EnumAction.SOUND, words.get(i));
 
         });
 

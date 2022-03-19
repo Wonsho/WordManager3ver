@@ -122,6 +122,8 @@ public interface MyDao {
     @Update
     void updateWordInfo(WordInfo wordInfo);
 
-    @Query("SELECT * FROM WordInfo WHERE wordEnglish = :wordTitle")
-    WordInfo getWordInfo(String wordTitle);
+    @Query("SELECT * FROM(SELECT * FROM wordinfo WHERE languageCode = :languageCode) WHERE wordEnglish = :wordTitle")
+    WordInfo getWordInfo(String wordTitle, int languageCode);
+
+
 }
