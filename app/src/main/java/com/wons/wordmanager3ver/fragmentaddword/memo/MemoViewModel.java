@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
+import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 
 public class MemoViewModel extends ViewModel {

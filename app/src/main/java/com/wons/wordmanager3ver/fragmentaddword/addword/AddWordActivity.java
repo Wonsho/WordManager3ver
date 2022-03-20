@@ -4,14 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityAddWordBinding;
+import com.wons.wordmanager3ver.databinding.DialogAddWordBinding;
 import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
 import com.wons.wordmanager3ver.fragmentaddword.addword.adapter.AddWordAdapter;
 import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.ActionCallback;
@@ -22,6 +28,8 @@ import com.wons.wordmanager3ver.fragmentaddword.memo.MemoActivity;
 import com.wons.wordmanager3ver.fragmentaddword.sameword.CheckSameWordActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class AddWordActivity extends AppCompatActivity {
     private ActivityAddWordBinding binding;
@@ -102,6 +110,35 @@ public class AddWordActivity extends AppCompatActivity {
         return alertDialog;
     }
 
+    private void setDialogForRename(Word word) {
+        HashMap<String, WordInfo> map = viewModel.getWordInfo();
+        AlertDialog alertDialog = new AddWordDialogs().getDialogDForAddWord(
+                AddWordActivity.this, new AddWordCallbackGetString() {
+                    @Override
+                    public void callback() {
+                        dialogForRename.dismiss();
+                    }
+
+                    @Override
+                    public void callback(ArrayList<String> words) {
+                        dialogForRename.dismiss();
+
+                    }
+                }
+        );
+        //todo 다이로그에 바인딩으로 넘기기
+
+        DialogAddWordBinding binding;
+        binding = DialogAddWordBinding.inflate(getLayoutInflater(), null, false);
+        binding.tv.setText("단어 수정하기");
+        binding.btnAdd.setText("수정");
+        binding.etWordTitle.setText(word.getWordTitle());
+        binding.etWordKorean.setText(map.get(word.getWordTitle()).wordKorean);
+        dialogForRename = alertDialog;
+        dialogForRename.setView(binding.getRoot());
+
+    }
+
 
     private void setWordListView() {
         if (binding.lvWord.getAdapter() == null) {
@@ -110,11 +147,12 @@ public class AddWordActivity extends AppCompatActivity {
                 public void callbackAction(EnumAction action, Word word) {
                     switch (action) {
                         case RENAME: {
-                            //todo 다이로그 띄우기
+                            setDialogForRename(word);
+                            dialogForRename.show();
                             break;
                         }
                         case DELETE: {
-                            // todo 삭제 다이로그 띄우기
+                            showDialogForDelete(word);
                             break;
                         }
 
@@ -142,6 +180,26 @@ public class AddWordActivity extends AppCompatActivity {
         viewModel.setLiveDataCount(viewModel.getAllWordInList());
         binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()));
         ((AddWordAdapter) binding.lvWord.getAdapter()).notifyDataSetChanged();
+    }
+
+    private void showDialogForDelete(Word word) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("알림");
+        builder.setMessage(word.getWordTitle() + " 단어를 삭제하시겠습니까?");
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                viewModel.deleteWord(word);
+                onRestart();
+            }
+        });
+        builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 
 

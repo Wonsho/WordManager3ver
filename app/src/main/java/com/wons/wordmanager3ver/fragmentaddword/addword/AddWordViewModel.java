@@ -109,8 +109,12 @@ public class AddWordViewModel extends ViewModel {
        dao.insertWordInfo(info);
     }
 
-    public static void updateWord(ArrayList<String> word) {
+    public void updateWord(ArrayList<String> word) {
 
+    }
+
+    public void deleteWord(Word word) {
+        dao.deleteWord(word);
     }
 
 
