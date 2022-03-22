@@ -15,10 +15,13 @@ import com.wons.wordmanager3ver.MainActivity;
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.databinding.FragmentHomeBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
+import com.wons.wordmanager3ver.datavalues.EnumSetting;
+import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.fragmenthome.adapter.GameListAdapter;
 import com.wons.wordmanager3ver.fragmenthome.dialogutils.CallBackInHomeFragment;
 import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragment;
+import com.wons.wordmanager3ver.fragmenthome.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
 import com.wons.wordmanager3ver.studyword.StudyActivity;
@@ -45,7 +48,9 @@ public class HomeFragment extends Fragment {
     private void onC() {
 
         binding.btnSetting.setOnClickListener(v -> {
-            AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(this.getContext(), 1, 1, new CallBackInHomeFragment() {
+            AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(this.getContext(),
+                    MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue,
+                    MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue, new CallBackInHomeFragment() {
                 @Override
                 public void callback(int setting, int listCount) {
 
@@ -67,8 +72,8 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnReplace.setOnClickListener(v -> {
-
-            //todo 만약 추천에 고르는것이면 고르는 액티비티를 띄우고 아닐경우 알아서 추천
+            Intent intent = new Intent(getActivity(), ChoiceListActivity.class);
+            startActivity(intent);
         });
 
     }

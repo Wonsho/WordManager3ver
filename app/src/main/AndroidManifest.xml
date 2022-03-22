@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
         <activity
+            android:name=".fragmenthome.getlist.ChoiceListActivity"
+            android:exported="true" />
+        <activity
             android:name=".fragmentaddword.memo.MemoActivity"
             android:exported="true" />
         <activity

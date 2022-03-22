@@ -71,6 +71,8 @@ public class AddWordActivity extends AppCompatActivity {
 
 
     private AlertDialog makeDialogForAddWord() {
+        DialogAddWordBinding binding;
+        binding = DialogAddWordBinding.inflate(getLayoutInflater(), null, false);
         AlertDialog alertDialog = new AddWordDialogs().getDialogDForAddWord(AddWordActivity.this, new AddWordCallbackGetString() {
             @Override
             public void callback() {
@@ -106,12 +108,14 @@ public class AddWordActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        }, binding);
         return alertDialog;
     }
 
     private void setDialogForRename(Word word) {
         HashMap<String, WordInfo> map = viewModel.getWordInfo();
+        DialogAddWordBinding binding;
+        binding = DialogAddWordBinding.inflate(getLayoutInflater(), null, false);
         AlertDialog alertDialog = new AddWordDialogs().getDialogDForAddWord(
                 AddWordActivity.this, new AddWordCallbackGetString() {
                     @Override
@@ -121,15 +125,38 @@ public class AddWordActivity extends AppCompatActivity {
 
                     @Override
                     public void callback(ArrayList<String> words) {
+                        // todo Delete후 Insert */
+                        viewModel.deleteWord(word);
+                        int resultCode = viewModel.getResultCodeWhenAddWord(words);
+
+                        switch (resultCode) {
+                            case AddWordViewModel.NON: {
+                                if (viewModel.getWordCount() == 20) {
+                                    Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
+                                    dialogForAddWord.dismiss();
+                                    return;
+                                }
+                                viewModel.insertWord(words);
+                                Toast.makeText(getApplicationContext(), "저장 되었습니다", Toast.LENGTH_SHORT).show();
+                                setWordListView();
+                                break;
+                            }
+
+                            case AddWordViewModel.SAME_WORD_IN_DB: {
+                                showCheckActivity(words);
+                                break;
+                            }
+
+                            case AddWordViewModel.SAME_WORD_IN_LIST: {
+                                Toast.makeText(getApplicationContext(), "중복되는 단어가 단어장 안에 있습니다", Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                        }
                         dialogForRename.dismiss();
 
                     }
-                }
-        );
-        //todo 다이로그에 바인딩으로 넘기기
+                }, binding);
 
-        DialogAddWordBinding binding;
-        binding = DialogAddWordBinding.inflate(getLayoutInflater(), null, false);
         binding.tv.setText("단어 수정하기");
         binding.btnAdd.setText("수정");
         binding.etWordTitle.setText(word.getWordTitle());

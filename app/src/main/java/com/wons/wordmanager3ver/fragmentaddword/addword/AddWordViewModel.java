@@ -66,6 +66,7 @@ public class AddWordViewModel extends ViewModel {
         return map;
     }
 
+
     public int getWordCount() {
         return getWordListMutableLiveData().getValue().getWordCountInt();
     }
@@ -109,12 +110,25 @@ public class AddWordViewModel extends ViewModel {
        dao.insertWordInfo(info);
     }
 
-    public void updateWord(ArrayList<String> word) {
+    public void changeWord(Word word, ArrayList<String> words) {
 
     }
 
     public void deleteWord(Word word) {
+        int count = 0;
+        Word[] wordArr = dao.getAllWordByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+        for(Word word1 : wordArr) {
+            if(word1.getWordTitle().toUpperCase().equals(word.getWordTitle().toUpperCase())) {
+                count ++;
+            }
+        }
+        if(count <= 1) {
+            dao.deleteWordInfo(
+                    dao.getWordInfo(word.getWordTitle().toUpperCase(), word.getLanguageCode())
+            );
+        }
         dao.deleteWord(word);
+
     }
 
 
@@ -122,9 +136,5 @@ public class AddWordViewModel extends ViewModel {
 
 }
 
-//todo 3가지 경우
-// 중복 단어가 리스트에 있는 경우 --> return
-// 다른 리스트에 중복 단어가 있는 경우 --> 덮어 씌울껀지 아니면 원래의 걸로 추가 할지 묻고 추가
-// 중복단어가 없고 다른 리스트에도 없는 경우 --> 그냥 추가 */
 
 

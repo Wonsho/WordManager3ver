@@ -101,11 +101,16 @@ public class MainViewModel extends ViewModel {
     }
 
     public static int checkSameWordList(int languageCode, String listName) {
-        if(dao.getSelectedWordlist(languageCode, listName) == null) {
+        if (dao.getSelectedWordlist(languageCode, listName) == null || dao.getSelectedWordlist(languageCode, listName).length == 0) {
             return 0;
         } else {
             return 1;
         }
+    }
+
+    public static ArrayList<WordList> getSearchedWordList(int languageCode, String listName) {
+
+        return new ArrayList<WordList>(Arrays.asList(dao.getSelectedWordlist(languageCode, listName)));
     }
 
     public static void insertWordList(WordList wordList) {
@@ -113,11 +118,41 @@ public class MainViewModel extends ViewModel {
     }
 
     public static void deleteWordList(WordList wordList) {
+        Word[] words = dao.getAllWordByLanguageByListCode(wordList.getLanguageCode(), wordList.getListCodeInt());
+        for(Word word : words) {
+            deleteWord(word);
+        }
         dao.deleteWordList(wordList);
+    }
+
+    private static void deleteWord(Word word) {
+        int count = 0;
+        Word[] wordArr = dao.getAllWordByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+        for(Word word1 : wordArr) {
+            if(word1.getWordTitle().toUpperCase().equals(word.getWordTitle().toUpperCase())) {
+                count ++;
+            }
+        }
+        if(count <= 1) {
+            dao.deleteWordInfo(
+                    dao.getWordInfo(word.getWordTitle().toUpperCase(), word.getLanguageCode())
+            );
+        }
+        dao.deleteWord(word);
     }
 
     public static void updateWordList(WordList list) {
         dao.updateWordList(list);
     }
 
-}
+
+    public static Setting getSetting(int settingCode) {
+        return dao.getSetting(settingCode);
+    }
+
+    public static void updateSetting(int settingCode,int settingValue) {
+        Setting setting = dao.getSetting(settingCode);
+        setting.settingValue = settingValue;
+        dao.updateUserSetting(setting);
+    }
+ }

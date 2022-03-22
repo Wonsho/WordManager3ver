@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class DialogUtilsInHomeFragment {
         });
 
         this.listRecommendCode = savedRecommendValue;
+        Log.e("dialog", String.valueOf(savedRecommendValue));
 
         RadioButton rb_choice = rg.findViewById(R.id.rb_choice);
         RadioButton rb_recommend = rg.findViewById(R.id.rb_recommend);
