@@ -50,14 +50,6 @@ public class WordList {
         this.languageCode = languageCode;
     }
 
-    public int getListGrade() {
-        return listGradeInt;
-    }
-
-    public void setListGrade(int listGradeInt) {
-        this.listGradeInt = listGradeInt;
-    }
-
     public void setWordCountInt(int wordCountInt) {
         this.wordCountInt = wordCountInt;
     }

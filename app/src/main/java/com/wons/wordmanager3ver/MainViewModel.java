@@ -11,6 +11,7 @@ import com.wons.wordmanager3ver.datavalues.EnumDialogSettingValue;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.EnumSetting;
 import com.wons.wordmanager3ver.datavalues.Setting;
+import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
@@ -154,5 +155,17 @@ public class MainViewModel extends ViewModel {
         Setting setting = dao.getSetting(settingCode);
         setting.settingValue = settingValue;
         dao.updateUserSetting(setting);
+    }
+
+    public static ArrayList<TodayWordList> getTodayWordList(int languageCode) {
+        return new ArrayList<>(Arrays.asList(dao.getAllTodayListByLanguageCode(languageCode)));
+    }
+
+    public static void deleteTodayList(TodayWordList todayWordList) {
+        dao.deleteTodayList(todayWordList);
+    }
+
+    public static void updateTodayList(TodayWordList todayWordList) {
+        dao.updateTodayList(todayWordList);
     }
  }
