@@ -33,6 +33,7 @@ import com.wons.wordmanager3ver.studyword.StudyActivity;
 import com.wons.wordmanager3ver.testword.TestActivity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class HomeFragment extends Fragment {
 
@@ -115,6 +116,7 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
+                builder.create().show();
             } else {
                 changeTodayWordList();
             }
@@ -125,7 +127,25 @@ public class HomeFragment extends Fragment {
         int recommendValue = MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue;
 
         if(recommendValue == UserRecommendWordListSettingValue.USER_RECOMMEND_STYLE_RECOMMEND.recommendStyleCodeInt) {
-            // todo 랜덤으로 저장로직
+
+            ArrayList<Integer> integers = new ArrayList<>();
+
+            while(true) {
+                if(integers.size() == MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue) {
+                    break;
+                }
+
+                int randomNum = (int)(Math.random()*MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size());
+
+                if(!integers.contains(randomNum)) {
+                    integers.add(randomNum);
+                }
+
+            }
+            ArrayList<TodayWordList> todayWordLists = MainViewModel.getRandomTodayWordList(integers);
+            for(TodayWordList todayWordList : todayWordLists) {
+                MainViewModel.insertTodayWordList(todayWordList);
+            }
             setTodayWordList();
             Toast.makeText(getActivity(), "새로고침 되었습니다", Toast.LENGTH_SHORT).show();
         }

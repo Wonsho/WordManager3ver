@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
 
@@ -34,7 +35,11 @@ public class DialogUtilsInHomeFragment {
             }
         });
         tv_plus.setOnClickListener(v -> {
-            tv_num.setText(String.valueOf(Integer.parseInt(tv_num.getText().toString().trim()) + 1));
+            if(Integer.parseInt(tv_num.getText().toString().trim()) == MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size()) {
+                Toast.makeText(context, "저장된 단어장 갯수를 초과할수 없습니다", Toast.LENGTH_SHORT).show();
+            } else {
+                tv_num.setText(String.valueOf(Integer.parseInt(tv_num.getText().toString().trim()) + 1));
+            }
         });
 
         this.listRecommendCode = savedRecommendValue;

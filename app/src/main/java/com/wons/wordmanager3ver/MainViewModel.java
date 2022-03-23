@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 
 public class MainViewModel extends ViewModel {
     public static MainDatabase database;
@@ -167,5 +168,18 @@ public class MainViewModel extends ViewModel {
 
     public static void updateTodayList(TodayWordList todayWordList) {
         dao.updateTodayList(todayWordList);
+    }
+
+    public static ArrayList<TodayWordList> getRandomTodayWordList(ArrayList<Integer> integers) {
+        ArrayList<TodayWordList> todayWordLists = new ArrayList<>();
+        ArrayList<WordList> wordLists = new ArrayList<>(Arrays.asList(dao.getAllWordlistByLanguageCode(getUserInfo().getLanguageCode())));
+       for(int i = 0 ; i < integers.size() ; i++) {
+           WordList wordList = wordLists.get(integers.get(i));
+           todayWordLists.add(new TodayWordList(wordList.getLanguageCode(), wordList.getListCodeInt(), false, wordList.listName, wordList.getListGradeInt(), wordList.getWordCountInt()));
+       }
+        return todayWordLists;
+    }
+    public static void insertTodayWordList(TodayWordList wordList) {
+        dao.insertTodayList(wordList);
     }
  }

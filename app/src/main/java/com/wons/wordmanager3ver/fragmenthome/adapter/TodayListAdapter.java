@@ -8,14 +8,18 @@ import android.widget.BaseAdapter;
 import com.wons.wordmanager3ver.databinding.ListWordListHomeBinding;
 import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
+import com.wons.wordmanager3ver.datavalues.WordList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TodayListAdapter extends BaseAdapter {
-    private ArrayList<TodayWordList> todayWordLists;
+    private ArrayList<TodayWordList> todayWordKay;
+    private HashMap<TodayWordList,WordList> todayWordLists;
 
     public TodayListAdapter() {
-        todayWordLists = new ArrayList<>();
+        todayWordKay = new ArrayList<>();
+        todayWordLists = new HashMap<>();
     }
     @Override
     public int getCount() {
@@ -36,21 +40,17 @@ public class TodayListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ListWordListHomeBinding binding;
         binding = ListWordListHomeBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
-        if(todayWordLists.get(i).passOrNo) {
-            binding.tvPass.setVisibility(View.VISIBLE);
-        } else {
-            binding.tvPass.setVisibility(View.GONE);
-        }
         binding.tvListTitle.setText(todayWordLists.get(i).listName);
-        binding.tvWordCount.setText(String.valueOf(todayWordLists.get(i).listWordCount));
-        String listGrade = EnumGrade.F.getGradeToString(todayWordLists.get(i).listGrade);
-        if(todayWordLists.get(i).listGrade == 0) {
-            listGrade = "데이터 없음";
+        binding.tvListGrade.setText(EnumGrade.D.getGradeToString(todayWordLists.get(i).getListGradeInt()));
+        if(todayWordLists.get(i).getListGradeInt() == 0) {
+            binding.tvListGrade.setText("데이터 없음");
         }
-        binding.tvListGrade.setText(listGrade);
+
+        binding.tvWordCount.setText(String.valueOf(todayWordLists.get(i).getWordCountInt()));
         return binding.getRoot();
     }
-    public void setTodayWordLists(ArrayList<TodayWordList> todayWordLists) {
+    public void setTodayWordLists(ArrayList<TodayWordList> todayWordKay, HashMap<TodayWordList,WordList> todayWordLists) {
+        this.todayWordKay = todayWordKay;
         this.todayWordLists = todayWordLists;
     }
 }
