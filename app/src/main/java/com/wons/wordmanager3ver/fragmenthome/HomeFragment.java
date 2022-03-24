@@ -195,16 +195,29 @@ public class HomeFragment extends Fragment {
 
        if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
            binding.tv1.setText("아직 만든 단어장이 없습니다.\n단어장을 먼저 만들어 주세요.");
+           setVisible(true);
            binding.tv1.setVisibility(View.VISIBLE);
            binding.btnAddList.setVisibility(View.VISIBLE);
        } else if(binding.lvList.getAdapter().getCount() == 0) {
            binding.tv1.setVisibility(View.VISIBLE);
            binding.tv1.setText("오늘의 단어장이 비어있습니다\n새로고침을 해주세요");
+           setVisible(true);
            binding.btnAddList.setVisibility(View.GONE);
        } else {
+           setVisible(false);
            binding.tv1.setVisibility(View.GONE);
            binding.btnAddList.setVisibility(View.GONE);
        }
+    }
+
+    private void setVisible(boolean check) {
+        if(check) {
+            binding.card1.setVisibility(View.GONE);
+            binding.card2.setVisibility(View.GONE);
+        } else {
+            binding.card1.setVisibility(View.VISIBLE);
+            binding.card2.setVisibility(View.VISIBLE);
+        }
     }
 
 

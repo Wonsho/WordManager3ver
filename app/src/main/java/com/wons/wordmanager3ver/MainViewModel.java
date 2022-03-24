@@ -1,6 +1,7 @@
 package com.wons.wordmanager3ver;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 import android.widget.ArrayAdapter;
 
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +19,7 @@ import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 import com.wons.wordmanager3ver.tool.Tools;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +32,7 @@ import java.util.HashSet;
 public class MainViewModel extends ViewModel {
     public static MainDatabase database;
     public static MyDao dao;
+    public static TextToSpeech tts;
 
     public void buildDataBase(Context context) {
         database = Room.databaseBuilder(context, MainDatabase.class, "MainDataBase").allowMainThreadQueries().build();
@@ -86,6 +89,16 @@ public class MainViewModel extends ViewModel {
                 dao.upDateUsedDay(usedCount);
             }
         }
+
+        EnumLanguage[] enumLanguages = EnumLanguage.values();
+        int languageCode = MainViewModel.getUserInfo().getLanguageCode();
+        EnumLanguage enumLanguage = EnumLanguage.ENGLISH;
+        for(EnumLanguage language : enumLanguages) {
+            if(languageCode == language.languageCodeInt) {
+                enumLanguage = language;
+            }
+        }
+        tts = new Tools().speakTTS(context, enumLanguage);
     }
 
     public static UserInfo getUserInfo() {
@@ -138,6 +151,10 @@ public class MainViewModel extends ViewModel {
             );
         }
         dao.deleteWord(word);
+    }
+
+    public static Setting getSetting(int settingCode) {
+        return dao.getSetting(settingCode);
     }
 
     public static void updateWordList(WordList list) {

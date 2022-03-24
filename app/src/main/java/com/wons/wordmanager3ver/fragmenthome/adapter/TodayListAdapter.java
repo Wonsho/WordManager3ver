@@ -16,12 +16,13 @@ import java.util.HashMap;
 
 public class TodayListAdapter extends BaseAdapter {
     private ArrayList<TodayWordList> todayWordLists;
-    private HashMap<Integer,WordList> wordLists;
+    private HashMap<Integer, WordList> wordLists;
 
     public TodayListAdapter() {
         todayWordLists = new ArrayList<>();
         wordLists = new HashMap<>();
     }
+
     @Override
     public int getCount() {
         return todayWordLists.size();
@@ -40,23 +41,29 @@ public class TodayListAdapter extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         ListWordListHomeBinding binding;
-        binding = ListWordListHomeBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+        if (view == null) {
+            binding = ListWordListHomeBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+        } else {
+            binding = ListWordListHomeBinding.bind(view);
+        }
         binding.tvListTitle.setText(wordLists.get(todayWordLists.get(i).getListCode()).listName);
         binding.tvListGrade.setText(EnumGrade.D.getGradeToString(wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt()));
-        if(wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt() == 0) {
+        if (wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt() == 0) {
             binding.tvListGrade.setText("데이터 없음");
         }
-        if(todayWordLists.get(i).passOrNo) {
+        if (todayWordLists.get(i).passOrNo) {
             binding.tvPass.setVisibility(View.VISIBLE);
         } else {
             binding.tvPass.setVisibility(View.GONE);
         }
-        binding.tvWordCount.setText(String.valueOf(wordLists.get(todayWordLists.get(i).getListCode()).getWordCountInt()));
+        binding.tvWordCount.setText(String.valueOf(wordLists.get(todayWordLists.get(i).getListCode()).getWordCountInt()) + "/20");
 
         return binding.getRoot();
     }
-    public void setTodayWordLists(ArrayList<TodayWordList> todayWordList, HashMap<Integer,WordList> wordLists) {
+
+    public void setTodayWordLists(ArrayList<TodayWordList> todayWordList, HashMap<Integer, WordList> wordLists) {
         this.todayWordLists = todayWordList;
         this.wordLists = wordLists;
     }

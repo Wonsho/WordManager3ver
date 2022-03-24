@@ -8,14 +8,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityAddWordBinding;
 import com.wons.wordmanager3ver.databinding.DialogAddWordBinding;
+import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
@@ -26,6 +30,7 @@ import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.AddWordDial
 import com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils.EnumAction;
 import com.wons.wordmanager3ver.fragmentaddword.memo.MemoActivity;
 import com.wons.wordmanager3ver.fragmentaddword.sameword.CheckSameWordActivity;
+import com.wons.wordmanager3ver.tool.Tools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +54,9 @@ public class AddWordActivity extends AppCompatActivity {
         viewModel.getWordListMutableLiveData().observe(this, wordList -> {
             viewModel.updateWordList(wordList);
         });
+
+
+
 
         dialogForAddWord = makeDialogForAddWord();
 
@@ -191,7 +199,8 @@ public class AddWordActivity extends AppCompatActivity {
                             break;
                         }
                         case SOUND: {
-                            // todo TTS(언어코드 가져와서 객체 생성)
+                            new Tools().speech(word.getWordTitle());
+                            //todo 나중에 언어 메인 뷰모델 언어 컨트롤 해야됨
                             break;
                         }
                     }
@@ -205,7 +214,7 @@ public class AddWordActivity extends AppCompatActivity {
             binding.tvInfo.setVisibility(View.GONE);
         }
         viewModel.setLiveDataCount(viewModel.getAllWordInList());
-        binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()));
+        binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount())+"/20");
         ((AddWordAdapter) binding.lvWord.getAdapter()).notifyDataSetChanged();
     }
 
