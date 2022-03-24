@@ -31,7 +31,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_test.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_test_result.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_add_list.xml" value="0.4" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_add_word.xml" value="0.264" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_add_word.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_notice.xml" value="0.1625" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_same_word.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_setting_today_wordlist.xml" value="0.4" />
@@ -48,7 +48,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_add_list.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_add_wordlist.xml" value="0.536" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_home.xml" value="0.4" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_home.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/menu/main_menu.xml" value="0.25364583333333335" />
       </map>
     </option>

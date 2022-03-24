@@ -72,7 +72,7 @@ public class ChoiceListActivity extends AppCompatActivity {
 
     private void insertTodayWordList(ArrayList<WordList> wordLists) {
         for(WordList wordList : wordLists) {
-            TodayWordList todayWordList = new TodayWordList(languageCode, wordList.getListCodeInt(), false, wordList.listName, wordList.getListGradeInt(), wordList.getWordCountInt());
+            TodayWordList todayWordList = new TodayWordList(languageCode, wordList.getListCodeInt(), false);
             dao.insertTodayList(todayWordList);
         }
         Toast.makeText(getApplicationContext(), "지정되었습니다", Toast.LENGTH_SHORT).show();

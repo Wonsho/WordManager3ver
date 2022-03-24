@@ -1,6 +1,7 @@
 package com.wons.wordmanager3ver;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class MainViewModel extends ViewModel {
@@ -110,11 +112,6 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    public static ArrayList<WordList> getSearchedWordList(int languageCode, String listName) {
-
-        return new ArrayList<WordList>(Arrays.asList(dao.getSelectedWordlist(languageCode, listName)));
-    }
-
     public static void insertWordList(WordList wordList) {
         dao.insertWordList(wordList);
     }
@@ -147,39 +144,4 @@ public class MainViewModel extends ViewModel {
         dao.updateWordList(list);
     }
 
-
-    public static Setting getSetting(int settingCode) {
-        return dao.getSetting(settingCode);
-    }
-
-    public static void updateSetting(int settingCode,int settingValue) {
-        Setting setting = dao.getSetting(settingCode);
-        setting.settingValue = settingValue;
-        dao.updateUserSetting(setting);
-    }
-
-    public static ArrayList<TodayWordList> getTodayWordList(int languageCode) {
-        return new ArrayList<>(Arrays.asList(dao.getAllTodayListByLanguageCode(languageCode)));
-    }
-
-    public static void deleteTodayList(TodayWordList todayWordList) {
-        dao.deleteTodayList(todayWordList);
-    }
-
-    public static void updateTodayList(TodayWordList todayWordList) {
-        dao.updateTodayList(todayWordList);
-    }
-
-    public static ArrayList<TodayWordList> getRandomTodayWordList(ArrayList<Integer> integers) {
-        ArrayList<TodayWordList> todayWordLists = new ArrayList<>();
-        ArrayList<WordList> wordLists = new ArrayList<>(Arrays.asList(dao.getAllWordlistByLanguageCode(getUserInfo().getLanguageCode())));
-       for(int i = 0 ; i < integers.size() ; i++) {
-           WordList wordList = wordLists.get(integers.get(i));
-           todayWordLists.add(new TodayWordList(wordList.getLanguageCode(), wordList.getListCodeInt(), false, wordList.listName, wordList.getListGradeInt(), wordList.getWordCountInt()));
-       }
-        return todayWordLists;
-    }
-    public static void insertTodayWordList(TodayWordList wordList) {
-        dao.insertTodayList(wordList);
-    }
  }

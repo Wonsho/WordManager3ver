@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
+import com.wons.wordmanager3ver.datavalues.WordList;
 import com.wons.wordmanager3ver.fragmenthome.adapter.GameListAdapter;
 import com.wons.wordmanager3ver.fragmenthome.adapter.TodayListAdapter;
 import com.wons.wordmanager3ver.fragmenthome.dialogutils.CallBackInHomeFragment;
@@ -33,16 +35,18 @@ import com.wons.wordmanager3ver.studyword.StudyActivity;
 import com.wons.wordmanager3ver.testword.TestActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-
+    private HomeFragmentViewModel viewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
         onC();
         setGameList();
         setUserInfo();
@@ -54,23 +58,35 @@ public class HomeFragment extends Fragment {
     private void onC() {
 
         binding.btnSetting.setOnClickListener(v -> {
+            if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
+                Toast.makeText(getActivity(), "저장된 단어장이 없습니다", Toast.LENGTH_LONG).show();
+                return;
+            }
             AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(this.getContext(),
-                    MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue,
-                    MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue, new CallBackInHomeFragment() {
+                    viewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue,
+                    viewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue, new CallBackInHomeFragment() {
                 @Override
                 public void callback(int setting, int listCount) {
-                    MainViewModel.updateSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId, setting);
-                    MainViewModel.updateSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId, listCount);
+                    viewModel.updateSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId, setting);
+                    viewModel.updateSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId, listCount);
                 }
             });
             alertDialog.show();
         });
 
         binding.btnStudy.setOnClickListener(v -> {
+            if(binding.lvList.getAdapter().getCount() == 0) {
+                Toast.makeText(getActivity(), "지정된 오늘의 단어장이 없습니다", Toast.LENGTH_SHORT).show();
+                return;
+            }
             startActivity(new Intent(getActivity(), StudyActivity.class));
         });
 
         binding.btnTest.setOnClickListener(v -> {
+            if(binding.lvList.getAdapter().getCount() == 0) {
+                Toast.makeText(getActivity(), "지정된 오늘의 단어장이 없습니다", Toast.LENGTH_SHORT).show();
+                return;
+            }
             startActivity(new Intent(getActivity(), TestActivity.class));
         });
 
@@ -83,15 +99,15 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "저장된 단어장이 없습니다", Toast.LENGTH_LONG).show();
                 return;
             }
-            if(MainViewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode()).size() != 0) {
-                ArrayList<TodayWordList> todayWordLists = MainViewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+            if(viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode()).size() != 0) {
+                ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
                 for(TodayWordList list : todayWordLists) {
                     if(!list.passOrNo) {
                         break;
                     }  else {
-                        ArrayList<TodayWordList> todayWordLists1 = MainViewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+                        ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
                         for(TodayWordList list1 : todayWordLists1) {
-                            MainViewModel.deleteTodayList(list1);
+                            viewModel.deleteTodayList(list1);
                         }
                         changeTodayWordList();
                         return;
@@ -103,9 +119,9 @@ public class HomeFragment extends Fragment {
                 builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        ArrayList<TodayWordList> todayWordLists = MainViewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+                        ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
                         for(TodayWordList list : todayWordLists) {
-                            MainViewModel.deleteTodayList(list);
+                            viewModel.deleteTodayList(list);
                         }
                         changeTodayWordList();
                     }
@@ -124,14 +140,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void changeTodayWordList() {
-        int recommendValue = MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue;
+        int recommendValue = viewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue;
 
         if(recommendValue == UserRecommendWordListSettingValue.USER_RECOMMEND_STYLE_RECOMMEND.recommendStyleCodeInt) {
 
             ArrayList<Integer> integers = new ArrayList<>();
 
             while(true) {
-                if(integers.size() == MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue) {
+                if(integers.size() == viewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue) {
                     break;
                 }
 
@@ -142,16 +158,16 @@ public class HomeFragment extends Fragment {
                 }
 
             }
-            ArrayList<TodayWordList> todayWordLists = MainViewModel.getRandomTodayWordList(integers);
+            ArrayList<TodayWordList> todayWordLists = viewModel.getRandomTodayWordList(integers);
             for(TodayWordList todayWordList : todayWordLists) {
-                MainViewModel.insertTodayWordList(todayWordList);
+                viewModel.insertTodayWordList(todayWordList);
             }
             setTodayWordList();
             Toast.makeText(getActivity(), "새로고침 되었습니다", Toast.LENGTH_SHORT).show();
         }
         if(recommendValue == UserRecommendWordListSettingValue.USER_RECOMMEND_STYLE_CHOICE.recommendStyleCodeInt) {
             Intent intent = new Intent(getActivity(), ChoiceListActivity.class);
-            intent.putExtra("maxCount", MainViewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue);
+            intent.putExtra("maxCount", viewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue);
             intent.putExtra("languageCode", MainViewModel.getUserInfo().getLanguageCode());
             startActivity(intent);
         }
@@ -161,13 +177,22 @@ public class HomeFragment extends Fragment {
         if (binding.lvList.getAdapter() == null) {
             binding.lvList.setAdapter(new TodayListAdapter());
         }
-        ArrayList<TodayWordList> todayWordLists = MainViewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
-        ((TodayListAdapter)binding.lvList.getAdapter()).setTodayWordLists(todayWordLists);
+        ArrayList<TodayWordList> todayWordLists = new ArrayList<>();
+        HashMap<Integer, WordList> wordList = new HashMap<>();
+        try {
+            todayWordLists = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+            wordList = viewModel.getTodayWordList(todayWordLists);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "변경사항이 있어\n 오늘의 단어장이 초기화 되었습니다", Toast.LENGTH_SHORT).show();
+            ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+            for(TodayWordList todayWordList : todayWordLists1) {
+                viewModel.deleteTodayList(todayWordList);
+            }
+        }
+
+        ((TodayListAdapter)binding.lvList.getAdapter()).setTodayWordLists(todayWordLists, wordList);
         ((TodayListAdapter)binding.lvList.getAdapter()).notifyDataSetChanged();
 
-        //todo 단어장이 없을경우 안내문 띄우고
-        // 단어장이 있으나 오늘의 단어장을 초기화 하지 않을 경우 안내문 띄움
-        // 둘다 아니면 뷰를 없엠*/
        if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
            binding.tv1.setText("아직 만든 단어장이 없습니다.\n단어장을 먼저 만들어 주세요.");
            binding.tv1.setVisibility(View.VISIBLE);

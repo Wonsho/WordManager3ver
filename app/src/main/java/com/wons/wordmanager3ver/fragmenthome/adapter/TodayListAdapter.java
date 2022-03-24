@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.fragmenthome.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TodayListAdapter extends BaseAdapter {
-    private ArrayList<TodayWordList> todayWordKay;
-    private HashMap<TodayWordList,WordList> todayWordLists;
+    private ArrayList<TodayWordList> todayWordLists;
+    private HashMap<Integer,WordList> wordLists;
 
     public TodayListAdapter() {
-        todayWordKay = new ArrayList<>();
-        todayWordLists = new HashMap<>();
+        todayWordLists = new ArrayList<>();
+        wordLists = new HashMap<>();
     }
     @Override
     public int getCount() {
@@ -36,21 +37,27 @@ public class TodayListAdapter extends BaseAdapter {
         return i;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ListWordListHomeBinding binding;
         binding = ListWordListHomeBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
-        binding.tvListTitle.setText(todayWordLists.get(i).listName);
-        binding.tvListGrade.setText(EnumGrade.D.getGradeToString(todayWordLists.get(i).getListGradeInt()));
-        if(todayWordLists.get(i).getListGradeInt() == 0) {
+        binding.tvListTitle.setText(wordLists.get(todayWordLists.get(i).getListCode()).listName);
+        binding.tvListGrade.setText(EnumGrade.D.getGradeToString(wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt()));
+        if(wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt() == 0) {
             binding.tvListGrade.setText("데이터 없음");
         }
+        if(todayWordLists.get(i).passOrNo) {
+            binding.tvPass.setVisibility(View.VISIBLE);
+        } else {
+            binding.tvPass.setVisibility(View.GONE);
+        }
+        binding.tvWordCount.setText(String.valueOf(wordLists.get(todayWordLists.get(i).getListCode()).getWordCountInt()));
 
-        binding.tvWordCount.setText(String.valueOf(todayWordLists.get(i).getWordCountInt()));
         return binding.getRoot();
     }
-    public void setTodayWordLists(ArrayList<TodayWordList> todayWordKay, HashMap<TodayWordList,WordList> todayWordLists) {
-        this.todayWordKay = todayWordKay;
-        this.todayWordLists = todayWordLists;
+    public void setTodayWordLists(ArrayList<TodayWordList> todayWordList, HashMap<Integer,WordList> wordLists) {
+        this.todayWordLists = todayWordList;
+        this.wordLists = wordLists;
     }
 }
