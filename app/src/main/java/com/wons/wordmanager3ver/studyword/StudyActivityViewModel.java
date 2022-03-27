@@ -23,19 +23,19 @@ public class StudyActivityViewModel extends ViewModel {
     private HashMap<String, WordInfo> wordInfo;
 
     public void setWordListMutableLiveData() {
-        if(wordListMutableLiveData == null) {
+        if (wordListMutableLiveData == null) {
             this.wordListMutableLiveData = new MutableLiveData<>();
         }
     }
 
     public void setWordMutableLiveData() {
-        if(wordMutableLiveData == null) {
+        if (wordMutableLiveData == null) {
             this.wordMutableLiveData = new MutableLiveData<>();
         }
     }
 
     public MutableLiveData<Word> getWordMutableLiveData() {
-        if(wordMutableLiveData == null) {
+        if (wordMutableLiveData == null) {
             this.wordMutableLiveData = new MutableLiveData<>();
         }
         return wordMutableLiveData;
@@ -54,35 +54,35 @@ public class StudyActivityViewModel extends ViewModel {
     }
 
     public WordList getWordListMutableLiveData() {
-        if(wordListMutableLiveData == null) {
+        if (wordListMutableLiveData == null) {
             this.wordListMutableLiveData = new MutableLiveData<>();
         }
         return wordListMutableLiveData.getValue();
     }
 
     public void setStudyData() {
-       TodayWordList[] todayWordLists =  dao.getAllTodayListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
-       ArrayList<WordList> wordLists = new ArrayList<>();
+        TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+        ArrayList<WordList> wordLists = new ArrayList<>();
 
-       for(TodayWordList todayWordList : todayWordLists) {
-           wordLists.add(dao.getSelectedWordlist(todayWordList.getListCode()));
-       }
+        for (TodayWordList todayWordList : todayWordLists) {
+            wordLists.add(dao.getSelectedWordlist(todayWordList.getListCode()));
+        }
 
-       this.wordLists = wordLists;
-       HashMap<String, ArrayList<Word>> wordMap = new HashMap<>();
-       HashMap<String, WordInfo> wordInfoHashMap = new HashMap<>();
+        this.wordLists = wordLists;
+        HashMap<String, ArrayList<Word>> wordMap = new HashMap<>();
+        HashMap<String, WordInfo> wordInfoHashMap = new HashMap<>();
 
-       for(WordList wordList : wordLists) {
-           Word[] words = dao.getAllWordByLanguageByListCode(MainViewModel.getUserInfo().getLanguageCode(),
-                   wordList.getListCodeInt());
-           for(Word word : words) {
-              wordInfoHashMap.put(word.getWordTitle(), dao.getWordInfo(word.getWordTitle().toUpperCase(), wordList.getLanguageCode()));
-           }
-           wordMap.put(wordList.listName, new ArrayList<>(Arrays.asList(words)));
-       }
+        for (WordList wordList : wordLists) {
+            Word[] words = dao.getAllWordByLanguageByListCode(MainViewModel.getUserInfo().getLanguageCode(),
+                    wordList.getListCodeInt());
+            for (Word word : words) {
+                wordInfoHashMap.put(word.getWordTitle().toUpperCase(), dao.getWordInfo(word.getWordTitle().toUpperCase(), wordList.getLanguageCode()));
+            }
+            wordMap.put(wordList.listName, new ArrayList<>(Arrays.asList(words)));
+        }
 
-       this.wordMap = wordMap;
-       this.wordInfo = wordInfoHashMap;
+        this.wordMap = wordMap;
+        this.wordInfo = wordInfoHashMap;
     }
 
     public ArrayList<Word> getSelectedWords() {

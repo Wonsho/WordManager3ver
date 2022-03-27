@@ -5,12 +5,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.databinding.ActivityStudyBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.tool.Tools;
 
 import java.util.ArrayList;
 
@@ -39,28 +44,57 @@ public class StudyActivity extends AppCompatActivity {
 
         //리스트 왼쪽 버튼
         binding.btnLeft.setOnClickListener(v -> {
-
+            Log.e("Button", "onc");
+            String[] strArr = binding.tvListCount.getText().toString().split("/");
+            String indexString = strArr[0].trim().substring(1).trim();
+            if(Integer.parseInt(indexString) == 1) {
+                Log.e("Button", "onc2");
+                return;
+            } else {
+                viewModel.wordListMutableLiveData.setValue(viewModel.getWordLists().get(Integer.parseInt(indexString) - 2));
+            }
         });
 
         //리스트 오른쪽 버튼
         binding.btnRight.setOnClickListener(v -> {
-
+            String[] strArr = binding.tvListCount.getText().toString().split("/");
+            String indexString = strArr[0].trim().substring(1).trim();
+            if(Integer.parseInt(indexString) == viewModel.getWordLists().size()) {
+                return;
+            } else {
+                viewModel.wordListMutableLiveData.setValue(viewModel.getWordLists().get(Integer.parseInt(indexString)));
+            }
         });
 
 
         //단어 오른쪽 버튼
         binding.btnWordRight.setOnClickListener(v -> {
-
+            String[] wordArr = binding.tvCountOfWord.getText().toString().trim().split("/");
+            if(Integer.parseInt(wordArr[0].trim()) == viewModel.getSelectedWords().size()) {
+                return;
+            } else {
+                viewModel.wordMutableLiveData.setValue(viewModel.getSelectedWords().get(
+                        Integer.parseInt(wordArr[0])
+                ));
+            }
         });
 
         //단어 소리 버튼
         binding.btnWordSound.setOnClickListener(v -> {
-
+            new Tools().speech(binding.tvWordTitle.getText().toString().trim());
         });
 
         //단어 왼쪽 버튼
         binding.btnWordLeft.setOnClickListener(v -> {
-
+            String[] wordArr = binding.tvCountOfWord.getText().toString().trim().split("/");
+            if(Integer.parseInt(wordArr[0].trim()) == 1) {
+                Log.e("word", "Passed");
+                return;
+            } else {
+                viewModel.wordMutableLiveData.setValue(viewModel.getSelectedWords().get(
+                        Integer.parseInt(wordArr[0]) - 2
+                ));
+            }
         });
 
 
@@ -94,14 +128,28 @@ public class StudyActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setWordList(WordList wordList) {
         binding.tvListName.setText(wordList.listName);
-        binding.tvListCount.setText(String.valueOf(viewModel.getWordLists().indexOf(wordList) + 1 + "/" + viewModel.getWordLists().size()));
+        binding.tvListCount.setText("[" + (viewModel.getWordLists().indexOf(wordList) + 1) + "/" + viewModel.getWordLists().size() + "]");
     }
 
     private void setWord(Word word) {
         binding.tvWordTitle.setText(word.getWordTitle());
         binding.tvCountOfWord.setText(String.valueOf(viewModel.getSelectedWords().indexOf(word) + 1 + "/" + viewModel.getSelectedWords().size()));
         binding.tvKorean.setText(viewModel.getWordInfoByWord(word).wordKorean);
-        binding.tvMemo.setText(viewModel.getWordInfoByWord(word).getWordMemo());
+        String percentage = String.valueOf(viewModel.getWordInfoByWord(word).getCorrectPercentage()) + "%";
+        if(percentage.equals("0%")) {
+            percentage = "데이터 없음";
+        }
+        String memo = viewModel.getWordInfoByWord(word).getWordMemo();
+        binding.tvWordCorrectPercentage.setText(percentage);
+        if (memo.equals("")) {
+            binding.m.setVisibility(View.GONE);
+            binding.line4.setVisibility(View.GONE);
+        } else {
+            binding.m.setVisibility(View.VISIBLE);
+            binding.line4.setVisibility(View.VISIBLE);
+        }
+        binding.tvMemo.setText(memo);
+
     }
 
 }
