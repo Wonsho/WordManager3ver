@@ -63,4 +63,8 @@ public class HomeFragmentViewModel extends ViewModel {
         return todayWordLists;
     }
 
+    public int getWordCountOfTodayWordList(TodayWordList todayWordList) {
+        return dao.getAllWordByLanguageByListCode(todayWordList.getListLanguageCode(), todayWordList.getListCode()).length;
+    }
+
 }

@@ -79,6 +79,15 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "지정된 오늘의 단어장이 없습니다", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+            for(TodayWordList todayWordList : todayWordLists) {
+                if(viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                    Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             startActivity(new Intent(getActivity(), StudyActivity.class));
         });
 

@@ -67,4 +67,8 @@ public class TodayListAdapter extends BaseAdapter {
         this.todayWordLists = todayWordList;
         this.wordLists = wordLists;
     }
+
+    public ArrayList<TodayWordList> getTodayWordLists() {
+        return todayWordLists;
+    }
 }

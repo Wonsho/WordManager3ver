@@ -38,7 +38,8 @@ public class CheckListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        @SuppressLint("ViewHolder") ListSameWordListBinding binding = ListSameWordListBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+        @SuppressLint("ViewHolder")
+        ListSameWordListBinding binding = ListSameWordListBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
         if(view == null) {
             view = binding.getRoot();
         }
