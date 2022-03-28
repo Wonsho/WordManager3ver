@@ -21,11 +21,10 @@ public class AddWordViewModel extends ViewModel {
 
     static final int WORD_TITLE = 0;
     static final int WORD_KOREAN = 1;
-
+    private MutableLiveData<Word> mutableLiveData;
     static final int NON = 0;
     static final int SAME_WORD_IN_DB = 1;
     static final int SAME_WORD_IN_LIST = 2;
-
 
     private MyDao dao = MainViewModel.dao;
     protected MutableLiveData<WordList> wordListMutableLiveData;
@@ -35,6 +34,20 @@ public class AddWordViewModel extends ViewModel {
             wordListMutableLiveData = new MutableLiveData<>();
             wordListMutableLiveData.setValue(dao.getSelectedWordlist(listCode));
         }
+    }
+
+    public void setLiveData(Word word) {
+        if(this.mutableLiveData == null) {
+            this.mutableLiveData = new MutableLiveData<>();
+        }
+        this.mutableLiveData.setValue(word);
+    }
+
+    public Word getLiveData() {
+        if(this.mutableLiveData == null) {
+            this.mutableLiveData = new MutableLiveData<>();
+        }
+        return this.mutableLiveData.getValue();
     }
 
     public MutableLiveData<WordList> getWordListMutableLiveData() {
@@ -110,10 +123,6 @@ public class AddWordViewModel extends ViewModel {
        dao.insertWordInfo(info);
     }
 
-    public void changeWord(Word word, ArrayList<String> words) {
-
-    }
-
     public void deleteWord(Word word) {
         int count = 0;
         Word[] wordArr = dao.getAllWordByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
@@ -128,8 +137,40 @@ public class AddWordViewModel extends ViewModel {
             );
         }
         dao.deleteWord(word);
+    }
+
+    public void updateWord(Word word, ArrayList<String> changedWord, int languageCode) {
+        //todo 참조하는 단어정보를 참조하는 다른 단어가 있을시 업데이트를 하지 않고
+        // 새로 생성후 인서트
+        // 참조하는 단어가 없을경우 새로 생성함 */
+        Word[] allWordByLanguage = dao.getAllWordByLanguageCode(languageCode);
+        int count = 0;
+        for(Word word2 : allWordByLanguage) {
+            if(word.getWordTitle().toUpperCase().trim().equals(word2.getWordTitle().trim().toUpperCase())) {
+                count++;
+                if(count >= 2) {
+                    // todo 참조하는 단어 인포를 바꾸지 않고 새로 생성후 인서트
+                    WordInfo wordInfo = new WordInfo(changedWord.get(WORD_TITLE).toUpperCase().trim(), changedWord.get(WORD_KOREAN), languageCode);
+                    word.setWordTitle(changedWord.get(WORD_TITLE).trim());
+                    dao.insertWordInfo(wordInfo);
+                    dao.updateWord(word);
+                    return;
+                }
+            }
+        }
+
+        WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), languageCode);
+        Word word1 = word;
+        if(wordInfo.getWordEnglish().equals(changedWord.get(WORD_TITLE).trim().toUpperCase())) {
+            //todo 단어 뜻만 바뀌였을때
+        } else {
+
+        }
+        // todo 아니면 단어 뜻 참조와 단어를 바꾼후 update
 
     }
+
+
 
 
 

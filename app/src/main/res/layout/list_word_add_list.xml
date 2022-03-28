@@ -107,29 +107,16 @@
                 android:id="@+id/btn_rename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_baseline_create_24"
-                app:layout_constraintBottom_toBottomOf="@id/btn_sound"
-                app:layout_constraintRight_toLeftOf="@id/btn_sound"
-                app:layout_constraintTop_toTopOf="@id/btn_sound" />
-
-            <ImageView
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:id="@+id/btn_sound"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintRight_toLeftOf="@id/btn_memo"
                 app:layout_constraintBottom_toBottomOf="@id/btn_memo"
-                app:layout_constraintTop_toTopOf="@id/btn_memo"
-                android:src="@drawable/ic_baseline_volume_up_24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintRight_toLeftOf="@id/btn_memo"
+                app:layout_constraintTop_toTopOf="@id/btn_memo" />
+
+
             <TextView
                 android:textSize="15sp"
                 android:layout_marginRight="15dp"

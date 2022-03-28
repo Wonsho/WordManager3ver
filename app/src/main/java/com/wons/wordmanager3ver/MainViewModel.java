@@ -101,6 +101,8 @@ public class MainViewModel extends ViewModel {
         tts = new Tools().speakTTS(context, enumLanguage);
     }
 
+
+
     public static UserInfo getUserInfo() {
         return dao.getUserInfoByLanguageCode(dao.getSetting(EnumSetting.LANGUAGE.settingCodeId).settingValue);
     }

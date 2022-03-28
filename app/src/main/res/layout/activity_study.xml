@@ -183,19 +183,22 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
                                 android:id="@+id/tv_memo"
+                                android:textSize="15sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="20dp"
                                 android:text="빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라원숭이 엉덩이는 빨게 빨가면 사과 사과는 맛있어 맛있으면 바나나 바나나는 길어 길으면 기차 기차는 빨라"
                                 android:textColor="@color/theme_black"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/line4"
-                                android:paddingBottom="20dp"
-                                android:paddingTop="10dp"/>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/line4" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView

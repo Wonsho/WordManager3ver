@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.wons.wordmanager3ver.databinding.ActivityCheckSameWordBinding;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
+import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 import com.wons.wordmanager3ver.fragmentaddword.sameword.adapter.CheckListAdapter;
 
 public class CheckSameWordActivity extends AppCompatActivity {
@@ -17,6 +18,8 @@ public class CheckSameWordActivity extends AppCompatActivity {
     private int languageCode;
     private CheckListViewModel viewModel;
     private int listCode;
+    private int fromCode;
+    private int originWordId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,8 @@ public class CheckSameWordActivity extends AppCompatActivity {
         this.word_korean = getIntent().getStringExtra("wordKorean");
         this.languageCode = getIntent().getIntExtra("languageCode", -1);
         this.listCode = getIntent().getIntExtra("listCode", -1);
+        this.fromCode = getIntent().getIntExtra("fromCode", -1);
+        this.originWordId = getIntent().getIntExtra("wordId", -1);
         setView();
         setList();
 
@@ -40,11 +45,21 @@ public class CheckSameWordActivity extends AppCompatActivity {
         });
 
         binding.btnNewWord.setOnClickListener(v -> {
+            if(originWordId == AddWordActivity.RENAME) {
+                viewModel.updateNewWord(languageCode, wordTitle, word_korean, originWordId);
+                finish();
+                return;
+            }
             viewModel.insertNewWord(languageCode,listCode, wordTitle, word_korean);
             finish();
         });
 
         binding.btnOriginWord.setOnClickListener(v -> {
+            if(originWordId == AddWordActivity.RENAME) {
+                viewModel.updateOriginWord(wordTitle, originWordId);
+                finish();
+                return;
+            }
             viewModel.insertOriginWord(listCode, languageCode, wordTitle);
             finish();
         });

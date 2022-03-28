@@ -31,7 +31,7 @@ public class Word {
     }
 
     public void setWordTitle(String wordTitle) {
-        this.wordTitle = wordTitle;
+        this.wordTitle = new Tools().removeOverSpace(wordTitle);
     }
 
     public void setWordId(int wordId) {

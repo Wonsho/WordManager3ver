@@ -58,7 +58,6 @@ public class AddWordAdapter extends BaseAdapter {
         TextView tv_wordKorean = view.findViewById(R.id.tv_wordKorean);
         TextView tv_percentage = view.findViewById(R.id.tv_percentage);
         ImageView btn_rename = view.findViewById(R.id.btn_rename);
-        ImageView btn_sound = view.findViewById(R.id.btn_sound);
         ImageView btn_memo = view.findViewById(R.id.btn_memo);
         ImageView btn_delete = view.findViewById(R.id.btn_delete);
 
@@ -99,11 +98,6 @@ public class AddWordAdapter extends BaseAdapter {
 
         btn_rename.setOnClickListener(v -> {
             actionCallback.callbackAction(EnumAction.RENAME, words.get(i));
-
-        });
-
-        btn_sound.setOnClickListener(v -> {
-            actionCallback.callbackAction(EnumAction.SOUND, words.get(i));
 
         });
 

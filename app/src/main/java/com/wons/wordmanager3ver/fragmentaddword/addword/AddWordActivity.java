@@ -12,6 +12,8 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class AddWordActivity extends AppCompatActivity {
     private int listCode;
     private AlertDialog dialogForAddWord;
     private AlertDialog dialogForRename;
+    public static final int RENAME = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,6 @@ public class AddWordActivity extends AppCompatActivity {
         viewModel.getWordListMutableLiveData().observe(this, wordList -> {
             viewModel.updateWordList(wordList);
         });
-
-
 
 
         dialogForAddWord = makeDialogForAddWord();
@@ -105,7 +106,7 @@ public class AddWordActivity extends AppCompatActivity {
                     }
 
                     case AddWordViewModel.SAME_WORD_IN_DB: {
-                        showCheckActivity(words);
+                        showCheckActivity(words, -1,-1);
                         break;
                     }
 
@@ -133,30 +134,27 @@ public class AddWordActivity extends AppCompatActivity {
 
                     @Override
                     public void callback(ArrayList<String> words) {
-                        // todo Delete후 Insert */
-                        viewModel.deleteWord(word);
+                        // todo 단어 업데이트 기존 단어의 타이틀과 바뀐 단어의 타이틀이 같을 경우 업데이트
+                        //  만약 기존 단어의 타이틀과
+                        //  바뀐 단어의 타이틀이 다를 경우
+                        //  word Info 를 잠조하는 단어가 단어 하나일 경우 word Info 까지 삭제를 해야됨 */
                         int resultCode = viewModel.getResultCodeWhenAddWord(words);
 
                         switch (resultCode) {
                             case AddWordViewModel.NON: {
-                                if (viewModel.getWordCount() == 20) {
-                                    Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
-                                    dialogForAddWord.dismiss();
-                                    return;
-                                }
-                                viewModel.insertWord(words);
-                                Toast.makeText(getApplicationContext(), "저장 되었습니다", Toast.LENGTH_SHORT).show();
+                                viewModel.updateWord(word, words, word.getLanguageCode());
+                                Toast.makeText(getApplicationContext(), "수정 되었습니다", Toast.LENGTH_SHORT).show();
                                 setWordListView();
                                 break;
                             }
 
                             case AddWordViewModel.SAME_WORD_IN_DB: {
-                                showCheckActivity(words);
+                                showCheckActivity(words, RENAME, word.getWordId());
                                 break;
                             }
 
                             case AddWordViewModel.SAME_WORD_IN_LIST: {
-                                Toast.makeText(getApplicationContext(), "중복되는 단어가 단어장 안에 있습니다", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "수정된 단어가 단어장 안에 있습니다", Toast.LENGTH_LONG).show();
                                 break;
                             }
                         }
@@ -174,7 +172,6 @@ public class AddWordActivity extends AppCompatActivity {
 
     }
 
-
     private void setWordListView() {
         if (binding.lvWord.getAdapter() == null) {
             binding.lvWord.setAdapter(new AddWordAdapter(new ActionCallback() {
@@ -184,6 +181,7 @@ public class AddWordActivity extends AppCompatActivity {
                         case RENAME: {
                             setDialogForRename(word);
                             dialogForRename.show();
+
                             break;
                         }
                         case DELETE: {
@@ -198,11 +196,6 @@ public class AddWordActivity extends AppCompatActivity {
                             startActivity(intent);
                             break;
                         }
-                        case SOUND: {
-                            new Tools().speech(word.getWordTitle());
-                            //todo 나중에 언어 메인 뷰모델 언어 컨트롤 해야됨
-                            break;
-                        }
                     }
                 }
             }));
@@ -214,7 +207,7 @@ public class AddWordActivity extends AppCompatActivity {
             binding.tvInfo.setVisibility(View.GONE);
         }
         viewModel.setLiveDataCount(viewModel.getAllWordInList());
-        binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount())+"/20");
+        binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()) + "/20");
         ((AddWordAdapter) binding.lvWord.getAdapter()).notifyDataSetChanged();
     }
 
@@ -239,13 +232,14 @@ public class AddWordActivity extends AppCompatActivity {
     }
 
 
-
-    private void showCheckActivity(ArrayList<String> words) {
+    private void showCheckActivity(ArrayList<String> words, int fromCode, int wordId) {
         Intent intent = new Intent(getApplicationContext(), CheckSameWordActivity.class);
         intent.putExtra("wordTitle", words.get(AddWordViewModel.WORD_TITLE));
         intent.putExtra("wordKorean", words.get(AddWordViewModel.WORD_KOREAN));
         intent.putExtra("languageCode", viewModel.getWordListMutableLiveData().getValue().getLanguageCode());
         intent.putExtra("listCode", viewModel.getWordListMutableLiveData().getValue().getListCodeInt());
+        intent.putExtra("fromCode", fromCode);
+        intent.putExtra("wordId", wordId);
         startActivity(intent);
     }
 

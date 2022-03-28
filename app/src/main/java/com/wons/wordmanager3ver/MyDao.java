@@ -71,8 +71,14 @@ public interface MyDao {
     @Insert
     void insertWord(Word word);
 
+    @Update
+    void updateWord(Word word);
+
     @Delete
     void deleteWord(Word word);
+
+    @Query("SELECT * FROM word WHERE wordId = :wordId" )
+    Word getWordById(int wordId);
 
     @Query("SELECT * FROM Word WHERE languageCode = :languageCode")
     Word[] getAllWordByLanguageCode(int languageCode);

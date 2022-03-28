@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.wons.wordmanager3ver.tool.Tools;
+
 @Entity
 public class WordInfo {
 
@@ -19,7 +21,7 @@ public class WordInfo {
     private int correctTimes;
 
     public WordInfo(String wordEnglish, String wordKorean, int languageCode) {
-        this.wordEnglish = wordEnglish.toUpperCase();
+        this.wordEnglish = new Tools().removeOverSpace(wordEnglish.toUpperCase());
         this.wordKorean = wordKorean;
         this.wordMemo = "";
         this.testedTimes = 0;
@@ -57,7 +59,7 @@ public class WordInfo {
     }
 
     public void setWordEnglish(@NonNull String wordEnglish) {
-        this.wordEnglish = wordEnglish;
+        this.wordEnglish = new Tools().removeOverSpace(wordEnglish.toUpperCase());
     }
 
     public int getTestedTimes() {

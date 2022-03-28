@@ -8,13 +8,18 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
+import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityMemoBinding;
+import com.wons.wordmanager3ver.datavalues.EnumDialogSettingValue;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 
 public class MemoActivity extends AppCompatActivity {
@@ -33,8 +38,15 @@ public class MemoActivity extends AppCompatActivity {
         wordTitle = getIntent().getStringExtra("wordTitle");
         this.languageCode = getIntent().getIntExtra("languageCode", -1);
         this.wordInfo = viewModel.getWordInfo(wordTitle, languageCode);
+        if(viewModel.getDialogSetting().settingValue == EnumDialogSettingValue.SHOW.dialogCodeInt) {
+            showNotice();
+        } else {
+            initView();
+            showSoftKeyboard();
+        }
         initView();
         showSoftKeyboard();
+
 
 
         binding.btnSave.setOnClickListener( v -> {
@@ -102,6 +114,19 @@ public class MemoActivity extends AppCompatActivity {
             }
         });
        builder.create().show();
+    }
+
+    private void showNotice() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MemoActivity.this);
+        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_notice, null, false);
+        CheckBox checkBox = view.findViewById(R.id.checkBox);
+        builder.setView(view);
+        builder.setPositiveButton("확인", (dialogInterface, i) -> {
+            if(checkBox.isChecked()) {
+                viewModel.updateSetting();
+            }
+        });
+        builder.show();
     }
 
 }

@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class CheckListViewModel extends ViewModel {
+public class
+CheckListViewModel extends ViewModel {
     private MyDao dao = MainViewModel.dao;
 
     public ArrayList<WordList> getSameWordList(String wordTitle, int languageCode) {
@@ -41,6 +42,23 @@ public class CheckListViewModel extends ViewModel {
 
     public void insertOriginWord(int listCode, int languageCode, String wordTitle) {
         dao.insertWord(new Word(languageCode, wordTitle.trim(), listCode));
+    }
+
+    public void updateOriginWord(String wordTitle, int wordId) {
+       Word originWord = dao.getWordById(wordId);
+       originWord.setWordTitle(wordTitle);
+       dao.updateWord(originWord);
+    }
+
+    public void updateNewWord(int languageCode, String wordTitle, String wordKorean, int wordId) {
+        Word originWord = dao.getWordById(wordId);
+        WordInfo info = dao.getWordInfo(wordTitle.toUpperCase(), languageCode);
+        originWord.setWordTitle(wordTitle);
+        info.wordKorean = wordKorean;
+
+        dao.updateWordInfo(info);
+        dao.updateWord(originWord);
+
     }
 
 
