@@ -121,7 +121,7 @@ public class AddWordActivity extends AppCompatActivity {
         return alertDialog;
     }
 
-    private void setDialogForRename(Word word) {
+    private void setDialogForRename(Word word) { // 원래의 단어
         HashMap<String, WordInfo> map = viewModel.getWordInfo();
         DialogAddWordBinding binding;
         binding = DialogAddWordBinding.inflate(getLayoutInflater(), null, false);
@@ -134,31 +134,22 @@ public class AddWordActivity extends AppCompatActivity {
 
                     @Override
                     public void callback(ArrayList<String> words) {
-                        // todo 단어 업데이트 기존 단어의 타이틀과 바뀐 단어의 타이틀이 같을 경우 업데이트
-                        //  만약 기존 단어의 타이틀과
-                        //  바뀐 단어의 타이틀이 다를 경우
-                        //  word Info 를 잠조하는 단어가 단어 하나일 경우 word Info 까지 삭제를 해야됨 */
-                        int resultCode = viewModel.getResultCodeWhenAddWord(words);
 
-                        switch (resultCode) {
-                            case AddWordViewModel.NON: {
-                                viewModel.updateWord(word, words, word.getLanguageCode());
-                                Toast.makeText(getApplicationContext(), "수정 되었습니다", Toast.LENGTH_SHORT).show();
-                                setWordListView();
-                                break;
+                        if(!word.getWordTitle().trim().toUpperCase().equals(words.get(AddWordViewModel.WORD_TITLE).trim().toUpperCase())) {
+                            boolean check =  viewModel.updateWord(words, listCode, word.getLanguageCode());
+                            if(!check) {
+                                Toast.makeText(getApplicationContext(), "같은 단어가 단어장 안에 존재합니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+
                             }
+                        } else {
 
-                            case AddWordViewModel.SAME_WORD_IN_DB: {
-                                showCheckActivity(words, RENAME, word.getWordId());
-                                break;
-                            }
-
-                            case AddWordViewModel.SAME_WORD_IN_LIST: {
-                                Toast.makeText(getApplicationContext(), "수정된 단어가 단어장 안에 있습니다", Toast.LENGTH_LONG).show();
-                                break;
+                            if(viewModel.getWordInfoByWord(word).wordKorean.equals(words.get(AddWordViewModel.WORD_KOREAN))) {
+                                return; // 3번
+                            } else {
+                                // todo 4번 메커니즘 실행
                             }
                         }
-                        dialogForRename.dismiss();
 
                     }
                 }, binding);

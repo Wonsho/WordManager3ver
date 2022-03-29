@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.fragmentaddword.addword;
 
+import android.icu.text.IDNA;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -77,6 +78,10 @@ public class AddWordViewModel extends ViewModel {
         }
 
         return map;
+    }
+
+    public WordInfo getWordInfoByWord(Word word) {
+        return dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
     }
 
 
@@ -163,10 +168,28 @@ public class AddWordViewModel extends ViewModel {
         Word word1 = word;
         if(wordInfo.getWordEnglish().equals(changedWord.get(WORD_TITLE).trim().toUpperCase())) {
             //todo 단어 뜻만 바뀌였을때
+            wordInfo.wordKorean = changedWord.get(WORD_KOREAN);
+            dao.updateWordInfo(wordInfo);
         } else {
-
+            word1.setWordTitle(changedWord.get(WORD_TITLE).trim());
+            wordInfo.setWordMemo("");
+            wordInfo.setWordEnglish(changedWord.get(WORD_TITLE).toUpperCase());
+            wordInfo.wordKorean = changedWord.get(WORD_KOREAN);
+            wordInfo.setTestedTimes(0);
+            wordInfo.setCorrectTimes(0);
+            dao.updateWordInfo(wordInfo);
+            dao.updateWord(word1);
         }
         // todo 아니면 단어 뜻 참조와 단어를 바꾼후 update
+    }
+
+    public boolean updateWord(ArrayList<String> words, int listCode, int languageCode) {
+        Word[] words1 = dao.getAllWordByLanguageByListCode(languageCode, listCode);
+        for(Word word : words1) {
+            if(word.getWordTitle().trim().toUpperCase().equals(words.get(WORD_TITLE).trim().toUpperCase())) {
+                return false;
+            }
+        }
 
     }
 
