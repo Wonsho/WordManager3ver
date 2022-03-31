@@ -127,42 +127,50 @@ public class AddWordActivity extends AppCompatActivity {
                     public void callback(ArrayList<String> words) {
                         if(word.getWordTitle().trim().toUpperCase().equals(words.get(AddWordViewModel.WORD_TITLE).trim().toUpperCase())) {
                             //todo 3.4
-                            Log.e("3.4", "passed");
-                        } else {
-                            //todo 1.2
-                            Log.e("1.2", "passed");
-                            if(viewModel.checkChangedWordInList(words, word)) {
-                                Toast.makeText(getApplicationContext(), "같은 단어가 단어장 안에 있습니다", Toast.LENGTH_SHORT).show();
+                            if(viewModel.checkWordInfo(words, word)) {
+                                dialogForRename.dismiss();
                                 return;
                             } else {
-                                if(viewModel.checkOriginWordInDB(word)) { // todo 원래의 단어를 참조하는게 있음
-
-                                    if(viewModel.checkChangedWordInDB(words, word)) {
-                                            //todo 새단어를 참조하는게 있음 --> Activity
-                                        showActivity(words, word, RENAME);
-                                   } else {
-                                            //todo 새단어를 참조하는게 없음  --> update and new Info
-                                        viewModel.updateWordAndNewWordInfo(words, word);
-                                        Log.e("update and new Info", "passed");
-                                        showToast();
-                                        dialogForRename.dismiss();
-                                        onRestart();
-                                   }
-                                } else {  // todo 원래의 단어를 참조 하는게 없음
-                                    if(viewModel.checkChangedWordInDB(words, word)) {
-                                        //todo 새단어를 참조하는게 있음 --> 기존 info ->delete , Activity -->
-                                        showActivity(words, word, RENAME_AND_DELETE_WORD_INFO);
-                                    } else {
-                                        //todo 새단어를 참조하는게 없음 --> update All
-                                        viewModel.updateWordInfoAndWord(words, word);
-                                        Log.e("update All", "passed");
-                                        dialogForRename.dismiss();
-                                        onRestart();
-                                        showToast();
-                                    }
-                                }
+                                showCheckActivity(words, RENAME, word.getWordId());
+                                dialogForRename.dismiss();
+                                return;
                             }
 
+                        } else {
+                            //todo 1.2
+                            if(!viewModel.checkInList(word, words)) {
+
+                                if(viewModel.checkOriginWordInDB(word)) {
+                                    //todo 참조하는 단어가 있음
+                                    if(viewModel.checkChangedWordInDB(words, word)) {
+                                        //todo 바꾸는 단어가 DB에 있음
+                                        Log.e("hasWordInDB", "passed");
+                                        showCheckActivity(words, RENAME, word.getWordId());
+                                        dialogForRename.dismiss();
+                                    } else {
+                                        //todo 바꾸는 단어가 DB에 없음
+                                        Log.e("hasNONWordInDB", "passed");
+                                        viewModel.updateWordAndNewWordInfo(words, word);
+                                        onRestart();
+                                        dialogForRename.dismiss();
+                                    }
+
+                                } else {
+                                    //todo 참조하는 단어가 혼자
+                                    if(viewModel.checkChangedWordInDB(words, word)) {
+                                        showCheckActivity(words,RENAME_AND_DELETE_WORD_INFO, word.getWordId());  //todo DB에 바뀌는 단어가 존재
+                                        dialogForRename.dismiss();
+                                    } else {
+                                        viewModel.updateWordAndWordInfo(words, word);   //todo DB에 바뀌는 단어가 없음
+                                        onRestart();
+                                        dialogForRename.dismiss();
+                                    }
+
+                                }
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "단어장에 존재하는 단어 입니다", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }, binding);
@@ -175,19 +183,7 @@ public class AddWordActivity extends AppCompatActivity {
         dialogForRename.setView(binding.getRoot());
     }
 
-    private void showToast() {
-        Toast.makeText(getApplicationContext(), "수정되었습니다", Toast.LENGTH_SHORT).show();
-    }
 
-    private void showActivity(ArrayList<String> words, Word word, int actionCode) {
-        Intent intent = new Intent(AddWordActivity.this, CheckSameWordActivity.class);
-        intent.putExtra("wordTitle", words.get(AddWordViewModel.WORD_TITLE).trim());
-        intent.putExtra("wordKorean", words.get(AddWordViewModel.WORD_KOREAN).trim());
-        intent.putExtra("languageCode", word.getLanguageCode());
-        intent.putExtra("listCode", word.getWordListCodeInt());
-        intent.putExtra("actionCode", actionCode);
-        intent.putExtra("wordId", word.getWordId());
-    }
 
     private void setWordListView() {
         if (binding.lvWord.getAdapter() == null) {
@@ -249,13 +245,13 @@ public class AddWordActivity extends AppCompatActivity {
     }
 
 
-    private void showCheckActivity(ArrayList<String> words, int fromCode, int wordId) {
+    private void showCheckActivity(ArrayList<String> words, int actionCode, int wordId) {
         Intent intent = new Intent(getApplicationContext(), CheckSameWordActivity.class);
         intent.putExtra("wordTitle", words.get(AddWordViewModel.WORD_TITLE));
         intent.putExtra("wordKorean", words.get(AddWordViewModel.WORD_KOREAN));
         intent.putExtra("languageCode", viewModel.getWordListMutableLiveData().getValue().getLanguageCode());
         intent.putExtra("listCode", viewModel.getWordListMutableLiveData().getValue().getListCodeInt());
-        intent.putExtra("fromCode", fromCode);
+        intent.putExtra("actionCode", actionCode);
         intent.putExtra("wordId", wordId);
         startActivity(intent);
     }

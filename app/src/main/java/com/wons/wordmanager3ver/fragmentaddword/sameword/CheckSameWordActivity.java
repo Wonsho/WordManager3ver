@@ -48,11 +48,13 @@ public class CheckSameWordActivity extends AppCompatActivity {
         binding.btnNewWord.setOnClickListener(v -> {
             switch (actionCode) {
                 case AddWordActivity.RENAME: {
-                    viewModel.updateChangedWordInfo(originWordId, wordTitle, word_korean, AddWordActivity.RENAME);
+                    viewModel.updateWordToNew(originWordId, wordTitle, word_korean);
+                    finish();
                     return;
                 }
                 case AddWordActivity.RENAME_AND_DELETE_WORD_INFO: {
-                    viewModel.updateChangedWordInfo(originWordId, wordTitle, word_korean, AddWordActivity.RENAME_AND_DELETE_WORD_INFO);
+                    viewModel.updateWordAndDeleteWordInfoToNewInfo(originWordId, wordTitle, word_korean);
+                    finish();
                     return;
                 }
             }
@@ -61,16 +63,20 @@ public class CheckSameWordActivity extends AppCompatActivity {
         });
 
         binding.btnOriginWord.setOnClickListener(v -> {
+
             switch (actionCode) {
                 case AddWordActivity.RENAME: {
-                    viewModel.updateOriginWordInfo(originWordId, wordTitle.trim(), AddWordActivity.RENAME);
+                    viewModel.updateWordToOrigin(originWordId, wordTitle);
+                    finish();
                     return;
                 }
                 case AddWordActivity.RENAME_AND_DELETE_WORD_INFO: {
-                    viewModel.updateOriginWordInfo(originWordId, wordTitle.trim(), AddWordActivity.RENAME_AND_DELETE_WORD_INFO);
+                    viewModel.updateWordAndDeleteWordInfoToOrigin(originWordId, wordTitle);
+                    finish();
                     return;
                 }
             }
+
             viewModel.insertOriginWord(listCode, languageCode, wordTitle);
             finish();
         });

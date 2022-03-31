@@ -65,11 +65,6 @@ public class AddWordViewModel extends ViewModel {
         return map;
     }
 
-    public WordInfo getWordInfoByWord(Word word) {
-        return dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
-    }
-
-
     public int getWordCount() {
         return getWordListMutableLiveData().getValue().getWordCountInt();
     }
@@ -129,14 +124,24 @@ public class AddWordViewModel extends ViewModel {
         dao.deleteWord(word);
     }
 
+    public boolean checkInList(Word word, ArrayList<String> words) {
+        Word[] words1 = dao.getAllWordByLanguageByListCode(word.getLanguageCode(), word.getWordListCodeInt());
+        for (Word word1 : words1) {
+            if (word1.getWordTitle().trim().toUpperCase().equals(words.get(WORD_TITLE).trim().toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean checkOriginWordInDB(Word word) {
         Word[] words1 = dao.getAllWordByLanguageCode(word.getLanguageCode());
         int count = 0;
 
-        for(Word word1 : words1) {
-            if(word1.getWordTitle().trim().toUpperCase().equals(word.getWordTitle().trim().toUpperCase())) {
+        for (Word word1 : words1) {
+            if (word1.getWordTitle().trim().toUpperCase().equals(word.getWordTitle().trim().toUpperCase())) {
                 count++;
-                if(count == 2) {
+                if (count == 2) {
                     return true;
                 }
             }
@@ -144,8 +149,8 @@ public class AddWordViewModel extends ViewModel {
         return false;
     }
 
-    public boolean checkChangedWordInList(ArrayList<String> words, Word word) {
-        Word[] words1 = dao.getAllWordByLanguageByListCode(word.getLanguageCode(), word.getWordListCodeInt());
+    public boolean checkChangedWordInDB(ArrayList<String> words, Word word) {
+        Word[] words1 = dao.getAllWordByLanguageCode(word.getLanguageCode());
         for(Word word1 : words1) {
             if(word1.getWordTitle().trim().toUpperCase().equals(words.get(WORD_TITLE).trim().toUpperCase())) {
                 return true;
@@ -154,41 +159,37 @@ public class AddWordViewModel extends ViewModel {
         return false;
     }
 
-    public boolean checkChangedWordInDB(ArrayList<String> words, Word word) {
-        WordInfo wordInfo = dao.getWordInfo(words.get(WORD_TITLE).trim().toUpperCase(), word.getLanguageCode());
-
-        if(wordInfo == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public void updateWordInfoAndWord(ArrayList<String> words, Word word) {
-        Word word1 = dao.getWordById(word.getWordId());
+    public void updateWordAndWordInfo(ArrayList<String> words, Word word) {
         WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
-        word1.setWordTitle(words.get(WORD_TITLE).trim());
         wordInfo.setWordMemo("");
-        wordInfo.setWordEnglish(words.get(WORD_TITLE).trim().toUpperCase());
-        wordInfo.setTestedTimes(0);
         wordInfo.setCorrectTimes(0);
+        wordInfo.setTestedTimes(0);
         wordInfo.wordKorean = words.get(WORD_KOREAN).trim();
+        wordInfo.setWordEnglish(words.get(WORD_TITLE).trim().toUpperCase());
+        Word word1 = word;
+        word1.setWordTitle(words.get(WORD_TITLE));
 
-        dao.updateWord(word1);
         dao.updateWordInfo(wordInfo);
+        dao.updateWord(word);
+
     }
 
     public void updateWordAndNewWordInfo(ArrayList<String> words, Word word) {
         Word word1 = word;
         word1.setWordTitle(words.get(WORD_TITLE).trim());
-        WordInfo wordInfo = new WordInfo(words.get(WORD_TITLE).trim().toUpperCase(), words.get(WORD_KOREAN).trim(), word.getLanguageCode());
-        dao.updateWord(word);
+        WordInfo wordInfo = new WordInfo(word1.getWordTitle(), words.get(WORD_KOREAN).trim(), word.getLanguageCode());
+        dao.updateWord(word1);
         dao.insertWordInfo(wordInfo);
     }
 
-
-
-
+    public boolean checkWordInfo(ArrayList<String> words, Word word) {
+        WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(),word.getLanguageCode());
+        if(wordInfo.wordKorean.trim().equals(words.get(WORD_KOREAN).trim())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
 

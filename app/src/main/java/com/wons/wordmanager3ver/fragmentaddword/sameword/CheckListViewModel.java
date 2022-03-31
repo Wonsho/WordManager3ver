@@ -45,29 +45,39 @@ CheckListViewModel extends ViewModel {
         dao.insertWord(new Word(languageCode, wordTitle.trim(), listCode));
     }
 
-    public void updateOriginWordInfo(int wordId, String wordTitle, int actionCode) {
-        Word word = dao.getWordById(wordId);
-        if(actionCode == AddWordActivity.RENAME_AND_DELETE_WORD_INFO) {
-            deleteWordInfo(wordId);
-        }
-        word.setWordTitle(wordTitle.trim());
-
-    }
-
-    public void updateChangedWordInfo(int wordId, String wordTitle, String wordKoren, int actionCode)  {
-        Word word = dao.getWordById(wordId);
-        if(actionCode == AddWordActivity.RENAME_AND_DELETE_WORD_INFO) {
-            deleteWordInfo(wordId);
-        }
-        WordInfo wordInfo = dao.getWordInfo(wordTitle.trim().toUpperCase(), word.getLanguageCode());
-        word.setWordTitle(wordTitle.trim());
-        wordInfo.wordKorean = wordKoren.trim();
-    }
-
-
-    private void deleteWordInfo(int wordId) {
+    public void updateWordAndDeleteWordInfoToOrigin(int wordId, String wordTitle) {
         Word word = dao.getWordById(wordId);
         WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
         dao.deleteWordInfo(wordInfo);
+        word.setWordTitle(wordTitle.trim());
+        dao.updateWord(word);
     }
+
+    public void updateWordAndDeleteWordInfoToNewInfo(int wordId, String wordTitle, String wordKorean) {
+        Word word = dao.getWordById(wordId);
+        WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
+        dao.deleteWordInfo(wordInfo);
+        word.setWordTitle(wordTitle.trim());
+        dao.updateWord(word);
+        WordInfo wordInfo1 = dao.getWordInfo(wordTitle.trim().toUpperCase(), word.getLanguageCode());
+        wordInfo1.wordKorean = wordKorean.trim();
+        dao.updateWordInfo(wordInfo1);
+    }
+
+    public void updateWordToOrigin(int wordId, String wordTitle) {
+        Word word = dao.getWordById(wordId);
+        word.setWordTitle(wordTitle.trim().toUpperCase());
+        dao.updateWord(word);
+    }
+
+    public void updateWordToNew(int wordId, String wordTitle, String wordKorean) {
+        Word word = dao.getWordById(wordId);
+        WordInfo wordInfo = dao.getWordInfo(wordTitle.trim().toUpperCase(), word.getLanguageCode());
+        word.setWordTitle(wordTitle.trim());
+        wordInfo.wordKorean = wordKorean.trim();
+        dao.updateWord(word);
+        dao.updateWordInfo(wordInfo);
+    }
+
+
 }
