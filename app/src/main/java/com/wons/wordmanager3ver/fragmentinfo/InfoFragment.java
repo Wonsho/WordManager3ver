@@ -117,15 +117,7 @@ public class InfoFragment extends Fragment {
         if (binding.lvMyWay.getAdapter() == null) {
             binding.lvMyWay.setAdapter(new MyWayAdapter());
         }
-        ArrayList<FlagUserLevelData> arrayList = new ArrayList<>();
-        arrayList.add(new FlagUserLevelData(0, "2022-03-10", 1));
-        arrayList.add(new FlagUserLevelData(0, "2022-03-11", 2));
-        arrayList.add(new FlagUserLevelData(0, "2022-03-12", 3));
-        arrayList.add(new FlagUserLevelData(0, "2022-03-13", 4));
-        arrayList.add(new FlagUserLevelData(0, "2022-03-14", 5));
-        arrayList.add(new FlagUserLevelData(0, "2022-03-15", 6));
-        arrayList.add(new FlagUserLevelData(0, "2022-03-16", 7));
-        ((MyWayAdapter) binding.lvMyWay.getAdapter()).setUserData(arrayList);
+        ((MyWayAdapter) binding.lvMyWay.getAdapter()).setUserData(viewModel.getFlagUserData(nowUserInfo.getLanguageCode()));
         ((MyWayAdapter) binding.lvMyWay.getAdapter()).notifyDataSetChanged();
     }
 

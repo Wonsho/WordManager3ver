@@ -17,7 +17,7 @@ public class FlagUserLevelData {
     public FlagUserLevelData(int languageCode, String date, int levelOfDate) {
         this.levelOfDate = levelOfDate;
         this.date = date;
-        this.languageCode = levelOfDate;
+        this.languageCode = languageCode;
     }
 
     public String getDate() {

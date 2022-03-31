@@ -2,9 +2,13 @@ package com.wons.wordmanager3ver.fragmentinfo.adapter;
 
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
+import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class InfoViewModel {
     private MyDao dao;
@@ -48,5 +52,13 @@ public class InfoViewModel {
 
     public int getWordListQuantity(int languageCode) {
         return dao.getAllWordlistByLanguageCode(languageCode).length;
+    }
+
+    public ArrayList<FlagUserLevelData> getFlagUserData(int languageCode) {
+        FlagUserLevelData[] flagUserLevelData = dao.getAllFlagUserDataByLanguage(languageCode);
+        if(flagUserLevelData.length == 0) {
+            dao.insertFlagUserData(new FlagUserLevelData(languageCode, getNowUserInfo().getStartDay(), 1));
+        }
+        return new ArrayList<FlagUserLevelData>(Arrays.asList(dao.getAllFlagUserDataByLanguage(languageCode)));
     }
 }
