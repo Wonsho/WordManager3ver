@@ -22,11 +22,9 @@ public class AddWordViewModel extends ViewModel {
 
     static final int WORD_TITLE = 0;
     static final int WORD_KOREAN = 1;
-    private MutableLiveData<Word> mutableLiveData;
     static final int NON = 0;
     static final int SAME_WORD_IN_DB = 1;
     static final int SAME_WORD_IN_LIST = 2;
-
     private MyDao dao = MainViewModel.dao;
     protected MutableLiveData<WordList> wordListMutableLiveData;
 
@@ -37,19 +35,6 @@ public class AddWordViewModel extends ViewModel {
         }
     }
 
-    public void setLiveData(Word word) {
-        if(this.mutableLiveData == null) {
-            this.mutableLiveData = new MutableLiveData<>();
-        }
-        this.mutableLiveData.setValue(word);
-    }
-
-    public Word getLiveData() {
-        if(this.mutableLiveData == null) {
-            this.mutableLiveData = new MutableLiveData<>();
-        }
-        return this.mutableLiveData.getValue();
-    }
 
     public MutableLiveData<WordList> getWordListMutableLiveData() {
         return wordListMutableLiveData;
@@ -119,24 +104,24 @@ public class AddWordViewModel extends ViewModel {
                 word.get(WORD_TITLE),
                 getWordListMutableLiveData().getValue().getListCodeInt()
         );
-       WordInfo info = new WordInfo(
-               word.get(WORD_TITLE).toUpperCase(),
-               word.get(WORD_KOREAN),
-               getWordListMutableLiveData().getValue().getLanguageCode());
+        WordInfo info = new WordInfo(
+                word.get(WORD_TITLE).toUpperCase(),
+                word.get(WORD_KOREAN),
+                getWordListMutableLiveData().getValue().getLanguageCode());
 
-       dao.insertWord(word1);
-       dao.insertWordInfo(info);
+        dao.insertWord(word1);
+        dao.insertWordInfo(info);
     }
 
     public void deleteWord(Word word) {
         int count = 0;
         Word[] wordArr = dao.getAllWordByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
-        for(Word word1 : wordArr) {
-            if(word1.getWordTitle().toUpperCase().equals(word.getWordTitle().toUpperCase())) {
-                count ++;
+        for (Word word1 : wordArr) {
+            if (word1.getWordTitle().toUpperCase().equals(word.getWordTitle().toUpperCase())) {
+                count++;
             }
         }
-        if(count <= 1) {
+        if (count <= 1) {
             dao.deleteWordInfo(
                     dao.getWordInfo(word.getWordTitle().toUpperCase(), word.getLanguageCode())
             );
@@ -144,61 +129,70 @@ public class AddWordViewModel extends ViewModel {
         dao.deleteWord(word);
     }
 
-    public void updateWord(Word word, ArrayList<String> changedWord, int languageCode) {
-        //todo 참조하는 단어정보를 참조하는 다른 단어가 있을시 업데이트를 하지 않고
-        // 새로 생성후 인서트
-        // 참조하는 단어가 없을경우 새로 생성함 */
-        Word[] allWordByLanguage = dao.getAllWordByLanguageCode(languageCode);
+    public boolean checkOriginWordInDB(Word word) {
+        Word[] words1 = dao.getAllWordByLanguageCode(word.getLanguageCode());
         int count = 0;
-        for(Word word2 : allWordByLanguage) {
-            if(word.getWordTitle().toUpperCase().trim().equals(word2.getWordTitle().trim().toUpperCase())) {
+
+        for(Word word1 : words1) {
+            if(word1.getWordTitle().trim().toUpperCase().equals(word.getWordTitle().trim().toUpperCase())) {
                 count++;
-                if(count >= 2) {
-                    // todo 참조하는 단어 인포를 바꾸지 않고 새로 생성후 인서트
-                    WordInfo wordInfo = new WordInfo(changedWord.get(WORD_TITLE).toUpperCase().trim(), changedWord.get(WORD_KOREAN), languageCode);
-                    word.setWordTitle(changedWord.get(WORD_TITLE).trim());
-                    dao.insertWordInfo(wordInfo);
-                    dao.updateWord(word);
-                    return;
+                if(count == 2) {
+                    return true;
                 }
             }
         }
-
-        WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), languageCode);
-        Word word1 = word;
-        if(wordInfo.getWordEnglish().equals(changedWord.get(WORD_TITLE).trim().toUpperCase())) {
-            //todo 단어 뜻만 바뀌였을때
-            wordInfo.wordKorean = changedWord.get(WORD_KOREAN);
-            dao.updateWordInfo(wordInfo);
-        } else {
-            word1.setWordTitle(changedWord.get(WORD_TITLE).trim());
-            wordInfo.setWordMemo("");
-            wordInfo.setWordEnglish(changedWord.get(WORD_TITLE).toUpperCase());
-            wordInfo.wordKorean = changedWord.get(WORD_KOREAN);
-            wordInfo.setTestedTimes(0);
-            wordInfo.setCorrectTimes(0);
-            dao.updateWordInfo(wordInfo);
-            dao.updateWord(word1);
-        }
-        // todo 아니면 단어 뜻 참조와 단어를 바꾼후 update
+        return false;
     }
 
-    public boolean updateWord(ArrayList<String> words, int listCode, int languageCode) {
-        Word[] words1 = dao.getAllWordByLanguageByListCode(languageCode, listCode);
-        for(Word word : words1) {
-            if(word.getWordTitle().trim().toUpperCase().equals(words.get(WORD_TITLE).trim().toUpperCase())) {
-                return false;
+    public boolean checkChangedWordInList(ArrayList<String> words, Word word) {
+        Word[] words1 = dao.getAllWordByLanguageByListCode(word.getLanguageCode(), word.getWordListCodeInt());
+        for(Word word1 : words1) {
+            if(word1.getWordTitle().trim().toUpperCase().equals(words.get(WORD_TITLE).trim().toUpperCase())) {
+                return true;
             }
         }
-
+        return false;
     }
 
+    public boolean checkChangedWordInDB(ArrayList<String> words, Word word) {
+        WordInfo wordInfo = dao.getWordInfo(words.get(WORD_TITLE).trim().toUpperCase(), word.getLanguageCode());
+
+        if(wordInfo == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void updateWordInfoAndWord(ArrayList<String> words, Word word) {
+        Word word1 = dao.getWordById(word.getWordId());
+        WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
+        word1.setWordTitle(words.get(WORD_TITLE).trim());
+        wordInfo.setWordMemo("");
+        wordInfo.setWordEnglish(words.get(WORD_TITLE).trim().toUpperCase());
+        wordInfo.setTestedTimes(0);
+        wordInfo.setCorrectTimes(0);
+        wordInfo.wordKorean = words.get(WORD_KOREAN).trim();
+
+        dao.updateWord(word1);
+        dao.updateWordInfo(wordInfo);
+    }
+
+    public void updateWordAndNewWordInfo(ArrayList<String> words, Word word) {
+        Word word1 = word;
+        word1.setWordTitle(words.get(WORD_TITLE).trim());
+        WordInfo wordInfo = new WordInfo(words.get(WORD_TITLE).trim().toUpperCase(), words.get(WORD_KOREAN).trim(), word.getLanguageCode());
+        dao.updateWord(word);
+        dao.insertWordInfo(wordInfo);
+    }
 
 
 
 
 
 }
+
+
 
 
 

@@ -1,6 +1,7 @@
 package com.wons.wordmanager3ver.fragmentaddword.sameword;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +19,7 @@ public class CheckSameWordActivity extends AppCompatActivity {
     private int languageCode;
     private CheckListViewModel viewModel;
     private int listCode;
-    private int fromCode;
+    private int actionCode;
     private int originWordId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class CheckSameWordActivity extends AppCompatActivity {
         this.word_korean = getIntent().getStringExtra("wordKorean");
         this.languageCode = getIntent().getIntExtra("languageCode", -1);
         this.listCode = getIntent().getIntExtra("listCode", -1);
-        this.fromCode = getIntent().getIntExtra("fromCode", -1);
+        this.actionCode = getIntent().getIntExtra("actionCode", -1);
         this.originWordId = getIntent().getIntExtra("wordId", -1);
         setView();
         setList();
@@ -45,20 +46,30 @@ public class CheckSameWordActivity extends AppCompatActivity {
         });
 
         binding.btnNewWord.setOnClickListener(v -> {
-            if(originWordId == AddWordActivity.RENAME) {
-                viewModel.updateNewWord(languageCode, wordTitle, word_korean, originWordId);
-                finish();
-                return;
+            switch (actionCode) {
+                case AddWordActivity.RENAME: {
+                    viewModel.updateChangedWordInfo(originWordId, wordTitle, word_korean, AddWordActivity.RENAME);
+                    return;
+                }
+                case AddWordActivity.RENAME_AND_DELETE_WORD_INFO: {
+                    viewModel.updateChangedWordInfo(originWordId, wordTitle, word_korean, AddWordActivity.RENAME_AND_DELETE_WORD_INFO);
+                    return;
+                }
             }
             viewModel.insertNewWord(languageCode,listCode, wordTitle, word_korean);
             finish();
         });
 
         binding.btnOriginWord.setOnClickListener(v -> {
-            if(originWordId == AddWordActivity.RENAME) {
-                viewModel.updateOriginWord(wordTitle, originWordId);
-                finish();
-                return;
+            switch (actionCode) {
+                case AddWordActivity.RENAME: {
+                    viewModel.updateOriginWordInfo(originWordId, wordTitle.trim(), AddWordActivity.RENAME);
+                    return;
+                }
+                case AddWordActivity.RENAME_AND_DELETE_WORD_INFO: {
+                    viewModel.updateOriginWordInfo(originWordId, wordTitle.trim(), AddWordActivity.RENAME_AND_DELETE_WORD_INFO);
+                    return;
+                }
             }
             viewModel.insertOriginWord(listCode, languageCode, wordTitle);
             finish();

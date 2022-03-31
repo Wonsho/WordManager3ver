@@ -7,6 +7,7 @@ import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,22 +45,29 @@ CheckListViewModel extends ViewModel {
         dao.insertWord(new Word(languageCode, wordTitle.trim(), listCode));
     }
 
-    public void updateOriginWord(String wordTitle, int wordId) {
-       Word originWord = dao.getWordById(wordId);
-       originWord.setWordTitle(wordTitle);
-       dao.updateWord(originWord);
-    }
-
-    public void updateNewWord(int languageCode, String wordTitle, String wordKorean, int wordId) {
-        Word originWord = dao.getWordById(wordId);
-        WordInfo info = dao.getWordInfo(wordTitle.toUpperCase(), languageCode);
-        originWord.setWordTitle(wordTitle);
-        info.wordKorean = wordKorean;
-
-        dao.updateWordInfo(info);
-        dao.updateWord(originWord);
+    public void updateOriginWordInfo(int wordId, String wordTitle, int actionCode) {
+        Word word = dao.getWordById(wordId);
+        if(actionCode == AddWordActivity.RENAME_AND_DELETE_WORD_INFO) {
+            deleteWordInfo(wordId);
+        }
+        word.setWordTitle(wordTitle.trim());
 
     }
 
+    public void updateChangedWordInfo(int wordId, String wordTitle, String wordKoren, int actionCode)  {
+        Word word = dao.getWordById(wordId);
+        if(actionCode == AddWordActivity.RENAME_AND_DELETE_WORD_INFO) {
+            deleteWordInfo(wordId);
+        }
+        WordInfo wordInfo = dao.getWordInfo(wordTitle.trim().toUpperCase(), word.getLanguageCode());
+        word.setWordTitle(wordTitle.trim());
+        wordInfo.wordKorean = wordKoren.trim();
+    }
 
+
+    private void deleteWordInfo(int wordId) {
+        Word word = dao.getWordById(wordId);
+        WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
+        dao.deleteWordInfo(wordInfo);
+    }
 }
