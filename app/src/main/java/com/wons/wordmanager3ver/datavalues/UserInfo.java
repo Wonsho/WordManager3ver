@@ -5,25 +5,22 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.wons.wordmanager3ver.tool.Tools;
+
 @Entity
 public class UserInfo {
     @PrimaryKey
     @NonNull
     private int languageCode;
-    private int userGradeInt;
     private int lv;
     private int expInt;
-    private int savedWord;
-    private int savedWordList;
-
+    private String startDay;
 
     public UserInfo(int languageCode) {
-        this.userGradeInt = 0;
         this.lv = 1;
         this.expInt = 0;
         this.languageCode = languageCode;
-        this.savedWord = 0;
-        this.savedWordList = 0;
+        this.startDay = new Tools().getNoWDate();
     }
 
     public void setLanguageCode(int languageCode) {
@@ -32,6 +29,14 @@ public class UserInfo {
 
     public int getLv() {
         return lv;
+    }
+
+    public String getStartDay() {
+        return startDay;
+    }
+
+    public void setStartDay(String startDay) {
+        this.startDay = startDay;
     }
 
     public void setLv(int lv) {
@@ -51,22 +56,6 @@ public class UserInfo {
         }
     }
 
-    public int getSavedWord() {
-        return savedWord;
-    }
-
-    public int getSavedWordList() {
-        return savedWordList;
-    }
-
-    public void setSavedWord(int savedWord) {
-        this.savedWord = savedWord;
-    }
-
-    public void setSavedWordList(int savedWordList) {
-        this.savedWordList = savedWordList;
-    }
-
     public int getLanguageCode() {
         return languageCode;
     }
@@ -75,16 +64,8 @@ public class UserInfo {
         return expInt;
     }
 
-    public int getUserGradeInt() {
-        return userGradeInt;
-    }
-
     public void setExpInt(int expInt) {
         this.expInt = expInt;
-    }
-
-    public void setUserGradeInt(int userGradeInt) {
-        this.userGradeInt = userGradeInt;
     }
 
 }

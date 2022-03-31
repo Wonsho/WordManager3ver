@@ -17,6 +17,7 @@ import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
+import com.wons.wordmanager3ver.fragmentinfo.adapter.InfoViewModel;
 import com.wons.wordmanager3ver.fragmentinfo.adapter.MyWayAdapter;
 
 import java.util.ArrayList;
@@ -24,11 +25,15 @@ import java.util.ArrayList;
 public class InfoFragment extends Fragment {
 
     private FragmentInfoBinding binding;
+    private InfoViewModel viewModel;
+    private UserInfo nowUserInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentInfoBinding.inflate(inflater, container, false);
+        viewModel = new InfoViewModel();
+        nowUserInfo = viewModel.getNowUserInfo();
         setWayList();
         setLanguageSpinner();
         setExp();
@@ -43,24 +48,24 @@ public class InfoFragment extends Fragment {
     }
 
     private void setUserGrade() {
-        int userGrade = 1; // 총 단어의 합격 평균
-        binding.tvUserGrade.setText(EnumGrade.A.getGradeToString(userGrade));
-
+        int grade = viewModel.getUserGrade(nowUserInfo.getLanguageCode());
+        if(grade == -1) {
+            binding.tvUserGrade.setText(String.valueOf("데이터 없음"));
+        } else {
+            binding.tvUserGrade.setText(String.valueOf(grade));
+        }
     }
 
     private void setCountWord() {
-        int countWord = 0;
-        binding.tvCountWord.setText(String.valueOf(countWord));
+        binding.tvCountWord.setText(String.valueOf(viewModel.getWordQuantity(nowUserInfo.getLanguageCode())));
     }
 
     private void setCountWordList() {
-        int countWordList = 0;
-        binding.tvCountWordList.setText(String.valueOf(countWordList));
+        binding.tvCountWordList.setText(String.valueOf(viewModel.getWordListQuantity(nowUserInfo.getLanguageCode())));
     }
 
     private void setUserLevel() {
-        String userLevel = "1";
-        binding.tvUserLevel.setText(userLevel);
+        binding.tvUserLevel.setText(String.valueOf(nowUserInfo.getLv()));
     }
 
     private void setTitleLanguage() {
@@ -74,13 +79,11 @@ public class InfoFragment extends Fragment {
     }
 
     private void setStartDate() {
-        String startDate = "2022-03-10";
-        binding.tvStartDate.setText(startDate);
+        binding.tvStartDate.setText(nowUserInfo.getStartDay());
     }
 
     private void setExp() {
-        int exp = 100;
-        binding.progressExp.setProgress(100);
+        binding.progressExp.setProgress(nowUserInfo.getExpInt());
     }
 
     private void setLanguageSpinner() {
@@ -126,4 +129,9 @@ public class InfoFragment extends Fragment {
         ((MyWayAdapter) binding.lvMyWay.getAdapter()).notifyDataSetChanged();
     }
 
+    @Override
+    public void onDestroy() {
+        this.viewModel = null;
+        super.onDestroy();
+    }
 }

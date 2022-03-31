@@ -131,5 +131,7 @@ public interface MyDao {
     @Query("SELECT * FROM(SELECT * FROM wordinfo WHERE languageCode = :languageCode) WHERE wordEnglish = :wordTitle")
     WordInfo getWordInfo(String wordTitle, int languageCode);
 
+    @Query("SELECT * FROM wordinfo WHERE languageCode = :languageCode")
+    WordInfo[] getAllWordInfoByLanguageCode(int languageCode);
 
 }
