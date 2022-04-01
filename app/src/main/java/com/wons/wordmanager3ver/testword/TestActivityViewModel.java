@@ -2,7 +2,88 @@ package com.wons.wordmanager3ver.testword;
 
 import android.view.View;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.wons.wordmanager3ver.MainViewModel;
+import com.wons.wordmanager3ver.MyDao;
+import com.wons.wordmanager3ver.datavalues.TestWordResult;
+import com.wons.wordmanager3ver.datavalues.TodayWordList;
+import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordInfo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class TestActivityViewModel extends ViewModel {
+    private ArrayList<TodayWordList> todayWordLists;
+    private ArrayList<Word> wordsArr;
+    public MutableLiveData<Integer> liveDataOfIndex;
+    private MyDao myDao = MainViewModel.dao;
+    private ArrayList<TestWordResult> testResult;
+
+    public void init() {
+        this.todayWordLists = new ArrayList<>();
+        this.wordsArr = new ArrayList<>();
+        this.liveDataOfIndex = new MutableLiveData<>();
+        this.testResult = new ArrayList<>();
+    }
+
+    public void setData() {
+        this.todayWordLists = new ArrayList<>(Arrays.asList(myDao.getAllTodayListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode())));
+
+        for (TodayWordList todayWordList : todayWordLists) {
+            Word[] words = myDao.getAllWordByLanguageByListCode(todayWordList.getListLanguageCode(), todayWordList.getListCode());
+            wordsArr.addAll(Arrays.asList(words));
+        }
+        liveDataOfIndex.setValue(0);
+    }
+
+    public Word getWordByIndex() {
+        return wordsArr.get(liveDataOfIndex.getValue());
+    }
+
+    public void setLiveDataOfIndex(int index) {
+        this.liveDataOfIndex.setValue(index);
+    }
+
+    public int getLiveDataOfIndex() {
+        return liveDataOfIndex.getValue();
+    }
+
+    public int getWordSize() {
+        return wordsArr.size();
+    }
+
+    public String getWordKorean() {
+        WordInfo wordInfo = myDao.getWordInfo(
+                wordsArr.get(getLiveDataOfIndex()).getWordTitle().trim().toUpperCase(),
+                MainViewModel.getUserInfo().getLanguageCode()
+        );
+        return wordInfo.wordKorean;
+    }
+
+    public int getNowIndex() {
+        if (liveDataOfIndex == null || liveDataOfIndex.getValue() == null) {
+            return -1;
+        }
+        return liveDataOfIndex.getValue();
+    }
+
+    public void addWordResult(String wordTitle) {
+        Word word = getWordByIndex();
+        TestWordResult wordResult = new TestWordResult(word.getWordId(), word.getWordTitle(), word.getWordListCodeInt());
+
+        if (word.getWordTitle().trim().toUpperCase().equals(wordTitle.toUpperCase())) {
+            wordResult.setTestResult(true);
+        } else {
+            wordResult.setTestResult(false);
+        }
+        testResult.add(wordResult);
+
+    }
+
+    public void insertWordResultInDB() {
+        //todo insert Data In DB Used Dao
+    }
 }

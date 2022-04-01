@@ -13,14 +13,9 @@ import android.widget.ArrayAdapter;
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.FragmentInfoBinding;
-import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
-import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
-import com.wons.wordmanager3ver.fragmentinfo.adapter.InfoViewModel;
 import com.wons.wordmanager3ver.fragmentinfo.adapter.MyWayAdapter;
-
-import java.util.ArrayList;
 
 public class InfoFragment extends Fragment {
 

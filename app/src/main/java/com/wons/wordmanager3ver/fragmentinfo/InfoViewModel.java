@@ -1,4 +1,4 @@
-package com.wons.wordmanager3ver.fragmentinfo.adapter;
+package com.wons.wordmanager3ver.fragmentinfo;
 
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;

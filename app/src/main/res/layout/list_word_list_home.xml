@@ -65,7 +65,7 @@
         app:layout_constraintLeft_toLeftOf="@id/iv"
         app:layout_constraintTop_toTopOf="@id/iv"
         android:textStyle="bold"
-        android:textColor="#FF0000"
+        android:textColor="@color/red"
         android:text="PASS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
