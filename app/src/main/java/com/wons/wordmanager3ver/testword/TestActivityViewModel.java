@@ -84,6 +84,15 @@ public class TestActivityViewModel extends ViewModel {
     }
 
     public void insertWordResultInDB() {
-        //todo insert Data In DB Used Dao
+        TestWordResult[] testWordResults = myDao.getAllTestWordResult();
+
+        for(TestWordResult testWordResult : testWordResults) {
+            myDao.deleteTestResult(testWordResult);
+        }
+
+        ArrayList<TestWordResult> testWordResults1 = this.testResult;
+        for(TestWordResult testWordResult : testWordResults1) {
+            myDao.insertTestResult(testWordResult);
+        }
     }
 }

@@ -25,6 +25,11 @@ public class TestActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(TestActivityViewModel.class);
         viewModel.init();
         viewModel.liveDataOfIndex.observe(this, index -> {
+
+            if(index == viewModel.getWordSize()) {
+                return;
+            }
+
             setView();
         });
         viewModel.setData();
@@ -39,21 +44,23 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void clickEnter() {
-        if(binding.etWordTitle.getText().toString().isEmpty()) {
+        if (binding.etWordTitle.getText().toString().isEmpty()) {
             binding.etWordTitle.setError("빈칸입니다");
             return;
         }
-        if (viewModel.getNowIndex() + 1 == viewModel.getWordSize()) {
+
+        viewModel.addWordResult(binding.etWordTitle.getText().toString().trim());
+        int nowIndex = viewModel.getNowIndex();
+        viewModel.setLiveDataOfIndex(nowIndex + 1);
+
+        if (viewModel.getNowIndex() == viewModel.getWordSize()) {
             viewModel.insertWordResultInDB(); // 시험이 다끝나면 DB에 저장 --> 결과 액티비티 띄우기
             Intent intent = new Intent(TestActivity.this, TestResultActivity.class);
             startActivity(intent);
+            finish();
             return;
-        } else {
-            //todo check And Add Data In ViewModel
-            viewModel.addWordResult(binding.etWordTitle.getText().toString().trim());
-            int nowIndex = viewModel.getNowIndex();
-            viewModel.setLiveDataOfIndex(nowIndex + 1);
         }
+
         binding.etWordTitle.setText("");
         showSoftKeyboard();
     }

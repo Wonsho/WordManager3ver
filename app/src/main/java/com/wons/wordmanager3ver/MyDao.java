@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.Setting;
+import com.wons.wordmanager3ver.datavalues.TestWordResult;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
@@ -134,4 +135,14 @@ public interface MyDao {
     @Query("SELECT * FROM wordinfo WHERE languageCode = :languageCode")
     WordInfo[] getAllWordInfoByLanguageCode(int languageCode);
 
+
+    // 시험 결과
+    @Insert
+    void insertTestResult(TestWordResult testWordResult);
+
+    @Delete
+    void deleteTestResult(TestWordResult testWordResult);
+
+    @Query("SELECT * FROM testwordresult")
+    TestWordResult[] getAllTestWordResult();
 }
