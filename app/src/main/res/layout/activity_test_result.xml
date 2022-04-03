@@ -120,16 +120,27 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/list_theme">
 
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/theme_black"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_passOrNot"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="합격"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/line2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/theme_black"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_passOrNot" />
 
                     <ListView
                         android:id="@+id/lv_word"
@@ -246,7 +257,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/tv_list_count"
+                android:id="@+id/tv_list_count_in_result"
                 android:textColor="@color/theme_black"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintLeft_toRightOf="@id/t2"
@@ -326,12 +337,12 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:layout_marginTop="5dp"
-                app:layout_constraintLeft_toLeftOf="@id/t6"
-                app:layout_constraintTop_toBottomOf="@id/t6"
-                android:text="시험 본 각단어장안의 단어 80% 이상을 맞아야 합격입니다"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="시험 본 각단어장안의 단어 70% 이상을 맞아야 합격입니다"
+                app:layout_constraintLeft_toLeftOf="@id/t6"
+                app:layout_constraintTop_toBottomOf="@id/t6" />
 
             <LinearLayout
                 android:background="@drawable/list_theme2"

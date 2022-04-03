@@ -277,14 +277,14 @@
                             app:layout_constraintTop_toTopOf="@id/tv1"
                             app:layout_constraintBottom_toBottomOf="@id/tv1"
                             app:layout_constraintLeft_toRightOf="@id/tv1"
-                            android:id="@+id/tv_list_count"
+                            android:id="@+id/tv_list_count_in_result"
                             android:text="30"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            app:layout_constraintLeft_toRightOf="@id/tv_list_count"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_list_count"
-                            app:layout_constraintTop_toTopOf="@id/tv_list_count"
+                            app:layout_constraintLeft_toRightOf="@id/tv_list_count_in_result"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_list_count_in_result"
+                            app:layout_constraintTop_toTopOf="@id/tv_list_count_in_result"
                             android:textColor="@color/theme_black"
                             android:text=" ]"
                             android:layout_width="wrap_content"
