@@ -14,92 +14,122 @@ import com.wons.wordmanager3ver.datavalues.WordList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TestResultActivityViewModel extends ViewModel {
-
-    public MutableLiveData<Integer> listIndexLiveData;
-    private ArrayList<TodayWordList> todayWordLists;
-    private HashMap<Integer, ArrayList<TestWordResult>> resultWordMap;
     private MyDao dao = MainViewModel.dao;
+    public MutableLiveData<Integer> indexOfLiveData;
+    public ArrayList<TodayWordList> todayWordLists;
+    public HashMap<Integer, ArrayList<TestWordResult>> testWordMap;
+    public HashMap<String, WordInfo> wordInfoHashMap;
 
-    public void setListIndexLiveData(int index) {
-        if(this.listIndexLiveData == null) {
-            this.listIndexLiveData = new MutableLiveData<>();
+    public void setIndexOfLiveData() {
+        if (indexOfLiveData == null) {
+            this.indexOfLiveData = new MutableLiveData<>();
         }
-        this.listIndexLiveData.setValue(index);
     }
 
-    public int getListIndexLiveData() {
-        if(this.listIndexLiveData == null || this.listIndexLiveData.getValue() == null) {
-            this.listIndexLiveData = new MutableLiveData<>();
-            listIndexLiveData.setValue(0);
+    public void initIndexOfLiveData() {
+        if (indexOfLiveData.getValue() == null || indexOfLiveData.getValue() == -1) {
+            indexOfLiveData.setValue(0);
         }
-
-        return listIndexLiveData.getValue();
     }
 
-    public void initData() {
-        if(listIndexLiveData == null) {
-            this.listIndexLiveData = new MutableLiveData<>();
-        }
-        TestWordResult[] testWordResults = dao.getAllTestWordResult();
-        TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+    public void setTodayWordLists() {
+        TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(
+                MainViewModel.getUserInfo().getLanguageCode()
+        );
         this.todayWordLists = new ArrayList<>(Arrays.asList(todayWordLists));
-        for(int i=0 ; i<todayWordLists.length ; i++) {
+    }
+
+    public void setTestWordMap() {
+        ArrayList<TodayWordList> todayWordLists = this.todayWordLists;
+        TestWordResult[] testWordResults = dao.getAllTestWordResult();
+        HashMap<Integer, ArrayList<TestWordResult>> hashMap = new HashMap<>();
+
+        for (int i = 0; i < todayWordLists.size(); i++) {
             ArrayList<TestWordResult> testWordResults1 = new ArrayList<>();
             for (TestWordResult testWordResult : testWordResults) {
-                if (testWordResult.getListCodeOfWord() == todayWordLists[i].getListCode()) {
+                if (todayWordLists.get(i).getListCode() == testWordResult.getListCodeOfWord()) {
                     testWordResults1.add(testWordResult);
                 }
             }
-            if (resultWordMap == null) {
-                this.resultWordMap = new HashMap<>();
-            }
-            this.resultWordMap.put(i, testWordResults1);
+            hashMap.put(i, testWordResults1);
         }
+        this.testWordMap = hashMap;
+    }
+
+    public void setWordInfoData() {
+        TestWordResult[] testWordResults = dao.getAllTestWordResult();
+        HashMap<String, WordInfo> wordInfoHashMap = new HashMap<>();
+        for (TestWordResult testWordResult : testWordResults) {
+            WordInfo wordInfo = dao.getWordInfo(
+                    testWordResult.getWordTitle().trim().toUpperCase(),
+                    MainViewModel.getUserInfo().getLanguageCode()
+            );
+            wordInfoHashMap.put(
+                    testWordResult.getWordTitle().trim().toUpperCase(),
+                    wordInfo
+            );
+        }
+        this.wordInfoHashMap = wordInfoHashMap;
     }
 
     public String getLanguage() {
         return EnumLanguage.ENGLISH.getLanguage(MainViewModel.getUserInfo().getLanguageCode());
     }
 
-    public String getListCount() {
-        return getListIndexLiveData() + 1 + "/" + todayWordLists.size();
+    public int getWordListSize() {
+        return this.todayWordLists.size();
     }
 
-    public String getListCountInResult() {
-        return String.valueOf(todayWordLists.size());
+    public int getWordCount() {
+        return dao.getAllTestWordResult().length;
     }
 
-    public String getWordCount() {
-        return String.valueOf(dao.getAllTestWordResult().length);
-    }
-
-    public String getCorrectWordCount() {
-        int correctCount = 0;
+    public int getCorrectWordCount() {
+        int count = 0;
         TestWordResult[] testWordResults = dao.getAllTestWordResult();
-        for(TestWordResult testWordResult : testWordResults) {
-            if(testWordResult.getTestResult()) {
-                correctCount++;
+        for (TestWordResult testWordResult : testWordResults) {
+            if (testWordResult.getTestResult()) {
+                count++;
             }
         }
-        return correctCount + "/" + testWordResults.length;
+        return count;
     }
 
-    public HashMap<String, WordInfo> getMapByNowList() {
-        int nowIndex = getListIndexLiveData();
-        ArrayList<TestWordResult> testWordResults = resultWordMap.get(todayWordLists.get(nowIndex));
-        HashMap<String, WordInfo> map = new HashMap<>();
-
-        for(TestWordResult testWordResult : testWordResults) {
-            WordInfo wordInfo = dao.getWordInfo(testWordResult.getWordTitle().toUpperCase(), MainViewModel.getUserInfo().getLanguageCode());
-            map.put(testWordResult.getWordTitle().toUpperCase(), wordInfo);
+    public String getTestResult() {
+        for (int i = 0; i < this.todayWordLists.size(); i++) {
+            ArrayList<TestWordResult> testWordResults = this.testWordMap.get(i);
+            int wordCount = testWordResults.size();
+            double correctWordCount = 0.0;
+            for (TestWordResult testWordResult : testWordResults) {
+                if (testWordResult.getTestResult()) {
+                    correctWordCount++;
+                }
+            }
+            if ((int) (correctWordCount / wordCount * 100.0) < 70) {
+                return "불합격";
+            }
         }
-        return map;
+        for(TodayWordList todayWordList : todayWordLists) {
+            todayWordList.passOrNo = true;
+            dao.updateTodayList(todayWordList);
+        }
+        return "합격";
     }
 
-    public ArrayList<TestWordResult> getTestResult() {
-        return resultWordMap.get(getListIndexLiveData());
+    public ArrayList<TestWordResult> getTestResultArr() {
+        return testWordMap.get(indexOfLiveData.getValue());
+    }
+
+    public String getListTitle() {
+        WordList wordList = dao.getSelectedWordlist(todayWordLists.get(indexOfLiveData.getValue()).getListCode());
+        return wordList.listName.trim();
+    }
+
+    public void updateWordData() {
+        //todo 시험본 단어 업데이트
     }
 }
 

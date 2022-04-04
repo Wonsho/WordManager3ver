@@ -156,7 +156,7 @@ public class AddWordFragment extends Fragment {
         }
 
         int listCount = ((WordListAdapter) binding.lvMyWordList.getAdapter()).getCount();
-        binding.tvListCount.setText(String.valueOf(listCount));
+        binding.tvListCountInResult.setText(String.valueOf(listCount));
         ((WordListAdapter) binding.lvMyWordList.getAdapter()).notifyDataSetChanged();
     }
 
