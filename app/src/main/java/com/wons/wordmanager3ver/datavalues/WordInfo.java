@@ -1,6 +1,8 @@
 package com.wons.wordmanager3ver.datavalues;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -46,11 +48,13 @@ public class WordInfo {
     }
 
     public void addCorrectCount() {
-        this.correctTimes = correctTimes++;
+        Log.e("add", "pass");
+        this.correctTimes += 1;
     }
 
     public void addTestedCount() {
-        this.testedTimes = testedTimes++;
+        Log.e("add2", "pass");
+        this.testedTimes += 1;
     }
 
     @NonNull
@@ -79,13 +83,7 @@ public class WordInfo {
     }
 
     public int getCorrectPercentage() {
-        return (int)((double) correctTimes / (double) testedTimes) * 100;
-    }
-    public void addTestedTimes() {
-        this.testedTimes++;
-    }
-    public void addCorrectTimes() {
-        this.correctTimes++;
+        return (int) ((double) correctTimes / (double) testedTimes) * 100;
     }
 
     public String getWordMemo() {

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -64,6 +65,10 @@ public class AddWordActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
             }
+        });
+
+        binding.btnView.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.dict.naver.com/#/main")));
         });
 
         setWordListView();

@@ -78,6 +78,7 @@ public class TestResultActivity extends AppCompatActivity {
 
 
     private void setViewInit() {
+        viewModel.updateWordData();
         binding.tvLanguage.setText(viewModel.getLanguage());// 언어
         binding.tvListCountInResult.setText(String.valueOf(viewModel.getWordListSize()));// 단어장 갯수
         binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()));// 단어 개수

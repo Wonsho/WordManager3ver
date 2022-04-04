@@ -96,6 +96,7 @@ public class AddWordFragment extends Fragment {
             startActivity(intent);
         });
 
+
     }
 
 

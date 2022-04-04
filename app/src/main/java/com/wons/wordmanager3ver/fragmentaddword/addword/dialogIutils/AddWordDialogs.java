@@ -2,6 +2,8 @@ package com.wons.wordmanager3ver.fragmentaddword.addword.dialogIutils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -46,6 +48,10 @@ public class AddWordDialogs {
             callback.callback();
         });
 
+        binding.btnView.setOnClickListener(v -> {
+            String url = "https://en.dict.naver.com/#/search?query=" + binding.etWordTitle.getText().toString().trim();
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        });
         builder.setView(view);
         return builder.create();
     }

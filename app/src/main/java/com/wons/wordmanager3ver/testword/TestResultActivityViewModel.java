@@ -1,5 +1,7 @@
 package com.wons.wordmanager3ver.testword;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -130,6 +132,18 @@ public class TestResultActivityViewModel extends ViewModel {
 
     public void updateWordData() {
         //todo 시험본 단어 업데이트
+        TestWordResult[] testWordResults = dao.getAllTestWordResult();
+        for(TestWordResult testWordResult : testWordResults) {
+            Log.e("updateWordData","pass");
+            WordInfo wordInfo = wordInfoHashMap.get(
+                    testWordResult.getWordTitle().trim().toUpperCase()
+            );
+            wordInfo.addTestedCount();
+            if(testWordResult.getTestResult()) {
+                wordInfo.addCorrectCount();
+            }
+            dao.updateWordInfo(wordInfo);
+        }
     }
 }
 
