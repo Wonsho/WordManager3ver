@@ -6,6 +6,7 @@ import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
+import com.wons.wordmanager3ver.datavalues.WordList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,26 +29,12 @@ public class InfoViewModel {
     }
 
     public int getUserGrade(int languageCode) {
-        double wordInfoCount = 0.0;
-        double passedWordCount = 0.0;
-        boolean check = false;
-        WordInfo[] wordInfos = dao.getAllWordInfoByLanguageCode(languageCode);
-
-        for(WordInfo wordInfo : wordInfos) {
-            if(wordInfo.getTestedTimes() != 0) {
-                check = true;
-                wordInfoCount += 1;
-                if(wordInfo.getCorrectPercentage() >= 70) {
-                    passedWordCount += 1;
-                }
-            }
+        WordList[] wordLists = dao.getAllWordlistByLanguageCode(languageCode);
+        int sum = 0;
+        for(WordList wordList : wordLists) {
+            sum += wordList.getListGradeInt();
         }
-
-        if(!check) {
-            return -1;
-        }
-
-        return (int)(passedWordCount / wordInfoCount * 100.0);
+        return (int)((double)sum / (double)wordLists.length);
     }
 
     public int getWordListQuantity(int languageCode) {

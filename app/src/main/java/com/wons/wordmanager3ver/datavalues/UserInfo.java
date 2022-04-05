@@ -47,12 +47,11 @@ public class UserInfo {
         this.lv = lv++;
     }
 
-    public void addExp() {
-
-        this.expInt = expInt + 10;
-        if(this.expInt == 100) {
-            this.expInt = 0;
-            this.lv++;
+    public void addExp(int valueOfExp) {
+        this.expInt += valueOfExp;
+        if(this.expInt >= 100) {
+            this.lv += this.expInt/100;
+            this.expInt = this.expInt%100;
         }
     }
 

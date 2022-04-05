@@ -287,5 +287,6 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         setTodayWordList();
+        setUserInfo();
     }
 }

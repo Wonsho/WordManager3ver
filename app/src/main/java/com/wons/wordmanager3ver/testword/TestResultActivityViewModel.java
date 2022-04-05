@@ -10,6 +10,7 @@ import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.TestWordResult;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
+import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
@@ -118,7 +119,30 @@ public class TestResultActivityViewModel extends ViewModel {
             todayWordList.passOrNo = true;
             dao.updateTodayList(todayWordList);
         }
+
+        int exp = getTestExp();
+        Log.e("exp", String.valueOf(exp));
+        UserInfo userInfo = dao.getUserInfoByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+        userInfo.addExp(exp);
+        dao.updateUserInfo(userInfo);
+
         return "합격";
+    }
+
+    private int getTestExp() {
+         int wordCount = 0;
+         double exp = 0.0;
+         TestWordResult[] testWordResults = dao.getAllTestWordResult();
+
+         for(TestWordResult testWordResult : testWordResults) {
+             if(wordCount <= 25) {
+                 exp += 0.6;
+             } else {
+                 exp += 0.8;
+             }
+             wordCount++;
+         }
+         return (int) exp;
     }
 
     public ArrayList<TestWordResult> getTestResultArr() {

@@ -47,7 +47,7 @@ public class InfoFragment extends Fragment {
         if(grade == -1) {
             binding.tvUserGrade.setText(String.valueOf("데이터 없음"));
         } else {
-            binding.tvUserGrade.setText(String.valueOf(grade));
+            binding.tvUserGrade.setText(String.valueOf(grade) + "점");
         }
     }
 
@@ -78,7 +78,8 @@ public class InfoFragment extends Fragment {
     }
 
     private void setExp() {
-        binding.progressExp.setProgress(nowUserInfo.getExpInt());
+        UserInfo userInfo = viewModel.getNowUserInfo();
+        binding.progressExp.setProgress(userInfo.getExpInt());
     }
 
     private void setLanguageSpinner() {
