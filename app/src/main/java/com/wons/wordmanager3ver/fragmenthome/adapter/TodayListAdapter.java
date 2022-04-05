@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.wons.wordmanager3ver.databinding.ListWordListHomeBinding;
-import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
@@ -49,8 +48,8 @@ public class TodayListAdapter extends BaseAdapter {
             binding = ListWordListHomeBinding.bind(view);
         }
         binding.tvListTitle.setText(wordLists.get(todayWordLists.get(i).getListCode()).listName);
-        binding.tvListGrade.setText(EnumGrade.D.getGradeToString(wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt()));
-        if (wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt() == 0) {
+        binding.tvListGrade.setText(String.valueOf(wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt()) + "점");
+        if (wordLists.get(todayWordLists.get(i).getListCode()).getListGradeInt() == -1) {
             binding.tvListGrade.setText("데이터 없음");
         }
         if (todayWordLists.get(i).passOrNo) {

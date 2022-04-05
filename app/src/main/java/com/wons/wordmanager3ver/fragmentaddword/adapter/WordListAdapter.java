@@ -8,10 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wons.wordmanager3ver.R;
-import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.WordList;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -55,8 +52,8 @@ public class WordListAdapter extends BaseAdapter {
 
         tv_wordCount.setText(String.valueOf(lists.get(i).getWordCountInt()) + "/20");
         tv_listTitle.setText(lists.get(i).listName);
-        String listGrade = EnumGrade.A.getGradeToString(lists.get(i).getListGradeInt());
-        if (lists.get(i).getListGradeInt() == 0) {
+        String listGrade = String.valueOf(lists.get(i).getListGradeInt() + "점");
+        if (lists.get(i).getListGradeInt() == -1) {
             tv_listGrade.setText("데이터 없음");
         } else {
             tv_listGrade.setText(listGrade);

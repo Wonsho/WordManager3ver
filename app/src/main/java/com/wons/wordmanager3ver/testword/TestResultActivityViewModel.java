@@ -144,6 +144,26 @@ public class TestResultActivityViewModel extends ViewModel {
             }
             dao.updateWordInfo(wordInfo);
         }
+
+       updateWordListGrade();
+
+    }
+
+    private void updateWordListGrade() {
+
+        ArrayList<WordList> wordLists = new ArrayList<>();
+
+        for(TodayWordList todayWordList : todayWordLists) {
+            WordList wordList = dao.getSelectedWordlist(todayWordList.getListCode());
+            wordLists.add(wordList);
+        }
+
+        for(WordList wordList : wordLists) {
+            int average = MainViewModel.getAverageWordGradeInWordList(wordList);
+            Log.e("average" , String.valueOf(average));
+            wordList.setListGradeInt(average);
+            dao.updateWordList(wordList);
+        }
     }
 }
 

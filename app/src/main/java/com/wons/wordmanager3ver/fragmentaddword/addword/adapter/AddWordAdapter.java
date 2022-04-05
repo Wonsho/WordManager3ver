@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.fragmentaddword.addword.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class AddWordAdapter extends BaseAdapter {
         }
 
         int percentage = infoMap.get(words.get(i).getWordTitle()).getCorrectPercentage();
+        Log.e("percentage", String.valueOf(percentage));
         tv_language.setText(language);
         tv_wordTitle.setText(words.get(i).getWordTitle());
         tv_wordKorean.setText(infoMap.get(words.get(i).getWordTitle()).wordKorean);
@@ -81,10 +83,10 @@ public class AddWordAdapter extends BaseAdapter {
             btn_memo.setImageResource(R.drawable.ic_baseline_playlist_add_check_24);
         }
 
-        if (percentage == 0) {
+        if (percentage == -1) {
             tv_percentage.setText("데이터 없음");
         } else {
-            tv_percentage.setText(String.valueOf(percentage));
+            tv_percentage.setText(String.valueOf(percentage) + "%");
         }
 
         btn_delete.setOnClickListener(v -> {

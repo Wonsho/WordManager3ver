@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
+import com.wons.wordmanager3ver.datavalues.EnumSetting;
 import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.WordList;
@@ -65,6 +66,12 @@ public class HomeFragmentViewModel extends ViewModel {
 
     public int getWordCountOfTodayWordList(TodayWordList todayWordList) {
         return dao.getAllWordByLanguageByListCode(todayWordList.getListLanguageCode(), todayWordList.getListCode()).length;
+    }
+
+    public void setRecommendSettingReset() {
+        Setting setting = dao.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId);
+        setting.settingValue = 1;
+        dao.updateUserSetting(setting);
     }
 
 }

@@ -264,6 +264,14 @@ public class AddWordActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.e("onRestart_addWord","pass");
         setWordListView();
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

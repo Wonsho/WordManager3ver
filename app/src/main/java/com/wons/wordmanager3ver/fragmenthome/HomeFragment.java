@@ -92,10 +92,25 @@ public class HomeFragment extends Fragment {
         });
 
         binding.btnTest.setOnClickListener(v -> {
+            boolean check = true;
             if(binding.lvList.getAdapter().getCount() == 0) {
                 Toast.makeText(getActivity(), "지정된 오늘의 단어장이 없습니다", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+            for(TodayWordList todayWordList : todayWordLists) {
+                check = todayWordList.passOrNo;
+                if(viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                    Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            if(check) {
+                Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n새로고침 해주세요", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             startActivity(new Intent(getActivity(), TestActivity.class));
         });
 
@@ -197,6 +212,7 @@ public class HomeFragment extends Fragment {
             for(TodayWordList todayWordList : todayWordLists1) {
                 viewModel.deleteTodayList(todayWordList);
             }
+            viewModel.setRecommendSettingReset();
         }
 
         ((TodayListAdapter)binding.lvList.getAdapter()).setTodayWordLists(todayWordLists, wordList);

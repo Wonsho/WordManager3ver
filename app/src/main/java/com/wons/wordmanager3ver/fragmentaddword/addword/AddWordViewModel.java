@@ -191,6 +191,24 @@ public class AddWordViewModel extends ViewModel {
         }
     }
 
+    public void updateWordListGrade() {
+        Word[] words1 = dao.getAllWordByLanguageByListCode(
+                getWordListMutableLiveData().getValue().getLanguageCode(),
+                getWordListMutableLiveData().getValue().getListCodeInt()
+                );
+        int sum = 0;
+
+        for(Word word : words1) {
+            WordInfo wordInfo = dao.getWordInfo(word.getWordTitle().trim().toUpperCase(), word.getLanguageCode());
+            sum += wordInfo.getCorrectPercentage();
+        }
+
+        int average = sum/words1.length;
+        WordList wordList = getWordListMutableLiveData().getValue();
+        wordList.setListGradeInt(average);
+        dao.updateWordList(wordList);
+    }
+
 }
 
 

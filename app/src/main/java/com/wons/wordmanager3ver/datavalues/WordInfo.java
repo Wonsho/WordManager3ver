@@ -83,7 +83,10 @@ public class WordInfo {
     }
 
     public int getCorrectPercentage() {
-        return (int) ((double) correctTimes / (double) testedTimes) * 100;
+        if(this.testedTimes == 0) {
+            return -1;
+        }
+        return (int) (((double) this.correctTimes / (double) this.testedTimes) * 100.0);
     }
 
     public String getWordMemo() {

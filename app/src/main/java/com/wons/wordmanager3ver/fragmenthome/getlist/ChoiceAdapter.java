@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 
 import com.wons.wordmanager3ver.databinding.ListChoiceListBinding;
-import com.wons.wordmanager3ver.datavalues.EnumGrade;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class ChoiceAdapter extends BaseAdapter {
         ListChoiceListBinding binding;
         binding = ListChoiceListBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
         binding.tvListTitle.setText(wordLists.get(i).listName);
-        binding.tvListGrade.setText(EnumGrade.D.getGradeToString(wordLists.get(i).getListGradeInt()));
+        binding.tvListGrade.setText(String.valueOf(wordLists.get(i).getListGradeInt()) + "점");
         if(wordLists.get(i).getListGradeInt() == 0) {
             binding.tvListGrade.setText("데이터 없음");
         }

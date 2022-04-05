@@ -8,7 +8,7 @@
 
 
     <androidx.cardview.widget.CardView
-        app:layout_constraintBottom_toTopOf="@id/guideline2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp">
@@ -62,80 +62,87 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
 
-            <ScrollView
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            app:cardCornerRadius="3dp"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:background="@drawable/list_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_wordTitle"
+                    android:gravity="center"
+                    android:hint="단어를 적어주세요"
+                    android:background="@color/white"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:background="@color/theme_black"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/btn_enter"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textColor="@color/theme_black"
+                    android:textStyle="bold"
+                    android:text="Enter"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+            <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                app:layout_constraintBottom_toTopOf="@id/et_wordTitle"
+                android:id="@+id/t"
+                android:textColor="@color/theme_black"
+                android:background="@color/white"
+                android:layout_marginTop="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card"
+                android:text="단어 뜻 "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginRight="5dp"
+                app:layout_constraintLeft_toRightOf="@id/t"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line"
-                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/t"
+                app:layout_constraintTop_toTopOf="@id/t"
+                android:background="@color/theme_black"
                 android:layout_width="0dp"
+                android:layout_height="1dp"/>
+
+            <ScrollView
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="5dp"
+                app:layout_constraintTop_toBottomOf="@id/t"
+                android:layout_width="match_parent"
                 android:layout_height="0dp">
 
                 <TextView
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:id="@+id/tv_wordKorean"
-                    android:textSize="20sp"
+                    android:textSize="17sp"
                     android:textColor="@color/theme_black"
-                    android:text="사과라는 뜻을 가지고 있는 단어는??"
-                    android:layout_gravity="center"
+                    android:text="asdasdasd"
+                    android:id="@+id/tv_wordKorean"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent"/>
             </ScrollView>
-
-            <TextView
-                android:id="@+id/line4"
-                app:layout_constraintBottom_toTopOf="@id/et_wordTitle"
-                android:backgroundTint="@color/theme_black"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:background="@color/theme_black"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
-            <EditText
-                android:textSize="20sp"
-                android:padding="5dp"
-                android:layout_margin="2dp"
-                android:gravity="center"
-                android:hint="단어를 적어주세요"
-                android:id="@+id/et_wordTitle"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/line2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/line2"
-                android:background="@color/theme_black"
-                app:layout_constraintRight_toLeftOf="@id/btn_enter"
-                app:layout_constraintTop_toBottomOf="@id/line4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="1dp"
-                android:layout_height="0dp"/>
-           <TextView
-               android:background="?attr/selectableItemBackgroundBorderless"
-               android:clickable="true"
-               android:focusable="true"
-               android:padding="10dp"
-               app:layout_constraintTop_toBottomOf="@id/line4"
-               app:layout_constraintLeft_toLeftOf="@id/line2"
-               app:layout_constraintBottom_toBottomOf="parent"
-               app:layout_constraintRight_toRightOf="parent"
-               android:textSize="18dp"
-               android:textColor="@color/theme_black"
-               android:text="Enter"
-               android:id="@+id/btn_enter"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"/>
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

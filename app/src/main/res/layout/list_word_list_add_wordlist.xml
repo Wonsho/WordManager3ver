@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:text="단어장 점수 : "
+        android:text="단어장 평균 점수 : "
         android:textColor="@color/theme_black"
         app:layout_constraintBottom_toBottomOf="@id/tv_listGrade"
         app:layout_constraintRight_toLeftOf="@id/tv_listGrade"

@@ -18,6 +18,7 @@ import com.wons.wordmanager3ver.datavalues.UsedCount;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
 import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
 import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 import com.wons.wordmanager3ver.tool.Tools;
@@ -93,14 +94,13 @@ public class MainViewModel extends ViewModel {
         EnumLanguage[] enumLanguages = EnumLanguage.values();
         int languageCode = MainViewModel.getUserInfo().getLanguageCode();
         EnumLanguage enumLanguage = EnumLanguage.ENGLISH;
-        for(EnumLanguage language : enumLanguages) {
-            if(languageCode == language.languageCodeInt) {
+        for (EnumLanguage language : enumLanguages) {
+            if (languageCode == language.languageCodeInt) {
                 enumLanguage = language;
             }
         }
         tts = new Tools().speakTTS(context, enumLanguage);
     }
-
 
 
     public static UserInfo getUserInfo() {
@@ -133,7 +133,7 @@ public class MainViewModel extends ViewModel {
 
     public static void deleteWordList(WordList wordList) {
         Word[] words = dao.getAllWordByLanguageByListCode(wordList.getLanguageCode(), wordList.getListCodeInt());
-        for(Word word : words) {
+        for (Word word : words) {
             deleteWord(word);
         }
         dao.deleteWordList(wordList);
@@ -142,17 +142,38 @@ public class MainViewModel extends ViewModel {
     private static void deleteWord(Word word) {
         int count = 0;
         Word[] wordArr = dao.getAllWordByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
-        for(Word word1 : wordArr) {
-            if(word1.getWordTitle().toUpperCase().equals(word.getWordTitle().toUpperCase())) {
-                count ++;
+        for (Word word1 : wordArr) {
+            if (word1.getWordTitle().toUpperCase().equals(word.getWordTitle().toUpperCase())) {
+                count++;
             }
         }
-        if(count <= 1) {
+        if (count <= 1) {
             dao.deleteWordInfo(
                     dao.getWordInfo(word.getWordTitle().toUpperCase(), word.getLanguageCode())
             );
         }
         dao.deleteWord(word);
+    }
+
+    public static int getAverageWordGradeInWordList(WordList wordList) {
+
+        Word[] words1 = dao.getAllWordByLanguageByListCode(wordList.getLanguageCode(), wordList.listCodeInt);
+        int sum = 0;
+        boolean check = false;
+        for (Word word : words1) {
+            WordInfo wordInfo = dao.getWordInfo(
+                    word.getWordTitle().trim().toUpperCase(),
+                    word.getLanguageCode()
+            );
+            if(wordInfo.getTestedTimes() != 0) {
+                check = true;
+            }
+            sum += wordInfo.getCorrectPercentage();
+        }
+        if(!check) {
+            return -1;
+        }
+        return sum / words1.length;
     }
 
     public static Setting getSetting(int settingCode) {
@@ -163,4 +184,4 @@ public class MainViewModel extends ViewModel {
         dao.updateWordList(list);
     }
 
- }
+}

@@ -59,8 +59,7 @@
 
 
     <TextView
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="15sp"
         android:textColor="@color/theme_black"
         android:layout_marginRight="10dp"
         app:layout_constraintTop_toTopOf="@id/tv3"
