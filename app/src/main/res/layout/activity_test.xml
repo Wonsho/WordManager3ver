@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:imeOptions="actionSend"
                     android:id="@+id/et_wordTitle"
                     android:gravity="center"
                     android:hint="단어를 적어주세요"

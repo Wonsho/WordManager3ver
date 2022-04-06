@@ -7,8 +7,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import com.wons.wordmanager3ver.databinding.ActivityTestBinding;
@@ -40,6 +42,12 @@ public class TestActivity extends AppCompatActivity {
 
         binding.btnEnter.setOnClickListener(v -> {
             clickEnter();
+        });
+
+        binding.etWordTitle.setOnEditorActionListener((textView, i, keyEvent) -> {
+            Log.e("event", String.valueOf(i) + " - "+keyEvent);
+
+            return true;
         });
     }
 

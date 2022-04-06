@@ -3,6 +3,7 @@
     package="com.wons.wordmanager3ver">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
+
         <activity
             android:name=".fragmenthome.getlist.ChoiceListActivity"
             android:exported="true" />
@@ -27,8 +29,7 @@
             android:exported="true" />
         <activity
             android:name=".testword.TestActivity"
-            android:exported="true"
-             />
+            android:exported="true" />
         <activity
             android:name=".studyword.StudyActivity"
             android:exported="true" />
