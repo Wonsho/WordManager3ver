@@ -17,14 +17,15 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_gold.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_myinfo.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_num1.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_silver.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/list_theme.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/theme2.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_add_word.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_check_same_word.xml" value="0.4" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_choice_list.xml" value="0.264" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_hang_man.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_choice_list.xml" value="0.176" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_hang_man.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_memo.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_same_word.xml" value="0.18996415770609318" />
@@ -39,7 +40,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_same_word.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_setting_today_wordlist.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/dialog_test.xml" value="0.264" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_add_word.xml" value="0.6" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_add_word.xml" value="0.5299837925445705" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_info.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_choice_list.xml" value="0.4" />
@@ -52,6 +53,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_add_wordlist.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_home.xml" value="0.536" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/mykeyboard.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/menu/main_menu.xml" value="0.25364583333333335" />
       </map>
     </option>

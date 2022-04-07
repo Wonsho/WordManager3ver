@@ -11,6 +11,7 @@ public class HangManActivity extends AppCompatActivity {
 
     private ActivityHangManBinding binding;
     private GameViewModel viewModel;
+    private HangMan hangMan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,8 @@ public class HangManActivity extends AppCompatActivity {
         binding = ActivityHangManBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
+
+
 
 
     }

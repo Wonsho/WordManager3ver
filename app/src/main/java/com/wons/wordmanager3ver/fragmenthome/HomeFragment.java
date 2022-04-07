@@ -31,6 +31,7 @@ import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragme
 import com.wons.wordmanager3ver.fragmenthome.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
+import com.wons.wordmanager3ver.game.HangManActivity;
 import com.wons.wordmanager3ver.studyword.StudyActivity;
 import com.wons.wordmanager3ver.testword.TestActivity;
 
@@ -161,7 +162,16 @@ public class HomeFragment extends Fragment {
                 changeTodayWordList();
             }
         });
-    }
+
+        binding.lvGame3.setOnItemClickListener((adapterView, view, i, l) -> {
+            GameValue gameValue = (GameValue) ((GameListAdapter) binding.lvGame3.getAdapter()).getItem(i);
+
+            if(gameValue.gameCode == EnumGame.HANGMAN_GAME.gameCodeInt) {
+                startActivity(new Intent(getActivity(), HangManActivity.class));
+            }
+
+        });
+        }
 
     private void changeTodayWordList() {
         int recommendValue = viewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue;

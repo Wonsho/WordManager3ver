@@ -33,6 +33,8 @@
         <activity
             android:name=".studyword.StudyActivity"
             android:exported="true" />
+        <activity android:name=".game.HangManActivity"
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
