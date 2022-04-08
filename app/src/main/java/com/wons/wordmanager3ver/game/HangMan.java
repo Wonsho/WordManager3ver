@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class HangMan {
     public String word_title;
     public ArrayList<String> wordToArr;
-    public int count;
+    private int count;
 
     HangMan(String word_title) {
         this.word_title = word_title.trim().toUpperCase();
@@ -28,7 +28,7 @@ public class HangMan {
     public int putSpell(String spell) {
         char[] charArr = word_title.toCharArray();
 
-        if(word_title.contains(spell)) {
+        if(word_title.contains(spell.trim().toUpperCase())) {
 
             for(int i=0 ; i<charArr.length ; i++) {
                 if(String.valueOf(charArr[i]).equals(spell.trim().toUpperCase())) {

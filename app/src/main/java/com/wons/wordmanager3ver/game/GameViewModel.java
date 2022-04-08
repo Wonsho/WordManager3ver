@@ -15,12 +15,17 @@ import java.util.Random;
 
 public class GameViewModel extends ViewModel {
     private MyDao myDao = MainViewModel.dao;
-    public Word word;
+    public MutableLiveData<HangMan> hangman;
 
-    public void choiceWord() {
+    public void choiceWord(int startCode) {
 
-        if(this.word == null) {
+        if (hangman != null && startCode == HangManActivity.START) {
             return;
+        } else if (startCode == HangManActivity.RESTART) {
+            hangman = new MutableLiveData<>();
+            choiceWord(HangManActivity.START);
+        } else {
+            hangman = new MutableLiveData<>();
         }
 
         TodayWordList[] todayWordLists = myDao.getAllTodayListByLanguageCode(
@@ -28,16 +33,17 @@ public class GameViewModel extends ViewModel {
         );
         ArrayList<Word> arrayList = new ArrayList<>();
 
-        for(TodayWordList todayWordList : todayWordLists) {
+        for (TodayWordList todayWordList : todayWordLists) {
             arrayList.addAll(new ArrayList<>(Arrays.asList(myDao.getAllWordByLanguageByListCode(
-                 MainViewModel.getUserInfo().getLanguageCode(),
-                 todayWordList.getListCode()
+                    MainViewModel.getUserInfo().getLanguageCode(),
+                    todayWordList.getListCode()
             ))));
         }
 
         Random random = new Random();
 
         int randomNum = random.nextInt(arrayList.size());
-        this.word = arrayList.get(randomNum);
+
+        this.hangman.setValue(new HangMan(arrayList.get(randomNum).getWordTitle()));
     }
 }
