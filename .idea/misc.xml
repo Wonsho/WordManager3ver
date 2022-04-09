@@ -25,7 +25,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_add_word.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_check_same_word.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_choice_list.xml" value="0.176" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_hang_man.xml" value="0.2" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_hang_man.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_memo.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/activity_same_word.xml" value="0.18996415770609318" />
@@ -43,6 +43,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_add_word.xml" value="0.5299837925445705" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/fragment_info.xml" value="0.4" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/hangman_game_over.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_choice_list.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_game.xml" value="0.4831981460023175" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_my_way.xml" value="0.72" />

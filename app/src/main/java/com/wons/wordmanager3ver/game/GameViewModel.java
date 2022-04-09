@@ -1,5 +1,7 @@
 package com.wons.wordmanager3ver.game;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,34 +18,46 @@ import java.util.Random;
 public class GameViewModel extends ViewModel {
     private MyDao myDao = MainViewModel.dao;
     public MutableLiveData<HangMan> hangman;
+    public String wordTitle;
 
-    public void choiceWord(int startCode) {
+    //startCode is RESTART, START
+    public void setHangman(int startCode) {
+        if (startCode == HangManActivity.START && hangman == null) {
 
-        if (hangman != null && startCode == HangManActivity.START) {
-            return;
+            this.hangman = new MutableLiveData<>();
+            getWordRandomTitle();
+            this.hangman.setValue(new HangMan(this.wordTitle));
+
         } else if (startCode == HangManActivity.RESTART) {
-            hangman = new MutableLiveData<>();
-            choiceWord(HangManActivity.START);
-        } else {
-            hangman = new MutableLiveData<>();
-        }
 
+            getWordRandomTitle();
+            HangMan hangMan = new HangMan(wordTitle);
+            this.hangman.setValue(hangMan);
+
+        }
+    }
+
+
+    private void getWordRandomTitle() {
         TodayWordList[] todayWordLists = myDao.getAllTodayListByLanguageCode(
                 MainViewModel.getUserInfo().getLanguageCode()
         );
-        ArrayList<Word> arrayList = new ArrayList<>();
+        ArrayList<Word> wordArrOfTodayWord = new ArrayList<>();
 
         for (TodayWordList todayWordList : todayWordLists) {
-            arrayList.addAll(new ArrayList<>(Arrays.asList(myDao.getAllWordByLanguageByListCode(
-                    MainViewModel.getUserInfo().getLanguageCode(),
+            Word[] words1 = myDao.getAllWordByLanguageByListCode(
+                    todayWordList.getListLanguageCode(),
                     todayWordList.getListCode()
-            ))));
+            );
+            wordArrOfTodayWord.addAll(Arrays.asList(words1));
         }
 
-        Random random = new Random();
+        int randomNum = new Random().nextInt(wordArrOfTodayWord.size());
+        Log.e("todayWordSize", String.valueOf(wordArrOfTodayWord.size()));
+        Log.e("RandomNum", String.valueOf(randomNum));
 
-        int randomNum = random.nextInt(arrayList.size());
-
-        this.hangman.setValue(new HangMan(arrayList.get(randomNum).getWordTitle()));
+        this.wordTitle = wordArrOfTodayWord.get(randomNum).getWordTitle().trim().toUpperCase();
+        Log.e("word" , this.wordTitle);
     }
+
 }

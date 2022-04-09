@@ -7,10 +7,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
@@ -21,18 +21,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_0"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_0"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="0"
@@ -49,18 +49,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="1"
@@ -77,18 +77,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="2"
@@ -105,18 +105,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="3"
@@ -133,18 +133,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="4"
@@ -161,18 +161,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="5"
@@ -187,19 +187,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="6"
@@ -216,18 +217,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="7"
@@ -244,18 +245,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="8"
@@ -270,19 +271,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_9"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="9"
@@ -293,10 +295,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
@@ -305,19 +307,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_Q"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_Q"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="Q"
@@ -334,18 +337,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_W"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_W"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="W"
@@ -362,18 +365,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_E"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_E"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="E"
@@ -390,18 +393,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_R"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_R"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="R"
@@ -418,18 +421,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_T"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_T"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="T"
@@ -446,18 +449,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_Y"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_Y"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="Y"
@@ -465,6 +468,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -473,18 +477,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_U"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_U"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="U"
@@ -499,19 +503,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_I"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_I"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="I"
@@ -519,25 +524,27 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_O"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_O"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="O"
@@ -554,18 +561,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_P"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_P"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="P"
@@ -579,10 +586,10 @@
 
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal">
 
 
@@ -594,18 +601,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
                     android:id="@+id/btn_A"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="A"
@@ -620,19 +627,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
                     android:id="@+id/btn_S"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="S"
@@ -647,19 +655,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
                     android:id="@+id/btn_D"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="D"
@@ -676,18 +685,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_F"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_F"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="F"
@@ -695,25 +704,27 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_G"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_G"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="G"
@@ -730,18 +741,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_H"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_H"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="H"
@@ -756,19 +767,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_J"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_J"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="J"
@@ -783,19 +795,20 @@
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_K"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_K"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="K"
@@ -812,18 +825,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_L"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_L"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="L"
@@ -836,10 +849,10 @@
 
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
@@ -850,18 +863,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
                     android:id="@+id/btn_Z"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="Z"
@@ -869,6 +882,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -877,18 +891,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_X"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_X"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="X"
@@ -896,6 +910,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -904,18 +919,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_C"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_C"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="C"
@@ -923,25 +938,27 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:background="@color/white"
             app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_V"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_V"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="V"
@@ -958,18 +975,19 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_B"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_B"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="B"
@@ -986,18 +1004,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_N"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_N"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="N"
@@ -1014,18 +1032,18 @@
             app:cardCornerRadius="3dp">
 
             <LinearLayout
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:id="@+id/btn_M"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
                 <TextView
+                    android:id="@+id/btn_M"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="M"

@@ -25,7 +25,7 @@ public class HangMan {
         }
     }
 
-    public int putSpell(String spell) {
+    public void putSpell(String spell) {
         char[] charArr = word_title.toCharArray();
 
         if(word_title.contains(spell.trim().toUpperCase())) {
@@ -37,13 +37,15 @@ public class HangMan {
             }
 
             if(!wordToArr.contains("_")) {
-                return -1;
+                count = -1;
             }
 
         } else {
             this.count += 1;
         }
-        return count;
     }
 
+    public int getCount() {
+        return count;
+    }
 }
