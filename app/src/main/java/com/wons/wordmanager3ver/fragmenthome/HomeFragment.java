@@ -262,15 +262,12 @@ public class HomeFragment extends Fragment {
         }
         ArrayList<GameValue> gameValues = new ArrayList<>();
         gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
-        gameValues.add(new GameValue(EnumGame.HANGMAN_GAME));
+        gameValues.add(new GameValue(EnumGame.MAKE_WORD_BY_SPELLING));
+        gameValues.add(new GameValue(EnumGame.OX_QUIZ));
+        gameValues.add(new GameValue(EnumGame.PUT_SPELL_AT_BLANK));
+        gameValues.add(new GameValue(EnumGame.WRITE_WORD));
+        gameValues.add(new GameValue(EnumGame.FOUR_CARD));
+
         ((GameListAdapter) binding.lvGame3.getAdapter()).setData(gameValues);
         ((GameListAdapter) binding.lvGame3.getAdapter()).notifyDataSetChanged();
     }

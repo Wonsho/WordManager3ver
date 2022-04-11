@@ -26,7 +26,8 @@ public class HangManActivity extends AppCompatActivity {
     private ActivityHangManBinding binding;
     private GameViewModel viewModel;
     private MykeyboardBinding keyBoardBinding;
-    public static final int RESTART = 0;
+    public static final int RESTART_OTHER_WORD = 0;
+    public static final int RESTART_SAME_WORD = 2;
     public static final int START = 1;
     private final int GAME_OVER = 1;
     private final int GAME_WIN = 0;
@@ -37,15 +38,21 @@ public class HangManActivity extends AppCompatActivity {
         binding = ActivityHangManBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
-
-        keyBoardBinding = MykeyboardBinding.inflate(getLayoutInflater(), binding.keyboard, true);
-        keyBoardSetting();
+        keyBoardSetting(START);
         viewModel.setHangman(START);
         setGameView();
 
     }
 
-    private void keyBoardSetting() {
+    private void keyBoardSetting(int startCode) {
+
+        if (startCode == START && viewModel.hangman != null) {
+            return;
+        }
+
+        binding.tvGameOver.setVisibility(View.GONE);
+
+        keyBoardBinding = MykeyboardBinding.inflate(getLayoutInflater(), binding.keyboard, true);
 
         keyBoardBinding.btn0.setOnClickListener(v -> {
             inputKeyBoard(((TextView) v).getText().toString().trim());
@@ -239,42 +246,42 @@ public class HangManActivity extends AppCompatActivity {
     }
 
 
-
     private void removeView(View v) {
-       ((TextView) v).setText("");
+        ((TextView) v).setText("");
     }
 
     private void showDialogs(int code) {
-        if(code == GAME_OVER) {
+        if (code == GAME_OVER) {
+            binding.tvGameOver.setVisibility(View.VISIBLE);
             AlertDialog alertDialog = new DialogOfGame().getDialogWhenGameOver(
                     HangManActivity.this, new CallBackGameDialog() {
                         @Override
                         public void callBack(EnumGameStart enumGameStart) {
-                            switch (enumGameStart) {
-                                case CLOSE: {
-                                    finish();
-                                    return;
-                                }
-                                case RESTART_OTHER_WORD: {
-                                    // todo 다른 단어로 재실행
-                                    break;
-                                }
-                                case RESTART_SAME_WORD: {
-                                    //todo 같은 단어로 재실행
-                                    break;
-                                }
-                            }
+                            resetGame(enumGameStart);
                         }
                     });
+            alertDialog.setOnCancelListener(v -> {
+                alertDialog.show();
+            });
             alertDialog.show();
         }
-        if(code == GAME_WIN) {
-
+        if (code == GAME_WIN) {
+            AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(
+                    HangManActivity.this, new CallBackGameDialog() {
+                        @Override
+                        public void callBack(EnumGameStart enumGameStart) {
+                            resetGame(enumGameStart);
+                        }
+                    }, viewModel.wordTitle, viewModel.getWordKorean());
+            dialog.setOnCancelListener(v -> {
+                dialog.show();
+            });
+            dialog.show();
         }
     }
 
     private void inputKeyBoard(String spell) {
-        if(spell.isEmpty() || spell.equals("")) {
+        if (spell.isEmpty() || spell.equals("")) {
             return;
         }
         HangMan hangMan = viewModel.hangman.getValue();
@@ -290,7 +297,7 @@ public class HangManActivity extends AppCompatActivity {
 
         switch (count) {
             case -1: {
-
+                showDialogs(GAME_WIN);
                 return;
             }
             case 0: {
@@ -333,6 +340,11 @@ public class HangManActivity extends AppCompatActivity {
         }
         binding.im.setImageResource(imageId);
 
+        if(imageId == R.drawable.ic_num7) {
+            showDialogs(GAME_OVER);
+            return;
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
 
         ArrayList<String> strings = hangMan.wordToArr;
@@ -357,16 +369,18 @@ public class HangManActivity extends AppCompatActivity {
                 return;
             }
             case RESTART_SAME_WORD: {
-
+                viewModel.setHangman(RESTART_SAME_WORD);
+                keyBoardSetting(RESTART_SAME_WORD);
+                setGameView();
                 break;
             }
 
             case RESTART_OTHER_WORD: {
-
+                viewModel.setHangman(RESTART_OTHER_WORD);
+                keyBoardSetting(RESTART_OTHER_WORD);
+                setGameView();
                 break;
             }
-
         }
     }
-
 }

@@ -10,6 +10,7 @@ import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class GameViewModel extends ViewModel {
     public MutableLiveData<HangMan> hangman;
     public String wordTitle;
 
-    //startCode is RESTART, START
+    //startCode is RESTART_SAME_WORD, RESTART_OTHER_WORD, START
     public void setHangman(int startCode) {
         if (startCode == HangManActivity.START && hangman == null) {
 
@@ -28,12 +29,15 @@ public class GameViewModel extends ViewModel {
             getWordRandomTitle();
             this.hangman.setValue(new HangMan(this.wordTitle));
 
-        } else if (startCode == HangManActivity.RESTART) {
+        } else if (startCode == HangManActivity.RESTART_OTHER_WORD) {
 
             getWordRandomTitle();
             HangMan hangMan = new HangMan(wordTitle);
             this.hangman.setValue(hangMan);
 
+        } else if (startCode == HangManActivity.RESTART_SAME_WORD) {
+            HangMan hangMan = new HangMan(wordTitle);
+            this.hangman.setValue(hangMan);
         }
     }
 
@@ -57,7 +61,12 @@ public class GameViewModel extends ViewModel {
         Log.e("RandomNum", String.valueOf(randomNum));
 
         this.wordTitle = wordArrOfTodayWord.get(randomNum).getWordTitle().trim().toUpperCase();
-        Log.e("word" , this.wordTitle);
+        Log.e("word", this.wordTitle);
+    }
+
+    public String getWordKorean() {
+        WordInfo wordInfo = myDao.getWordInfo(this.wordTitle.trim().toUpperCase(), MainViewModel.getUserInfo().getLanguageCode());
+        return wordInfo.wordKorean.trim();
     }
 
 }
