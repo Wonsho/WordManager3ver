@@ -16,6 +16,7 @@ import com.wons.wordmanager3ver.databinding.MykeyboardBinding;
 import com.wons.wordmanager3ver.game.dialogUtils.CallBackGameDialog;
 import com.wons.wordmanager3ver.game.dialogUtils.DialogOfGame;
 import com.wons.wordmanager3ver.game.dialogUtils.EnumGameStart;
+import com.wons.wordmanager3ver.game.gameCode.GameCode;
 
 import java.util.ArrayList;
 
@@ -26,11 +27,6 @@ public class HangManActivity extends AppCompatActivity {
     private ActivityHangManBinding binding;
     private GameViewModel viewModel;
     private MykeyboardBinding keyBoardBinding;
-    public static final int RESTART_OTHER_WORD = 0;
-    public static final int RESTART_SAME_WORD = 2;
-    public static final int START = 1;
-    private final int GAME_OVER = 1;
-    private final int GAME_WIN = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +34,15 @@ public class HangManActivity extends AppCompatActivity {
         binding = ActivityHangManBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        keyBoardSetting(START);
-        viewModel.setHangman(START);
+        keyBoardSetting(GameCode.START);
+        viewModel.setHangman(GameCode.START);
         setGameView();
 
     }
 
     private void keyBoardSetting(int startCode) {
 
-        if (startCode == START && viewModel.hangman != null) {
+        if (startCode == GameCode.START && viewModel.hangman != null) {
             return;
         }
 
@@ -251,7 +247,7 @@ public class HangManActivity extends AppCompatActivity {
     }
 
     private void showDialogs(int code) {
-        if (code == GAME_OVER) {
+        if (code == GameCode.GAME_OVER) {
             binding.tvGameOver.setVisibility(View.VISIBLE);
             AlertDialog alertDialog = new DialogOfGame().getDialogWhenGameOver(
                     HangManActivity.this, new CallBackGameDialog() {
@@ -265,7 +261,7 @@ public class HangManActivity extends AppCompatActivity {
             });
             alertDialog.show();
         }
-        if (code == GAME_WIN) {
+        if (code == GameCode.GAME_WIN) {
             AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(
                     HangManActivity.this, new CallBackGameDialog() {
                         @Override
@@ -297,7 +293,7 @@ public class HangManActivity extends AppCompatActivity {
 
         switch (count) {
             case -1: {
-                showDialogs(GAME_WIN);
+                showDialogs(GameCode.GAME_WIN);
                 return;
             }
             case 0: {
@@ -341,7 +337,7 @@ public class HangManActivity extends AppCompatActivity {
         binding.im.setImageResource(imageId);
 
         if(imageId == R.drawable.ic_num7) {
-            showDialogs(GAME_OVER);
+            showDialogs(GameCode.GAME_OVER);
             return;
         }
 
@@ -369,15 +365,15 @@ public class HangManActivity extends AppCompatActivity {
                 return;
             }
             case RESTART_SAME_WORD: {
-                viewModel.setHangman(RESTART_SAME_WORD);
-                keyBoardSetting(RESTART_SAME_WORD);
+                viewModel.setHangman(GameCode.RESTART_SAME_WORD);
+                keyBoardSetting(GameCode.RESTART_SAME_WORD);
                 setGameView();
                 break;
             }
 
             case RESTART_OTHER_WORD: {
-                viewModel.setHangman(RESTART_OTHER_WORD);
-                keyBoardSetting(RESTART_OTHER_WORD);
+                viewModel.setHangman(GameCode.RESTART_OTHER_WORD);
+                keyBoardSetting(GameCode.RESTART_OTHER_WORD);
                 setGameView();
                 break;
             }

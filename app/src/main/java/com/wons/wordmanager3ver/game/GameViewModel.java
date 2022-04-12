@@ -11,6 +11,7 @@ import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
+import com.wons.wordmanager3ver.game.gameCode.GameCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,19 +24,19 @@ public class GameViewModel extends ViewModel {
 
     //startCode is RESTART_SAME_WORD, RESTART_OTHER_WORD, START
     public void setHangman(int startCode) {
-        if (startCode == HangManActivity.START && hangman == null) {
+        if (startCode == GameCode.START && hangman == null) {
 
             this.hangman = new MutableLiveData<>();
             getWordRandomTitle();
             this.hangman.setValue(new HangMan(this.wordTitle));
 
-        } else if (startCode == HangManActivity.RESTART_OTHER_WORD) {
+        } else if (startCode == GameCode.RESTART_OTHER_WORD) {
 
             getWordRandomTitle();
             HangMan hangMan = new HangMan(wordTitle);
             this.hangman.setValue(hangMan);
 
-        } else if (startCode == HangManActivity.RESTART_SAME_WORD) {
+        } else if (startCode == GameCode.RESTART_SAME_WORD) {
             HangMan hangMan = new HangMan(wordTitle);
             this.hangman.setValue(hangMan);
         }

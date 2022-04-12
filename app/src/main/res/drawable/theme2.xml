@@ -8,5 +8,8 @@
         android:color="@color/theme_black"
         />
 
+    <solid
+        android:color="@color/theme2"/>
+
 
 </shape>
