@@ -34,9 +34,19 @@ public class MakeSpellViewModel extends ViewModel {
     private final int DELETE = 0;
     private final int ADD = 1;
 
+    public ArrayList<String> getShowWordArr() {
+        return this.showWord.getValue();
+    }
+
+    public ArrayList<String> getChoiceWordArr() {
+        return this.choiceSpell.getValue();
+    }
+
+
     public void initData(int gameCode) {
 
-        if (gameCode == GameCode.START && (baseWord == null || baseWord.getValue() == null)) {
+        if (gameCode == GameCode.START && (this.baseWord != null)) {
+            Log.e("init", "pass");
             return;
         }
 
@@ -46,14 +56,17 @@ public class MakeSpellViewModel extends ViewModel {
 
         if (this.showWord == null) {
             this.showWord = new MutableLiveData<>();
+            this.showWord.setValue(new ArrayList<>());
         }
 
         if (this.choiceSpell == null) {
             this.choiceSpell = new MutableLiveData<>();
+            this.choiceSpell.setValue(new ArrayList<>());
         }
 
         if (this.pickedSpell == null) {
             this.pickedSpell = new MutableLiveData<>();
+            this.pickedSpell.setValue(new ArrayList<>());
         }
     }
 
@@ -61,7 +74,8 @@ public class MakeSpellViewModel extends ViewModel {
 
         switch (gameCode) {
             case GameCode.START: {
-                if (baseWord == null || baseWord.getValue() == null) {
+                if (baseWord.getValue() != null) {
+                    Log.e("init", "pass");
                     return;
                 }
                 choiceRandomWord();

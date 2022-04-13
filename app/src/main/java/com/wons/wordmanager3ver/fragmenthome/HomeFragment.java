@@ -32,6 +32,7 @@ import com.wons.wordmanager3ver.fragmenthome.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
 import com.wons.wordmanager3ver.game.HangManActivity;
+import com.wons.wordmanager3ver.game.makeword.MakeWordGameActivity;
 import com.wons.wordmanager3ver.studyword.StudyActivity;
 import com.wons.wordmanager3ver.testword.TestActivity;
 
@@ -168,6 +169,10 @@ public class HomeFragment extends Fragment {
 
             if(gameValue.gameCode == EnumGame.HANGMAN_GAME.gameCodeInt) {
                 startActivity(new Intent(getActivity(), HangManActivity.class));
+            }
+
+            if(gameValue.gameCode == EnumGame.MAKE_WORD_BY_SPELLING.gameCodeInt) {
+                startActivity(new Intent(getActivity(), MakeWordGameActivity.class));
             }
 
         });
