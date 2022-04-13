@@ -31,6 +31,9 @@ public class MakeSpellViewModel extends ViewModel {
     //todo 단순 데이터 -> 고른 데이터 저장
     private MutableLiveData<ArrayList<String>> pickedSpell; // (고른뒤 추가 되는 데이터 -> 바낌 )고른 스펠링을 보여주는 정보 --> 나중에 이 둘을 비교 원래의 단어와 같을경우 승리
 
+    private final int DELETE = 0;
+    private final int ADD = 1;
+
     public void initData(int gameCode) {
 
         if (gameCode == GameCode.START && (baseWord == null || baseWord.getValue() == null)) {
@@ -52,8 +55,37 @@ public class MakeSpellViewModel extends ViewModel {
         if (this.pickedSpell == null) {
             this.pickedSpell = new MutableLiveData<>();
         }
+    }
 
-        choiceRandomWord();
+    public void startGame(int gameCode) {
+
+        switch (gameCode) {
+            case GameCode.START: {
+                if (baseWord == null || baseWord.getValue() == null) {
+                    return;
+                }
+                choiceRandomWord();
+                makeShowWord();
+                makeChoiceSpell();
+                break;
+            }
+
+            case GameCode.RESTART_OTHER_WORD: {
+                choiceRandomWord();
+                makeShowWord();
+                makeChoiceSpell();
+                this.pickedSpell.setValue(new ArrayList<>());
+                break;
+            }
+
+            case GameCode.RESTART_SAME_WORD: {
+                makeShowWord();
+                makeChoiceSpell();
+                this.pickedSpell.setValue(new ArrayList<>());
+                break;
+            }
+        }
+
     }
 
     private void choiceRandomWord() {
@@ -74,7 +106,33 @@ public class MakeSpellViewModel extends ViewModel {
         makeShowWord();
     }
 
+    // 만약 pickSpell의 사이즈가 0이면 새로 만들고 아니면 pick을 바탕으로 만들기
     private void makeShowWord() {
+
+        if(this.pickedSpell.getValue().size() == 0) {
+            initShowWord();
+        } else {
+            initShowWord();
+            ArrayList<String> pickArr = this.pickedSpell.getValue();
+            ArrayList<String> showWord = this.showWord.getValue();
+
+            int spaceCount = 0;
+
+            for(int i=0 ; i<pickArr.size() ; i++) {
+                int index = i + spaceCount;
+
+                if(showWord.get(index).equals(" ")) {
+                    spaceCount++;
+                    continue;
+                }
+
+                showWord.set(index, pickArr.get(i));
+            }
+            this.showWord.setValue(showWord);
+        }
+    }
+
+    private void initShowWord() {
         ArrayList<String> strArr = new ArrayList<>();
         String word = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
         char[] wordToChars = word.toCharArray();
@@ -90,7 +148,6 @@ public class MakeSpellViewModel extends ViewModel {
             }
         }
         this.showWord.setValue(strArr);
-        makeChoiceSpell();
     }
 
     private void makeChoiceSpell() {
@@ -119,98 +176,67 @@ public class MakeSpellViewModel extends ViewModel {
         this.choiceSpell.setValue(choiceSpell);
     }
 
-
-    //todo null 이면 -1 , 칸을 다채웠으면 1, 아니면 0
+    // 들어온 값이 없으면 -1, 선택을 다했으면 1, 아니면 0
     public int inputSpell(String spell) {
-        if (spell.isEmpty()) {
+
+        if(spell.isEmpty()) {
             return -1;
         }
-        ArrayList<String> pickedSpellArr = this.pickedSpell.getValue();
-        pickedSpellArr.add(spell.trim().toUpperCase());
-        this.pickedSpell.setValue(pickedSpellArr);
 
+        ArrayList<String> pickArr = this.pickedSpell.getValue();
+        pickArr.add(spell.trim().toUpperCase());
+        this.pickedSpell.setValue(pickArr);
+        makeShowWord();
+        changeChoiceSpell(DELETE, spell);
 
-        changedShowWord();
-
-        String[] strings = this.baseWord.getValue().getWordTitle().trim().toUpperCase().split(" ");
-        StringBuilder stringBuilder = new StringBuilder();
+        String originWord = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
+        StringBuilder builder = new StringBuilder();
+        String[] strings = originWord.split(" ");
 
         for(String s : strings) {
-            stringBuilder.append(s.trim());
+            builder.append(s.trim());
         }
 
-        String word = stringBuilder.toString();
+        String removedSpaceOriginWord = builder.toString();
 
-        if(this.pickedSpell.getValue().size() == word.length()) {
+        if(removedSpaceOriginWord.length() == this.pickedSpell.getValue().size()) {
             return 1;
         } else {
             return 0;
         }
-
     }
 
-    private void changedShowWord() {
-        ArrayList<String> showWord = this.showWord.getValue();
-        int index = 0;
-        if (this.pickedSpell.getValue() == null || this.pickedSpell == null) {
-            Log.e("changedShowWord", "is null");
-            return;
+    private void changeChoiceSpell(int action, String spell) {
+        ArrayList<String> choiceSpell = this.choiceSpell.getValue();
+
+        if(action == DELETE) {
+            //todo pick의 마지막껄 가져와서 같은 값 지우기
+            int index = choiceSpell.indexOf(spell);
+            choiceSpell.remove(index);
         }
 
-        ArrayList<String> pickSpellArr = this.pickedSpell.getValue();
-
-        while (true) {
-            try {
-                if (showWord.get(index).equals(" ")) continue;
-                String putSpell = pickSpellArr.get(index);
-                showWord.set(index, putSpell);
-                index++;
-            } catch (Exception e) {
-                break;
-            }
+        if(action == ADD) {
+            choiceSpell.add(spell.trim());
         }
 
-        this.showWord.setValue(showWord);
+        this.choiceSpell.setValue(choiceSpell);
     }
 
-    public void onClickReplaceBtn() {
-        makeShowWord();
-        this.pickedSpell.setValue(new ArrayList<>());
-    }
+    public void onclickBackBtn() {
 
-    public void onClickBackBtn() {
         if(this.pickedSpell.getValue().size() == 0) {
             return;
         }
-
-
+        ArrayList<String> pikArr = this.pickedSpell.getValue();
+        String spell = pickedSpell.getValue().get(pikArr.size()-1);
+        pikArr.remove(pikArr.size()-1);
+        this.pickedSpell.setValue(pikArr);
+        makeShowWord();
+        changeChoiceSpell(ADD, spell);
     }
 
-    public int checkAnswer() {
-        String word = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
-        StringBuilder stringBuilder = new StringBuilder();
-        String[] strings = word.split(" ");
-
-        for(String s : strings) {
-            stringBuilder.append(s.trim());
-        }
-
-        String removedSpaceWord = stringBuilder.toString().toUpperCase();
-
-        StringBuilder stringBuilder1 = new StringBuilder();
-
-        for(String s : this.pickedSpell.getValue()) {
-            stringBuilder1.append(s.trim().toUpperCase());
-        }
-
-        String pickedWord = stringBuilder1.toString();
-
-        if(removedSpaceWord.equals(pickedWord)) {
-            return GameCode.GAME_WIN;
-        } else {
-            return GameCode.GAME_OVER;
-        }
-
+    public void onClickReplaceBtn() {
+        startGame(GameCode.RESTART_SAME_WORD);
     }
 
     public String getWordKorean() {
