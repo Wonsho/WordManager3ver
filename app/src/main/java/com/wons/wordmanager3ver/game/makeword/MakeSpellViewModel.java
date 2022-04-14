@@ -78,6 +78,7 @@ public class MakeSpellViewModel extends ViewModel {
                     Log.e("init", "pass");
                     return;
                 }
+                this.pickedSpell.setValue(new ArrayList<>());
                 choiceRandomWord();
                 makeShowWord();
                 makeChoiceSpell();
@@ -85,17 +86,17 @@ public class MakeSpellViewModel extends ViewModel {
             }
 
             case GameCode.RESTART_OTHER_WORD: {
+                this.pickedSpell.setValue(new ArrayList<>());
                 choiceRandomWord();
                 makeShowWord();
                 makeChoiceSpell();
-                this.pickedSpell.setValue(new ArrayList<>());
                 break;
             }
 
             case GameCode.RESTART_SAME_WORD: {
+                this.pickedSpell.setValue(new ArrayList<>());
                 makeShowWord();
                 makeChoiceSpell();
-                this.pickedSpell.setValue(new ArrayList<>());
                 break;
             }
         }
@@ -131,16 +132,17 @@ public class MakeSpellViewModel extends ViewModel {
             ArrayList<String> showWord = this.showWord.getValue();
 
             int spaceCount = 0;
-
-            for(int i=0 ; i<pickArr.size() ; i++) {
-                int index = i + spaceCount;
-
-                if(showWord.get(index).equals(" ")) {
+            for(int i=0 ; i<showWord.size() ; i++) {
+                if(showWord.get(i).equals(" ")) {
                     spaceCount++;
                     continue;
                 }
+                try {
+                    showWord.set(i, pickArr.get(i-spaceCount));
+                } catch (Exception e) {
+                    break;
+                }
 
-                showWord.set(index, pickArr.get(i));
             }
             this.showWord.setValue(showWord);
         }
@@ -258,5 +260,34 @@ public class MakeSpellViewModel extends ViewModel {
                 this.baseWord.getValue().getWordTitle().trim().toUpperCase(),
                 MainViewModel.getUserInfo().getLanguageCode()
                 ).wordKorean;
+    }
+
+    public int checkWord() {
+        String originWord = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] strArr = originWord.split(" ");
+        for(String s : strArr) {
+            stringBuilder.append(s.trim().toUpperCase());
+        }
+        String originWordRemovedSpace = stringBuilder.toString();
+
+        ArrayList<String> pickArr = this.pickedSpell.getValue();
+        StringBuilder stringBuilder1 = new StringBuilder();
+
+        for(String s : pickArr) {
+            stringBuilder1.append(s.trim().toUpperCase());
+        }
+
+        String pickWord = stringBuilder1.toString();
+
+        if(originWordRemovedSpace.equals(pickWord)) {
+            return GameCode.GAME_WIN;
+        } else {
+            return GameCode.GAME_OVER;
+        }
+    }
+
+    public String getBaseWord() {
+        return this.baseWord.getValue().getWordTitle();
     }
 }

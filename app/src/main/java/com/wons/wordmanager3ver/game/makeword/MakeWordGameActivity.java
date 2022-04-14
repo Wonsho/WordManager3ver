@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityMakeWordGameBinding;
+import com.wons.wordmanager3ver.game.dialogUtils.CallBackGameDialog;
+import com.wons.wordmanager3ver.game.dialogUtils.DialogOfGame;
+import com.wons.wordmanager3ver.game.dialogUtils.EnumGameStart;
 import com.wons.wordmanager3ver.game.gameCode.GameCode;
 
 import java.util.ArrayList;
@@ -57,6 +62,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
     }
 
     private void setGameView() {
+        binding.tvWordKorean.setText("단어의 뜻 - \n" + viewModel.getWordKorean());
         LinearLayout layoutWord = binding.layoutWord;
         LinearLayout layoutSpell = binding.layoutSpell;
 
@@ -67,15 +73,15 @@ public class MakeWordGameActivity extends AppCompatActivity {
         ArrayList<String> choiceWordArr = viewModel.getChoiceWordArr();
 
         for (String s : showWordArr) {
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.word_spell, null, true);
+            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.word_spell, null);
             TextView tv_spell = view.findViewById(R.id.tv_spell);
-
+            Log.e("inflate", "passed");
             if (s.equals(" ")) {
-                ConstraintLayout layout = view.findViewById(R.id.container);
+                LinearLayout layout = view.findViewById(R.id.container);
                 layout.setBackgroundResource(R.drawable.back);
                 tv_spell.setTextColor(Color.parseColor("#FFFFFFFF"));
             } else if (s.equals("^")) {
-                tv_spell.setTextColor(Color.parseColor("#A6A6A6"));
+                tv_spell.setTextColor(Color.parseColor("#F2F2F2"));
             } else {
                 tv_spell.setText(s.trim().toUpperCase());
             }
@@ -83,7 +89,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
         }
 
         for(String s : choiceWordArr) {
-            @SuppressLint("InflateParams") View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.word_spell, null, true);
+            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.word_spell, null, true);
             TextView tv_spell = view.findViewById(R.id.tv_spell);
 
             tv_spell.setText(s.trim().toUpperCase());
@@ -99,6 +105,33 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     case FINISH: {
                         setGameView();
                         //todo 뷰모델에서 체크후 다이로그 띄우기
+                        int resultGameCode = viewModel.checkWord();
+                        switch (resultGameCode) {
+                            case GameCode.GAME_OVER: {
+                                Toast.makeText(MakeWordGameActivity.this, "Over", Toast.LENGTH_SHORT).show();
+                                AlertDialog dialog = new DialogOfGame().getDialogWhenGameOver(MakeWordGameActivity.this, new CallBackGameDialog() {
+                                    @Override
+                                    public void callBack(EnumGameStart enumGameStart) {
+                                        startGameByCode(enumGameStart);
+                                    }
+                                });
+                                dialog.show();
+                                break;
+                            }
+
+                            case GameCode.GAME_WIN: {
+                                Toast.makeText(MakeWordGameActivity.this, "Win", Toast.LENGTH_SHORT).show();
+                                AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(MakeWordGameActivity.this, new CallBackGameDialog() {
+                                    @Override
+                                    public void callBack(EnumGameStart enumGameStart) {
+                                        startGameByCode(enumGameStart);
+                                    }
+                                }, viewModel.getBaseWord(), viewModel.getWordKorean());
+
+                                dialog.show();
+                                break;
+                            }
+                        }
                         break;
                     }
 
@@ -108,8 +141,33 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
+            layoutSpell.addView(view);
+        }
+    }
+
+    private void startGameByCode(EnumGameStart gameStart) {
+
+        switch (gameStart) {
+            case CLOSE: {
+                finish();
+                break;
+            }
+
+            case RESTART_SAME_WORD: {
+                viewModel.onClickReplaceBtn();
+                setGameView();
+                Log.e("startSame", "Passed");
+                break;
+            }
+
+            case RESTART_OTHER_WORD: {
+                viewModel.startGame(GameCode.RESTART_OTHER_WORD);
+                Log.e("startOther", "Passed");
+                setGameView();
+                break;
+            }
+        }
     }
 
 }
