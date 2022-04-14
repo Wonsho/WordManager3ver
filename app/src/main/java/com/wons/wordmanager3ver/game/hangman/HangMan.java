@@ -1,4 +1,4 @@
-package com.wons.wordmanager3ver.game;
+package com.wons.wordmanager3ver.game.hangman;
 
 import java.util.ArrayList;
 

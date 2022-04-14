@@ -1,6 +1,5 @@
 package com.wons.wordmanager3ver.game.makeword;
 
-import android.mtp.MtpConstants;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +9,7 @@ import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.Word;
-import com.wons.wordmanager3ver.game.gameCode.GameCode;
+import com.wons.wordmanager3ver.game.GameCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;

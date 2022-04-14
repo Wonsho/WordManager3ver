@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.databinding.FragmentHomeBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.EnumSetting;
-import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
@@ -31,14 +29,14 @@ import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragme
 import com.wons.wordmanager3ver.fragmenthome.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
-import com.wons.wordmanager3ver.game.HangManActivity;
+import com.wons.wordmanager3ver.game.hangman.HangManActivity;
 import com.wons.wordmanager3ver.game.makeword.MakeWordGameActivity;
+import com.wons.wordmanager3ver.game.oxquiz.QuizActivity;
 import com.wons.wordmanager3ver.studyword.StudyActivity;
 import com.wons.wordmanager3ver.testword.TestActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class HomeFragment extends Fragment {
 
@@ -173,6 +171,10 @@ public class HomeFragment extends Fragment {
 
             if(gameValue.gameCode == EnumGame.MAKE_WORD_BY_SPELLING.gameCodeInt) {
                 startActivity(new Intent(getActivity(), MakeWordGameActivity.class));
+            }
+
+            if (gameValue.gameCode == EnumGame.OX_QUIZ.gameCodeInt) {
+                startActivity(new Intent(getActivity(), QuizActivity.class));
             }
 
         });

@@ -1,4 +1,4 @@
-package com.wons.wordmanager3ver.game.gameCode;
+package com.wons.wordmanager3ver.game;
 
 public class GameCode {
     public static final int RESTART_OTHER_WORD = 0;

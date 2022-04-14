@@ -15,6 +15,7 @@ import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.game.oxquiz.QuizObject;
 
 @Dao
 public interface MyDao {
@@ -145,4 +146,5 @@ public interface MyDao {
 
     @Query("SELECT * FROM testwordresult")
     TestWordResult[] getAllTestWordResult();
+
 }

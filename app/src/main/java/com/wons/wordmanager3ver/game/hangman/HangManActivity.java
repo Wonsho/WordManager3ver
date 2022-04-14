@@ -1,4 +1,4 @@
-package com.wons.wordmanager3ver.game;
+package com.wons.wordmanager3ver.game.hangman;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,11 +15,9 @@ import com.wons.wordmanager3ver.databinding.MykeyboardBinding;
 import com.wons.wordmanager3ver.game.dialogUtils.CallBackGameDialog;
 import com.wons.wordmanager3ver.game.dialogUtils.DialogOfGame;
 import com.wons.wordmanager3ver.game.dialogUtils.EnumGameStart;
-import com.wons.wordmanager3ver.game.gameCode.GameCode;
+import com.wons.wordmanager3ver.game.GameCode;
 
 import java.util.ArrayList;
-
-import javax.security.auth.login.LoginException;
 
 public class HangManActivity extends AppCompatActivity {
 

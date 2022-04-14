@@ -1,10 +1,8 @@
 package com.wons.wordmanager3ver.game.makeword;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,7 +18,7 @@ import com.wons.wordmanager3ver.databinding.ActivityMakeWordGameBinding;
 import com.wons.wordmanager3ver.game.dialogUtils.CallBackGameDialog;
 import com.wons.wordmanager3ver.game.dialogUtils.DialogOfGame;
 import com.wons.wordmanager3ver.game.dialogUtils.EnumGameStart;
-import com.wons.wordmanager3ver.game.gameCode.GameCode;
+import com.wons.wordmanager3ver.game.GameCode;
 
 import java.util.ArrayList;
 
@@ -30,6 +28,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
     private final int NON = -1;
     private final int FINISH = 1;
     private final int NOT_YET = 0;
+    private int backCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +41,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
         viewModel.startGame(GameCode.START);
         onClick();
         setGameView();
+        backCount = 0;
     }
 
     private void onClick() {
@@ -49,6 +49,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
         binding.btnDelete.setOnClickListener(v -> {
             viewModel.onclickBackBtn();
             setGameView();
+            backCount = 0;
         });
 
         binding.btnFinish.setOnClickListener(v -> {
@@ -58,10 +59,12 @@ public class MakeWordGameActivity extends AppCompatActivity {
         binding.btnReset.setOnClickListener(v -> {
             viewModel.onClickReplaceBtn();
             setGameView();
+            backCount = 0;
         });
     }
 
     private void setGameView() {
+        backCount = 0;
         binding.tvWordKorean.setText("단어의 뜻 - \n" + viewModel.getWordKorean());
         LinearLayout layoutWord = binding.layoutWord;
         LinearLayout layoutSpell = binding.layoutSpell;
@@ -170,4 +173,13 @@ public class MakeWordGameActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(backCount == 0) {
+            Toast.makeText(getApplicationContext(), "한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();
+            backCount ++;
+            return;
+        }
+        super.onBackPressed();
+    }
 }
