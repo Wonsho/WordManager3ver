@@ -29,6 +29,7 @@ import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragme
 import com.wons.wordmanager3ver.fragmenthome.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
+import com.wons.wordmanager3ver.game.putspellatblankgame.PutSpellAtBlankActivity;
 import com.wons.wordmanager3ver.game.hangman.HangManActivity;
 import com.wons.wordmanager3ver.game.makeword.MakeWordGameActivity;
 import com.wons.wordmanager3ver.game.oxquiz.QuizActivity;
@@ -175,6 +176,10 @@ public class HomeFragment extends Fragment {
 
             if (gameValue.gameCode == EnumGame.OX_QUIZ.gameCodeInt) {
                 startActivity(new Intent(getActivity(), QuizActivity.class));
+            }
+
+            if (gameValue.gameCode == EnumGame.PUT_SPELL_AT_BLANK.gameCodeInt) {
+                startActivity(new Intent(getActivity(), PutSpellAtBlankActivity.class));
             }
 
         });
