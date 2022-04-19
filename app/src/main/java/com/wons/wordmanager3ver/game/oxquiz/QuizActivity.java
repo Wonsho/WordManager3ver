@@ -23,9 +23,7 @@ public class QuizActivity extends AppCompatActivity {
         viewModel.initData();
         viewModel.liveIndex.observe(this, index -> {
             if (index == viewModel.getWordQuantity()) {
-                //todo 몇개 맞았는지 다이로그 띄우기 -> OX 누를때마다 즉각적인 피드백 ㄱ
                 Log.e("Finish", "pass");
-                showFinishDialog();
                 return;
             }
             setView();
@@ -63,18 +61,32 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showDialog(boolean b) {
+        int nowIndex = viewModel.getNowCount();
+
         if (b) {
             AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
             builder.setTitle("알림");
             builder.setMessage("정답입니다");
+            builder.setOnDismissListener(listener -> {
+                if (nowIndex + 1 == viewModel.getWordQuantity()) {
+                    showFinishDialog();
+                }
+            });
             builder.show();
         }
+
         if (!b) {
             AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
             builder.setTitle("알림");
-            builder.setMessage("틀렸습니다 \n" + "정답은 "+viewModel.getWordKorean() + " 입니다");
+            builder.setMessage("틀렸습니다 \n" + "정답은 " + viewModel.getWordKorean() + " 입니다");
+            builder.setOnDismissListener(listener -> {
+                if (nowIndex + 1 == viewModel.getWordQuantity()) {
+                    showFinishDialog();
+                }
+            });
             builder.show();
         }
+
     }
 
     private void showFinishDialog() {
@@ -90,7 +102,7 @@ public class QuizActivity extends AppCompatActivity {
         });
         alertDialog = builder.create();
 
-        alertDialog.setOnDismissListener( listener -> {
+        alertDialog.setOnDismissListener(listener -> {
             finish();
         });
         alertDialog.show();

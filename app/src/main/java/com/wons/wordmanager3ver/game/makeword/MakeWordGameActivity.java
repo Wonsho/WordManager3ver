@@ -107,30 +107,32 @@ public class MakeWordGameActivity extends AppCompatActivity {
 
                     case FINISH: {
                         setGameView();
-                        //todo 뷰모델에서 체크후 다이로그 띄우기
                         int resultGameCode = viewModel.checkWord();
                         switch (resultGameCode) {
                             case GameCode.GAME_OVER: {
-                                Toast.makeText(MakeWordGameActivity.this, "Over", Toast.LENGTH_SHORT).show();
                                 AlertDialog dialog = new DialogOfGame().getDialogWhenGameOver(MakeWordGameActivity.this, new CallBackGameDialog() {
                                     @Override
                                     public void callBack(EnumGameStart enumGameStart) {
                                         startGameByCode(enumGameStart);
                                     }
                                 });
+                                dialog.setOnCancelListener(listener -> {
+                                   finish();
+                                });
                                 dialog.show();
                                 break;
                             }
 
                             case GameCode.GAME_WIN: {
-                                Toast.makeText(MakeWordGameActivity.this, "Win", Toast.LENGTH_SHORT).show();
                                 AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(MakeWordGameActivity.this, new CallBackGameDialog() {
                                     @Override
                                     public void callBack(EnumGameStart enumGameStart) {
                                         startGameByCode(enumGameStart);
                                     }
                                 }, viewModel.getBaseWord(), viewModel.getWordKorean());
-
+                                dialog.setOnCancelListener(listener -> {
+                                    finish();
+                                });
                                 dialog.show();
                                 break;
                             }

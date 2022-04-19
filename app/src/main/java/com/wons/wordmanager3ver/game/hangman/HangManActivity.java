@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wons.wordmanager3ver.R;
@@ -34,6 +36,10 @@ public class HangManActivity extends AppCompatActivity {
         keyBoardSetting(GameCode.START);
         viewModel.setHangman(GameCode.START);
         setGameView();
+
+        binding.btnBack.setOnClickListener(v -> {
+            finish();
+        });
 
     }
 
@@ -350,7 +356,13 @@ public class HangManActivity extends AppCompatActivity {
             }
         }
 
-        binding.tvWordTitle.setText(stringBuilder.toString());
+        LinearLayout layout = binding.container;
+        layout.removeAllViews();
+        View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.hangman_spell_view, null);
+        String wordSpell = stringBuilder.toString();
+        ((TextView) v.findViewById(R.id.tv_wordTitle)).setText(wordSpell);
+        layout.addView(v);
+
         Log.e("title", hangMan.word_title);
     }
 

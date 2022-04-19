@@ -95,8 +95,10 @@ public class QuizGameViewModel extends ViewModel {
         //todo 먼저 나와있는걸 체크 한다음 check 와 check 가 맞는지 테스트후 리턴
         boolean checkResult = check();
         if(checkResult == check) {
+            setObject(true);
             return true;
         } else {
+            setObject(false);
             return false;
         }
     }
@@ -112,10 +114,8 @@ public class QuizGameViewModel extends ViewModel {
         );
 
         if(wordKorean.trim().equals(wordInfo.wordKorean.trim())) {
-            setObject(true);
             return true;
         } else {
-            setObject(false);
             return false;
         }
     }
