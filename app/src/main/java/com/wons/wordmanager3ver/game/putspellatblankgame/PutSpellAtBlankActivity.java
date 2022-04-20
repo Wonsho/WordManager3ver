@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,103 +33,113 @@ public class PutSpellAtBlankActivity extends AppCompatActivity {
         binding = ActivityPutSpellAtBlankBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(PutSpellBlankViewModel.class);
-        onclick();
-        viewModel.gameStart(GameCode.START);
+        viewModel.startGame(GameCode.START);
+        onClick();
+        setView();
     }
 
-    private void onclick() {
+    class GameResult {
+        public ArrayList<String> showWordArr;
+        public ArrayList<String> spellMenuArr;
+    }
+
+    private void onClick() {
         binding.btnFinish.setOnClickListener(v -> {
             finish();
         });
 
         binding.btnReset.setOnClickListener(v -> {
-            viewModel.gameStart(GameCode.RESTART_SAME_WORD);
-            setGameView();
+            viewModel.doResetGame();
         });
 
         binding.btnWordBack.setOnClickListener(v -> {
-            viewModel.approachData.inputBack();
-            setGameView();
+            viewModel.deleteSpell();
         });
+    }
+
+    private void setView() {
+        GameResult result = viewModel.getGameResult(new GameResult());
+        String wordKorean = viewModel.getGameWordKorean();
+
 
     }
 
-    private void setGameView() {
-        ArrayList<String> showWordArr = viewModel.approachData.getShowWord();
-        ArrayList<String> spellMenuArr = viewModel.approachData.getSpellMenu();
-        String wordKorean = viewModel.approachData.getWordKorean();
+    private void showDialogByResult(int gameCode) {
+        class Dialog {
+            int code;
 
-        LinearLayout layoutShowWord = binding.containerWordTitle;
-        LinearLayout layoutWordSpell = binding.containerWordSpell;
+            Dialog(int gameCode) {
+                this.code = gameCode;
+                show(code);
+            }
 
-        layoutWordSpell.removeAllViews();
-        layoutShowWord.removeAllViews();
+            private void show(int code) {
+                switch (code) {
+                    case GameCode.GAME_OVER: {
+                        showGameOverDialog();
+                        break;
+                    }
 
-        binding.tvWordKorean.setText(wordKorean);
+                    case GameCode.GAME_WIN: {
+                        showGameWinDialog();
+                        break;
+                    }
 
-        for (String s : spellMenuArr) {
-            View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.text_card_view, null);
-            ((TextView)v.findViewById(R.id.tv_card_spell)).setText(s.toUpperCase());
-
-        }
-
-    }
-
-    class Dialog {
-
-        public void showDialogWhenWin() {
-            AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(
-                    PutSpellAtBlankActivity.this,
-                    new CallBackGameDialog() {
-                        @Override
-                        public void callBack(EnumGameStart enumGameStart) {
-                            doActionByCode(enumGameStart);
-                        }
-                    },
-                    viewModel.gameLiveData.getValue().originWord,
-                    viewModel.gameLiveData.getValue().originWordKorean
-            );
-            dialog.setOnCancelListener(listener -> {
-                finish();
-            });
-            dialog.show();
-        }
-
-        public void showDialogWhenGameOver() {
-            AlertDialog dialog = new DialogOfGame().getDialogWhenGameOver(
-                    PutSpellAtBlankActivity.this,
-                    new CallBackGameDialog() {
-                        @Override
-                        public void callBack(EnumGameStart enumGameStart) {
-                            doActionByCode(enumGameStart);
-                        }
-                    });
-            dialog.setOnCancelListener(listener -> {
-                finish();
-            });
-            dialog.show();
-        }
-
-        private void doActionByCode(EnumGameStart enumGameStart) {
-            switch (enumGameStart) {
-                case CLOSE: {
+                }
+            }
+            private void showGameOverDialog() {
+                AlertDialog dialog = new DialogOfGame().getDialogWhenGameOver(
+                        PutSpellAtBlankActivity.this,
+                        new CallBackGameDialog() {
+                            @Override
+                            public void callBack(EnumGameStart enumGameStart) {
+                                doActionByGameCode(enumGameStart);
+                            }
+                        });
+                dialog.setOnCancelListener(listener -> {
                     finish();
-                    break;
-                }
+                });
+                dialog.show();
+            }
 
-                case RESTART_OTHER_WORD: {
-                    viewModel.gameStart(GameCode.RESTART_OTHER_WORD);
-                    setGameView();
-                    break;
-                }
+            private void showGameWinDialog() {
+                AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(
+                        PutSpellAtBlankActivity.this,
+                        new CallBackGameDialog() {
+                            @Override
+                            public void callBack(EnumGameStart enumGameStart) {
+                                doActionByGameCode(enumGameStart);
+                            }
+                        },
+                        viewModel.getGameWord(),
+                        viewModel.getGameWordKorean());
+                dialog.setOnCancelListener(listener -> {
+                    finish();
+                });
+                dialog.show();
+            }
 
-                case RESTART_SAME_WORD: {
-                    viewModel.gameStart(GameCode.RESTART_SAME_WORD);
-                    setGameView();
-                    break;
+            private void doActionByGameCode(EnumGameStart enumGameStart) {
+                switch (enumGameStart) {
+                    case RESTART_SAME_WORD: {
+                        viewModel.startGame(GameCode.RESTART_SAME_WORD);
+                        break;
+                    }
+
+                    case CLOSE: {
+                        finish();
+                        break;
+                    }
+
+                    case RESTART_OTHER_WORD: {
+                        viewModel.startGame(GameCode.RESTART_OTHER_WORD);
+                        break;
+                    }
+
                 }
             }
         }
+        new Dialog(gameCode);
     }
 
 

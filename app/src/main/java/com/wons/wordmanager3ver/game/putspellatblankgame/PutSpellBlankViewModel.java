@@ -16,104 +16,98 @@ import java.util.Random;
 
 public class PutSpellBlankViewModel extends ViewModel {
     private MyDao dao = MainViewModel.dao;
-    public MutableLiveData<PutSpellAtBlankGame> gameLiveData;
-    public ChangeData approachData;
+    private MutableLiveData<PutSpellAtBlankGame> liveDataGame;
 
+    public void startGame(int gameCode) {
 
-    public void gameStart(int gameCode) {
-        if(approachData == null) {
-            approachData = new ChangeData();
+        class PickWord {
+            private Word getRandomWordIntoTodayWordList() {
+                TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(
+                        MainViewModel.getUserInfo().getLanguageCode()
+                );
+
+                ArrayList<Word> words = new ArrayList<>();
+
+                for (TodayWordList t : todayWordLists) {
+                   words.addAll(new ArrayList<>(Arrays.asList(
+                           dao.getAllWordByLanguageByListCode(
+                                   t.getListLanguageCode(),
+                                   t.getListCode()
+                           )
+                   )));
+                }
+
+                int randomNum = new Random().nextInt(words.size());
+                return words.get(randomNum);
+            }
+
+            private String getWordKorean(Word word) {
+                return dao.getWordInfo(word.getWordTitle().toUpperCase(), word.getLanguageCode()).wordKorean;
+            }
         }
-        if (gameLiveData == null) {
-            gameLiveData = new MutableLiveData<>();
+
+        if (liveDataGame == null) {
+            liveDataGame = new MutableLiveData<>();
         }
 
         switch (gameCode) {
-
             case GameCode.START: {
-                if (gameLiveData.getValue() == null) {
-                    Word word = getRandomWord();
-                    gameLiveData.setValue(new PutSpellAtBlankGame(word.getWordTitle(), getWordKorean(word)));
+
+                if (liveDataGame.getValue() != null) {
+                    break;
                 }
-                break;
             }
 
             case GameCode.RESTART_OTHER_WORD: {
-                Word word = getRandomWord();
-                gameLiveData.setValue(new PutSpellAtBlankGame(word.getWordTitle(), getWordKorean(word)));
+                PickWord pickWord = new PickWord();
+                Word word = pickWord.getRandomWordIntoTodayWordList();
+                String wordKorean = pickWord.getWordKorean(word);
+                this.liveDataGame.setValue(new PutSpellAtBlankGame(
+                        word.getWordTitle().trim().toUpperCase(),
+                        wordKorean
+                        ));
                 break;
             }
 
             case GameCode.RESTART_SAME_WORD: {
-                PutSpellAtBlankGame game = gameLiveData.getValue();
-                game.data.changeData.inputReset();
-                this.gameLiveData.setValue(game);
+                PutSpellAtBlankGame game = this.liveDataGame.getValue();
+                game.gameData.approachData.changeData.resetData();
+                this.liveDataGame.setValue(game);
                 break;
             }
         }
     }
 
-    class ChangeData {
-
-        public int inputSpell(String spell) {
-            PutSpellAtBlankGame game = gameLiveData.getValue();
-            int resultCode = game.data.changeData.inputSpell(spell);
-            return resultCode;
-        }
-
-        public void inputBack() {
-            PutSpellAtBlankGame game = gameLiveData.getValue();
-            game.data.changeData.inputBack();
-            gameLiveData.setValue(game);
-        }
-
-        public ArrayList<String> getShowWord() {
-            return gameLiveData.getValue().data.getShowWordArr();
-        }
-
-        public ArrayList<String> getSpellMenu() {
-            return gameLiveData.getValue().data.getSpellMenuArr();
-        }
-
-        public String getWordKorean() {
-            return gameLiveData.getValue().originWordKorean;
-        }
-
+    public String getGameWord() {
+        return this.liveDataGame.getValue().getOriginWord();
     }
 
-    private Word getRandomWord() {
-
-        class MakeWordList {
-            private ArrayList<Word> getTodayWordArr() {
-                TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(
-                        MainViewModel.getUserInfo().getLanguageCode()
-                );
-                ArrayList<Word> words = new ArrayList<>();
-
-                for (TodayWordList t : todayWordLists) {
-                    words.addAll(new ArrayList<>(Arrays.asList(dao.getAllWordByLanguageByListCode(
-                            t.getListLanguageCode(),
-                            t.getListCode()
-                    ))));
-                }
-
-                return words;
-            }
-        }
-
-        ArrayList<Word> todayWord = new MakeWordList().getTodayWordArr();
-
-        int randomNum = new Random().nextInt(todayWord.size());
-
-        return todayWord.get(randomNum);
+    public String getGameWordKorean() {
+        return this.liveDataGame.getValue().getOriginWordKorean();
     }
 
-    private String getWordKorean(Word word) {
-        return dao.getWordInfo(
-                word.getWordTitle().trim().toUpperCase(),
-                word.getLanguageCode()
-        ).wordKorean;
+    public int inputSpell(String spell) {
+        PutSpellAtBlankGame game = liveDataGame.getValue();
+        int resultCode = game.gameData.approachData.changeData.inputSpell(spell);
+        this.liveDataGame.setValue(game);
+        return resultCode;
     }
 
+    public void deleteSpell() {
+        PutSpellAtBlankGame game = this.liveDataGame.getValue();
+        game.gameData.approachData.changeData.toBack();
+        this.liveDataGame.setValue(game);
+    }
 
+    public void doResetGame() {
+        PutSpellAtBlankGame game = this.liveDataGame.getValue();
+        game.gameData.approachData.changeData.resetData();
+        this.liveDataGame.setValue(game);
+    }
+
+    public PutSpellAtBlankActivity.GameResult getGameResult(PutSpellAtBlankActivity.GameResult result) {
+        result.showWordArr = this.liveDataGame.getValue().gameData.approachData.getShowWordArr();
+        result.spellMenuArr = this.liveDataGame.getValue().gameData.approachData.getSpellMenuArr();
+        return result;
+    }
 }
