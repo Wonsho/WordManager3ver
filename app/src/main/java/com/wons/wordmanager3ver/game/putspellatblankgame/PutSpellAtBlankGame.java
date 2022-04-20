@@ -1,8 +1,5 @@
 package com.wons.wordmanager3ver.game.putspellatblankgame;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.game.GameCode;
@@ -11,281 +8,193 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+
+//todo 기능들 :
+// -알파벳 들어옴
+// - 알파벳 지우기
+// - 원래의 알파벳으로 덮어씌우기(같은 단어로 다시 시작할 시)
+// - 알파벳이 다 차면 원래의 단어와 체크 하기*/
 public class PutSpellAtBlankGame {
-    private Word word;
-    private WordInfo wordInfo;
-    private int nowIndex;
-    private ArrayList<Integer> indexArr;
-    private ArrayList<String> showWordArr;
-    private ArrayList<String> spellMenuArr;
-    private InitClassData initClassData;
-    public PutSpell putSpell;
-    public Delete delete;
-    public GetDATA getDATA;
+    public String originWord;
+    public String originWordKorean;
+    public Data data;
 
-    PutSpellAtBlankGame(Word word, WordInfo wordInfo) {
-        this.word = word;
-        this.wordInfo = wordInfo;
-        this.nowIndex = 0;
-        this.initClassData = new InitClassData();
-        this.putSpell = new PutSpell();
-        this.delete = new Delete();
-        this.getDATA = new GetDATA();
-
-        Log.e("_spellSize", String.valueOf(spellMenuArr.size()));
-        Log.e("_showWordSize", String.valueOf(showWordArr.size()));
-        Log.e("_indexSize", String.valueOf(indexArr.size()));
+    PutSpellAtBlankGame(String originWord, String originWordKorean) {
+        this.originWord = originWord;
+        this.originWordKorean = originWordKorean;
     }
 
-    //todo 단어의 사이즈를 참고 0.3배 의 랜덤 자리 뽑기
-    // 랜덤 스펠링은 뽑은 스펠링의 2배 */
-    class InitClassData {
 
-        private int wordSize; // -> 띄어쓰기없앤 단어 사이즈
-        private String originWord; // -> 띄어쓰기 존재 , -> 대문자 아님
-        private int randomNumCount;
+    public void gameStart(int gameCode) {
+        switch (gameCode) {
 
-        InitClassData() {
-            this.originWord = word.getWordTitle().trim();
-            getWordSizeRemovedSpace();
-            setRandomNumCount();
+            case GameCode.RESTART_OTHER_WORD: {
+                this.data = new Data();
+                break;
+            }
+
+            case GameCode.RESTART_SAME_WORD: {
+                // todo 데이터 새로 생성 하지 않고 초기화
+                break;
+            }
+        }
+    }
+
+    class Data {
+        private int inputCount; // 누른 횟수
+        private String originWordToUp;
+        private ArrayList<Integer> indexArr; // 누른 횟수에 따른 자리값 참조 데이터
+        private ArrayList<String> showWordArr; // 빈칸을 가진체로 보여주는 단어 데이터
+        private ArrayList<String> showWordArrCopy; // 초기화 했을때 덮어 씌울 초반 데이터
+        private ArrayList<String> spellMenuArr; // 누를 스펠링이 있는 데이터
+        private ArrayList<String> spellMenuArrCopy; // 누를 스펠링이 있는 데이터를 씌울 초반 데이터
+        public ChangeData changeData;
+
+        Data() {
+            this.originWordToUp = originWord.trim().toUpperCase();
+            this.changeData = new ChangeData();
+            initData();
+        }
+
+        private void initData() {
+            this.inputCount = 0;
+            setInputCount();
             setIndexArr();
             setShowWordArr();
             setSpellMenuArr();
-
-            Log.e("init", String.valueOf(this.wordSize));
-            Log.e("init2", String.valueOf(this.originWord));
-            Log.e("init3", String.valueOf(this.randomNumCount));
-
-        }
-
-        private void getWordSizeRemovedSpace() {
-            String originWord = this.originWord;
-            String[] strArr = originWord.split(" ");
-            StringBuilder builder = new StringBuilder();
-
-            for (String s : strArr) {
-                builder.append(s.trim());
-            }
-
-            this.wordSize = builder.toString().length();
-        }
-
-        private void setRandomNumCount() {
-            double size = (double) this.wordSize;
-            double count = size * 0.3;
-            Log.e("randomC", String.valueOf(count));
-
-            int randomNumSize = Integer.parseInt(String.format("%.0f", count));
-
-            this.randomNumCount = randomNumSize;
-        }
-
-        private void setIndexArr() {
-
-            int randomNumCount = this.randomNumCount;
-
-            if (indexArr == null) {
-                indexArr = new ArrayList<>();
-            }
-
-            ArrayList<Integer> arr = new ArrayList<>();
-
-            while (true) {
-
-                if (randomNumCount == 0) {
-                    break;
-                }
-
-                int randomIndex = new Random().nextInt(this.wordSize);
-                String word = this.originWord;
-
-                if (arr.contains(randomIndex) || word.charAt(randomIndex) == ' ')
-                    continue;
-
-                arr.add(randomIndex);
-                randomNumCount -= 1;
-            }
-
-            indexArr = arr;
-        }
-
-        //빈칸은 ^ 로 표기
-        private void setShowWordArr() {
-
-            if (showWordArr == null) {
-                showWordArr = new ArrayList<>();
-            }
-
-            String originWord = this.originWord.trim().toUpperCase();
-
-            ArrayList<String> wordArr = new ArrayList<>();
-            char[] charArr = originWord.toCharArray();
-
-            for (char c : charArr) {
-                wordArr.add(String.valueOf(c));
-            }
-
-            for (int i : indexArr) {
-                wordArr.set(i, "^");
-            }
-
-            showWordArr = wordArr;
-
         }
 
         private void setSpellMenuArr() {
+            String word = this.originWordToUp;
+            ArrayList<Integer> indexArr = this.indexArr;
+            ArrayList<String> pickSpellArr = new ArrayList<>();
 
-            if (spellMenuArr == null) {
-                spellMenuArr = new ArrayList<>();
+            for (int i : indexArr) {
+                pickSpellArr.add(String.valueOf(word.charAt(i)));
             }
 
-            String originWord = this.originWord.trim().toUpperCase();
-            ArrayList<Integer> index = indexArr;
+            this.spellMenuArr = addMoreSpellAndMix(pickSpellArr);
+            this.spellMenuArrCopy = addMoreSpellAndMix(pickSpellArr);
 
-            ArrayList<String> indexSpell = new ArrayList<>();
+        }
 
-            for (int i : index) {
-                indexSpell.add(String.valueOf(originWord.charAt(i)));
+        private ArrayList<String> addMoreSpellAndMix(ArrayList<String> spellArr) {
+            int needPickCount = spellArr.size();
+            ArrayList<String> randomSpell = new ArrayList<>();
+
+            for (int i = 0; i < needPickCount; i++) {
+                randomSpell.add(String.valueOf((char) (new Random().nextInt(26)+65)));
             }
 
-            int randomSpellCount = index.size();
-            ArrayList<String> randomSpellArr = new ArrayList<>();
-
-            for (int i = 0; i < randomSpellCount; i++) {
-                randomSpellArr.add(String.valueOf((char) (new Random().nextInt(26) + 65)));
-            }
-
-            ArrayList<String> finalArr = new ArrayList<>();
-            finalArr.addAll(indexSpell);
-            finalArr.addAll(randomSpellArr);
-
-            ArrayList<String> mixedArr = new ArrayList<>();
-
+            ArrayList<String> needMixSpellArr = new ArrayList<>();
+            needMixSpellArr.addAll(spellMenuArr);
+            needMixSpellArr.addAll(randomSpell);
+            ArrayList<String> spellMenuArr = new ArrayList<>();
             while (true) {
 
-                if (finalArr.size() == 0) {
+                if(needMixSpellArr.size() == 0) {
                     break;
                 }
 
-                int random = new Random().nextInt(finalArr.size());
-                mixedArr.add(finalArr.get(random));
-                finalArr.remove(random);
+                int randomNum = new Random().nextInt(needMixSpellArr.size());
+                String pickedSpell = needMixSpellArr.get(randomNum);
+                spellMenuArr.add(pickedSpell);
+                needMixSpellArr.remove(needMixSpellArr.indexOf(pickedSpell));
             }
 
-            spellMenuArr = mixedArr;
+            return spellMenuArr;
         }
 
-    }
+        private void setShowWordArr() {
+            ArrayList<Integer> indexArr = this.indexArr;
+            String word = this.originWordToUp;
+            ArrayList<String> wordArr = new ArrayList<>();
 
-    class PutSpell {
+            char[] cArr = word.toCharArray();
 
-        //GameCode return --> 해당 사항 없을시 -1 return
-        public int putSpell(String spell) {
-
-            int spellIndex = indexArr.get(nowIndex);
-
-            ArrayList<String> wordSpellArr = showWordArr;
-            ArrayList<String> spellMenu = spellMenuArr;
-
-            wordSpellArr.set(spellIndex, spell.toUpperCase());
-            spellMenu.remove(spellMenu.indexOf(spell.toUpperCase()));
-
-            showWordArr = wordSpellArr;
-            spellMenuArr = spellMenu;
-
-            increaseNowIndex();
-
-            if (nowIndex == indexArr.size()) {
-                return checkWord();
+            for (int i = 0; i < cArr.length; i++) {
+                if (cArr[i] == ' ') {
+                    wordArr.add(" ");
+                } else if (indexArr.contains(i)) {
+                    wordArr.add("^");
+                } else {
+                    wordArr.add(String.valueOf(cArr[i]));
+                }
             }
 
-            return -1;
+            this.showWordArr = wordArr;
+            this.showWordArrCopy = wordArr;
         }
 
-        private int checkWord() {
+        private void setInputCount() {
+            this.inputCount = 0;
+        }
+
+        private void setIndexArr() {
+            int randomCount = getCountOfRandom(getSizeOfRemovedSpace(this.originWordToUp));
+            int count = 0;
+            ArrayList<Integer> arrOfIndex = new ArrayList<>();
+
+            while (true) {
+
+                if (count == randomCount) {
+                    break;
+                }
+
+                int randomNum = new Random().nextInt(originWord.length());
+
+                if (this.originWordToUp.charAt(randomNum) == ' ')
+                    continue;
+
+                arrOfIndex.add(randomNum);
+                count++;
+            }
+
+            this.indexArr = arrOfIndex;
+        }
+
+        private int getCountOfRandom(int wordSizeRemovedSpace) {
+            double size = (double) wordSizeRemovedSpace;
+
+            if (size == 1) {
+                return 1;
+            } else {
+                size = size * 0.3;
+                return Integer.parseInt(String.format("%.0f", size));
+            }
+
+        }
+
+        private int getSizeOfRemovedSpace(String word) {
+            String[] strArr = word.split(" ");
             StringBuilder builder = new StringBuilder();
-            String originWord;
-            String selectedWord;
 
-            for (String s : showWordArr) {
+            for (String s : strArr) {
                 builder.append(s);
             }
 
-            selectedWord = builder.toString();
-            originWord = word.getWordTitle().trim().toUpperCase();
+            return builder.toString().length();
+        }
 
-            if (originWord.equals(selectedWord.toUpperCase())) {
-                return GameCode.GAME_WIN;
-            } else {
-                return GameCode.GAME_OVER;
+        class ChangeData {
+            //todo 스펠링이 들어올때
+            // 스펠링 지울때 */
+
+            public void inputSpell(String spell) {
+
+            }
+
+            public void inputReset() {
+                inputCount = 0;
+                showWordArr = showWordArrCopy;
+                spellMenuArr = spellMenuArrCopy;
+            }
+
+            public void inputBack() {
+
             }
 
         }
 
-        private void increaseNowIndex() {
-            int index = nowIndex;
-            index += 1;
-            nowIndex = index;
-        }
-
     }
-
-    class Delete {
-
-        public void deleteOneSpell() {
-
-            if (nowIndex == 0) {
-                return;
-            }
-
-            decreaseNowIndex();
-            int index = indexArr.get(nowIndex);
-
-            String needRemoveSpell = String.valueOf(word.getWordTitle().trim().toUpperCase().charAt(index));
-
-            ArrayList<String> spellMenu = spellMenuArr;
-            spellMenu.add(needRemoveSpell);
-            spellMenuArr = spellMenu;
-
-            ArrayList<String> showWord = showWordArr;
-            showWord.set(index, "^");
-            showWordArr = showWord;
-
-
-        }
-
-        public void resetAllSpell() {
-            nowIndex = 0;
-            initClassData.setShowWordArr();
-            initClassData.setSpellMenuArr();
-        }
-
-
-        private void decreaseNowIndex() {
-
-            if (nowIndex == 0) {
-                return;
-            }
-
-            int index = nowIndex;
-            index -= 1;
-            nowIndex = index;
-        }
-    }
-
-    class GetDATA {
-
-        public PutSpellGameData getGameData() {
-            PutSpellGameData data = new PutSpellGameData(
-                    showWordArr,
-                    spellMenuArr,
-                    word.getWordTitle().trim(),
-                    wordInfo.wordKorean
-            );
-
-            return data;
-        }
-    }
-
 }

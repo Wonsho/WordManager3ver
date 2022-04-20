@@ -12,7 +12,7 @@ public class PutSpellGameData {
         this.showWordArr = showWordArr;
         this.spellMenuArr = spellMenuArr;
         this.wordTitle = wordTitle;
-        this.wordTitle = word_korean;
+        this.word_korean = word_korean;
     }
 
 }
