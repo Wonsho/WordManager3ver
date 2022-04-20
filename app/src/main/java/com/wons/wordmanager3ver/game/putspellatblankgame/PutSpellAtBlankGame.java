@@ -1,11 +1,14 @@
 package com.wons.wordmanager3ver.game.putspellatblankgame;
 
+import android.util.Log;
+
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.game.GameCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 
@@ -22,23 +25,9 @@ public class PutSpellAtBlankGame {
     PutSpellAtBlankGame(String originWord, String originWordKorean) {
         this.originWord = originWord;
         this.originWordKorean = originWordKorean;
+        this.data = new Data();
     }
 
-
-    public void gameStart(int gameCode) {
-        switch (gameCode) {
-
-            case GameCode.RESTART_OTHER_WORD: {
-                this.data = new Data();
-                break;
-            }
-
-            case GameCode.RESTART_SAME_WORD: {
-                // todo 데이터 새로 생성 하지 않고 초기화
-                break;
-            }
-        }
-    }
 
     class Data {
         private int inputCount; // 누른 횟수
@@ -56,12 +45,42 @@ public class PutSpellAtBlankGame {
             initData();
         }
 
+        public ArrayList<String> getShowWordArr() {
+            return this.showWordArr;
+        }
+
+        public ArrayList<String> getSpellMenuArr() {
+            return this.spellMenuArr;
+        }
+
         private void initData() {
             this.inputCount = 0;
             setInputCount();
             setIndexArr();
             setShowWordArr();
             setSpellMenuArr();
+            showDataLog();
+        }
+
+        private void showDataLog() {
+            show("inputCount", String.valueOf(inputCount));
+
+            for (int i : indexArr) {
+                show("inputIndex", String.valueOf(i));
+            }
+
+            for (String s : showWordArr) {
+                show("showWord", s);
+            }
+
+            for (String s : spellMenuArr) {
+                show("spellMenu", s);
+            }
+
+        }
+
+        private void show(String title, String value) {
+            Log.e(title, value);
         }
 
         private void setSpellMenuArr() {
@@ -83,7 +102,7 @@ public class PutSpellAtBlankGame {
             ArrayList<String> randomSpell = new ArrayList<>();
 
             for (int i = 0; i < needPickCount; i++) {
-                randomSpell.add(String.valueOf((char) (new Random().nextInt(26)+65)));
+                randomSpell.add(String.valueOf((char) (new Random().nextInt(26) + 65)));
             }
 
             ArrayList<String> needMixSpellArr = new ArrayList<>();
@@ -92,7 +111,7 @@ public class PutSpellAtBlankGame {
             ArrayList<String> spellMenuArr = new ArrayList<>();
             while (true) {
 
-                if(needMixSpellArr.size() == 0) {
+                if (needMixSpellArr.size() == 0) {
                     break;
                 }
 
@@ -143,12 +162,14 @@ public class PutSpellAtBlankGame {
 
                 int randomNum = new Random().nextInt(originWord.length());
 
-                if (this.originWordToUp.charAt(randomNum) == ' ')
+                if (this.originWordToUp.charAt(randomNum) == ' ' || arrOfIndex.contains(randomNum))
                     continue;
 
                 arrOfIndex.add(randomNum);
                 count++;
             }
+
+            Collections.sort(arrOfIndex);
 
             this.indexArr = arrOfIndex;
         }
@@ -180,8 +201,37 @@ public class PutSpellAtBlankGame {
             //todo 스펠링이 들어올때
             // 스펠링 지울때 */
 
-            public void inputSpell(String spell) {
+            public int inputSpell(String spell) {
+                if (inputCount >= indexArr.size()) {
+                    Log.e("inputSpell", "finish");
+                    return -2;
+                }
+                int nowSpellIndex = indexArr.get(inputCount);
+                ArrayList<String> wordArr = showWordArr;
+                wordArr.set(nowSpellIndex, spell);
+                showWordArr = wordArr;
+                inputCount += 1;
 
+                if (inputCount == indexArr.size()) {
+                    Log.e("inputDone", "finish");
+                    return checkWord();
+                }
+
+                return -1;
+            }
+
+            private int checkWord() {
+                StringBuilder builder = new StringBuilder();
+
+                for (String s : showWordArr) {
+                    builder.append(s.toUpperCase());
+                }
+
+                if(originWord.equals(builder.toString())) {
+                    return GameCode.GAME_WIN;
+                } else  {
+                    return GameCode.GAME_OVER;
+                }
             }
 
             public void inputReset() {
@@ -192,6 +242,16 @@ public class PutSpellAtBlankGame {
 
             public void inputBack() {
 
+                if (inputCount == 0) {
+                    Log.e("inputBack", "inputCount is 0");
+                    return;
+                }
+
+                inputCount -= 1;
+                int nowSpellCount = indexArr.get(inputCount);
+                String needRemoveSpell = showWordArr.get(nowSpellCount);
+                showWordArr.set(nowSpellCount, "^");
+                spellMenuArr.add(needRemoveSpell);
             }
 
         }
