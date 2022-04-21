@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.wons.wordmanager3ver.databinding.ActivityQuizBinding;
 
 public class QuizActivity extends AppCompatActivity {
     private ActivityQuizBinding binding;
     private QuizGameViewModel viewModel;
+    private int check = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +53,14 @@ public class QuizActivity extends AppCompatActivity {
             boolean b = viewModel.check(true);
             showDialog(b);
             viewModel.setNextIndex();
+            check = 0;
         });
 
         binding.btnX.setOnClickListener(v -> {
             boolean b = viewModel.check(false);
             showDialog(b);
             viewModel.setNextIndex();
+            check = 0;
         });
     }
 
@@ -72,6 +76,7 @@ public class QuizActivity extends AppCompatActivity {
                     showFinishDialog();
                 }
             });
+            builder.setNegativeButton("확인", null);
             builder.show();
         }
 
@@ -84,6 +89,7 @@ public class QuizActivity extends AppCompatActivity {
                     showFinishDialog();
                 }
             });
+            builder.setNegativeButton("확인", null);
             builder.show();
         }
 
@@ -106,5 +112,15 @@ public class QuizActivity extends AppCompatActivity {
             finish();
         });
         alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (check == 0) {
+            Toast.makeText(getApplicationContext(), "한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();
+            check++;
+            return;
+        }
+        super.onBackPressed();
     }
 }

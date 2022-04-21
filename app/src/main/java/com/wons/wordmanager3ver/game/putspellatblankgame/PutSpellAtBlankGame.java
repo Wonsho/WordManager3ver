@@ -14,11 +14,13 @@ import java.util.Random;
 public class PutSpellAtBlankGame {
     private String originWord;
     private String originWordKorean;
-    public GameData gameData = new GameData();
+    public GameData gameData;
 
     PutSpellAtBlankGame(String originWord, String originWordKorean) {
+        Log.e("init", originWord);
         this.originWord = originWord;
         this.originWordKorean = originWordKorean;
+        gameData = new GameData();
     }
 
     public String getOriginWord() {
@@ -58,6 +60,7 @@ public class PutSpellAtBlankGame {
                 initData.setShowWordArr();
                 initData.setSpellMenuArr();
                 initData.copyData();
+                Log.e("initData", "passed");
             }
 
             public ArrayList<Integer> getPutIndexOfShowWordArr() {
@@ -76,13 +79,18 @@ public class PutSpellAtBlankGame {
 
                 public void resetData() {
                     initData.setInputIndex();
-                    showWordArr = showWordArrCopy;
-                    spellMenuArr = spellMenuArrCopy;
+                    ArrayList<String> arrShowWord = new ArrayList<>();
+                    ArrayList<String> arrSpellMenu = new ArrayList<>();
+                    arrShowWord.addAll(showWordArrCopy);
+                    arrSpellMenu.addAll(spellMenuArrCopy);
+
+                    showWordArr = arrShowWord;
+                    spellMenuArr = arrSpellMenu;
                 }
 
                 public int inputSpell(String spell) {
 
-                    if(inputIndex >= indexOfShowWordArr.size()) {
+                    if (inputIndex >= indexOfShowWordArr.size()) {
                         Log.e("inputSpell", "inputIndex >= indexOfShowWordArr.size()");
                         return -2;
                     }
@@ -92,7 +100,7 @@ public class PutSpellAtBlankGame {
                         private int checkWord() {
                             StringBuilder builder = new StringBuilder();
 
-                            for(String s : showWordArr) {
+                            for (String s : showWordArr) {
                                 builder.append(s);
                             }
 
@@ -106,10 +114,11 @@ public class PutSpellAtBlankGame {
 
                     int nowIndex = indexOfShowWordArr.get(inputIndex);
                     showWordArr.set(nowIndex, spell);
+                    Log.e("spell", spell);
                     spellMenuArr.remove(spellMenuArr.indexOf(spell));
                     inputIndex += 1;
 
-                    if(inputIndex == indexOfShowWordArr.size()) {
+                    if (inputIndex == indexOfShowWordArr.size()) {
                         return new Check().checkWord();
                     }
 
@@ -118,7 +127,7 @@ public class PutSpellAtBlankGame {
 
                 public void toBack() {
 
-                    if(indexOfShowWordArr.size() == 0) {
+                    if (inputIndex == 0) {
                         return;
                     }
 
@@ -149,13 +158,21 @@ public class PutSpellAtBlankGame {
                                     spaceCount++;
                                 }
                             }
-                            return word.length() - spaceCount;
+                            double randomSize = word.length() - spaceCount;
+                            Log.e("wordLength", String.valueOf(word.length()));
+
+                            if (randomSize == 1.0) {
+                                return 1;
+                            } else {
+                                return Integer.parseInt(String.format("%.0f", (randomSize * 0.3)));
+                            }
                         }
                     }
 
                     String word = originWord.toUpperCase();
                     char[] charArr = word.toCharArray();
                     int randomCount = new MakeRandomSize().getRandomCountSize(word);
+                    Log.e("randomCount", String.valueOf(randomCount));
                     int count = 0;
                     ArrayList<Integer> indexArr = new ArrayList<>();
 
@@ -192,6 +209,7 @@ public class PutSpellAtBlankGame {
                         wordArr.set(i, "^");
                     }
 
+
                     showWordArr = wordArr;
                 }
 
@@ -204,7 +222,7 @@ public class PutSpellAtBlankGame {
 
                             while (true) {
 
-                                if(strArr.size() == 0) {
+                                if (strArr.size() == 0) {
                                     break;
                                 }
 
@@ -237,8 +255,17 @@ public class PutSpellAtBlankGame {
                 }
 
                 private void copyData() {
-                    showWordArrCopy = showWordArr;
-                    spellMenuArrCopy = spellMenuArr;
+                    Log.e("copy", "passed");
+
+                    ArrayList<String> showWordCopy = new ArrayList<>();
+                    ArrayList<String> spellMenuCopy = new ArrayList<>();
+
+
+                    showWordCopy.addAll(showWordArr);
+                    spellMenuCopy.addAll(spellMenuArr);
+
+                    showWordArrCopy = showWordCopy;
+                    spellMenuArrCopy = spellMenuCopy;
                 }
 
             }

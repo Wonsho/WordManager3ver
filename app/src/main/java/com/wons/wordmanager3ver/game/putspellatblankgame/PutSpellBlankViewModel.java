@@ -1,5 +1,7 @@
 package com.wons.wordmanager3ver.game.putspellatblankgame;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -36,7 +38,7 @@ public class PutSpellBlankViewModel extends ViewModel {
                            )
                    )));
                 }
-
+                Log.e("random", String.valueOf(words.size()));
                 int randomNum = new Random().nextInt(words.size());
                 return words.get(randomNum);
             }
@@ -76,6 +78,10 @@ public class PutSpellBlankViewModel extends ViewModel {
                 break;
             }
         }
+    }
+
+    public ArrayList<Integer> getIndexArr() {
+        return this.liveDataGame.getValue().gameData.approachData.getPutIndexOfShowWordArr();
     }
 
     public String getGameWord() {
