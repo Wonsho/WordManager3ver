@@ -1,161 +1,223 @@
 package com.wons.wordmanager3ver.game;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class ForCard {
     public final int WORD_TITLES = 0;
     public final int WORD_KOREAN = 1;
-    public ArrayList<Word> wordArr;
-    public ArrayList<WordInfo> wordInfoArr;
+    public ArrayList<String> wordArr;
+    public HashMap<Integer, ArrayList<String>> forCardMap;
 
-    ForCard(ArrayList<Word> wordArr, ArrayList<WordInfo> wordInfoArr) {
+    ForCard(ArrayList<String> wordArr) {
         this.wordArr = wordArr;
-        this.wordInfoArr = wordInfoArr;
+        makeForCard();
     }
 
-    public HashMap<Integer, ArrayList<String>> getForCardDataByIndex(int index) {
-        String nowTitle = wordArr.get(index).getWordTitle();
-        String nowWordKorean = wordInfoArr.get(index).wordKorean;
+    private void makeForCard() {
+        class Utils {
+            public final int VOWEL = 0;
+            public final int VOWEL_UP = 1;
+            public final int CONSONANT = 2;
+            public final int CONSONANT_UP = 3;
+            String[] vowels = {"a", "e", "i", "o", "u"};//5
+            String[] vowelsUP = {"A", "E", "I", "O", "U"};
+            String[] consonant = {"q", "w", "r", "t", "y", "p", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"};//21
+            String[] consonantUP = {"Q", "W", "R", "T", "Y", "P", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"};
 
-        HashMap<Integer, ArrayList<String>> map = new HashMap<>();
-        map.put(WORD_KOREAN, new ArrayList<>(Arrays.asList(nowWordKorean)));
-        map.put(WORD_TITLES, makeForCard(nowTitle));
-
-        return map;
-    }
-
-
-    private ArrayList<String> makeForCard(String wordTitle) {
-        class MakeRandom {
-
-            String[] vowel = {"a", "e", "i", "o", "u"}; //5
-            String[] consonant = {"q", "w", "r", "t", "y", "p", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"}; // 21
-            String[] vowelUp = {"A", "E", "I", "O", "U"};
-
-            ArrayList<String> vowelArr = new ArrayList<>(Arrays.asList(vowel));
+            ArrayList<String> vowelArr = new ArrayList<>(Arrays.asList(vowels));
+            ArrayList<String> vowelUpArr = new ArrayList<>(Arrays.asList(vowelsUP));
             ArrayList<String> consonantArr = new ArrayList<>(Arrays.asList(consonant));
-            ArrayList<String> vowelUpArr = new ArrayList<>(Arrays.asList(vowelUp));
+            ArrayList<String> consonantArrUP = new ArrayList<>(Arrays.asList(consonantUP));
 
-            private String changeWord(int wordSize, int randomCount, ArrayList<String> wordToArr) {
+            private int makeRandomCount(int lengthRemovedSpace) {
+                if (lengthRemovedSpace == 1) {
+                    return 1;
+                } else if (lengthRemovedSpace == 2) {
+                    return new Random().nextInt(2);
+                } else {
+                    return new Random().nextInt(lengthRemovedSpace - 2);
+                }
+            }
 
+            private int getWordLengthRemovedSpace(String word) {
+                char[] cArr = word.toCharArray();
+                int count = 0;
 
-                // 랜덤으로 들어가야 할 스펠링이 대문자냐 소문자냐 ?
-                // 스페이스면 넣지 않는다
-                // 단어의 사이즈가 2 이상일 경우 앞 뒤 자리를 바꾸지 않는다
-                ArrayList<String> strArr = wordToArr;
+                for (char c : cArr) {
+                    if (c != ' ') {
+                        count++;
+                    }
+                }
 
-                if (wordSize == 1) {
-                    String s = wordToArr.get(0);
-                    if (vowelArr.contains(s)) {
-                        // 소문자 모음
-                        while (true) {
-                            int random = getVowelRandomNum();
-                            String pickSpell = vowelArr.get(random);
+                return count;
+            }
 
-                            if(!pickSpell.equals(s)) {
-                                strArr.set(0, pickSpell);
-                                break;
-                            }
+            private ArrayList<String> getWordToArr(String word) {
+                ArrayList<String> wordArr = new ArrayList<>();
+                char[] cArr = word.toCharArray();
+
+                for (char c : cArr) {
+                    wordArr.add(String.valueOf(c));
+                }
+
+                return wordArr;
+            }
+
+            private String makeWordToRandomChange(String wordTitle) {
+                class Check {
+
+                    private int checkSpell(String spell) {
+                        if (vowelArr.contains(spell)) {
+                            return VOWEL;
+                        } else if (vowelUpArr.contains(spell)) {
+                            return VOWEL_UP;
+                        } else if (consonantArr.contains(spell)) {
+                            return CONSONANT;
+                        } else if (consonantArrUP.contains(spell)) {
+                            return CONSONANT_UP;
+                        } else {
+                            //error
+                            return -1;
                         }
+                    }
 
-                    } else if (consonantArr.contains(s)) {
-                        // 소문자 자음
-                        while (true) {
-                            int randomNum = getConsonantRandomNum();
-                            String pickSpell = consonantArr.get(randomNum);
+                    private String getRandomSpell(String spell) {
+                        int spellType = checkSpell(spell);
 
-                            if(!pickSpell.equals(s)) {
-                                strArr.set(0, pickSpell);
-                                break;
+                        switch (spellType) {
+                            case VOWEL: {
+                                while (true) {
+                                    int randomN = new Random().nextInt(5);
+                                    String randomSpell = vowelArr.get(randomN);
+
+                                    if (!randomSpell.equals(spell)) {
+                                        return randomSpell;
+                                    }
+                                }
                             }
-                        }
-                    } else if (vowelUpArr.contains(s)) {
-                        // 대문자 모음
 
-                        while (true) {
-                            int randomNum = getVowelRandomNum();
-                            String pickSpell = vowelUpArr.get(randomNum);
+                            case VOWEL_UP: {
+                                while (true) {
+                                    int randomN = new Random().nextInt(5);
+                                    String randomSpell = vowelUpArr.get(randomN);
 
-                            if(!pickSpell.equals(s)) {
-                                strArr.set(0, pickSpell);
-                                break;
+                                    if(!randomSpell.equals(spell)) {
+                                        return randomSpell;
+                                    }
+
+                                }
                             }
-                        }
-                    } else {
-                        //대문자 자음
-                        while (true) {
-                            int randomNum = getConsonantRandomNum();
-                            String pickSpell = consonantArr.get(randomNum).toUpperCase();
 
-                            if(!pickSpell.equals(s)) {
-                                strArr.set(0,pickSpell);
-                                break;
+                            case CONSONANT: {
+                                while (true) {
+                                    int randomN = new Random().nextInt(21);
+                                    String randomSpell = consonantArr.get(randomN);
+
+                                    if(!randomSpell.equals(spell)) {
+                                        return randomSpell;
+                                    }
+                                }
+                            }
+
+                            case CONSONANT_UP: {
+                                while (true) {
+                                    int randomN = new Random().nextInt(21);
+                                    String randomSpell = consonantArrUP.get(randomN);
+
+                                    if (!randomSpell.equals(spell)) {
+                                        return randomSpell;
+                                    }
+                                }
+                            }
+
+                            default: {
+                                Log.e("getRandomSpell", "Error");
+                                return null;
                             }
                         }
                     }
 
-                } else if (wordSize == 2) {
-                    int randomC = new Random().nextInt(2) + 1;
-                    int count = 0;
+                    private String makeWordArrToString(ArrayList<String> wordArr) {
+                        StringBuilder builder = new StringBuilder();
 
+                        for (String s : wordArr) {
+                            builder.append(s);
+                        }
+
+                        return builder.toString();
+                    }
+                }
+
+                Check check = new Check();
+                ArrayList<String> wordArr = getWordToArr(wordTitle);
+                int removedSpaceLength = getWordLengthRemovedSpace(wordTitle);
+                int randomCount = makeRandomCount(removedSpaceLength);
+
+                if (removedSpaceLength == 1) {
+                    String spell = wordArr.get(0);
+                    String randomSpell = check.getRandomSpell(spell);
+                    wordArr.set(0, randomSpell);
+                } else if (removedSpaceLength == 2) {
+
+                    while(true) {
+
+                        for(int i = 0; i<randomCount ; i++) {
+                            int randomPlace = new Random().nextInt(wordArr.size());
+                            wordArr.set(randomPlace, check.getRandomSpell(wordArr.get(randomPlace)));
+                        }
+
+                        if(!check.makeWordArrToString(wordArr).equals(wordTitle)) {
+                            break;
+                        }
+
+                    }
 
                 } else {
+                    int randomN =
 
                 }
+
+                return check.makeWordArrToString(wordArr);
             }
 
-            private int getVowelRandomNum() {
-                return new Random().nextInt(5);
-            }
-
-            private int getConsonantRandomNum() {
-                return new Random().nextInt(21);
-            }
-
-            private ArrayList<String> inputCorrectWord(ArrayList<String> wordsArr, String wordTitle) {
-                int randomCount = new Random().nextInt(4);
-                ArrayList<String> arr = wordsArr;
-                arr.set(randomCount, wordTitle);
-
-                return arr;
+            private ArrayList<String> makeOnCardToCorrect(ArrayList<String> wordFourCard, String correctWordTitle) {
+                int random = new Random().nextInt(4);
+                ArrayList<String> wordArr = wordFourCard;
+                wordArr.set(random, correctWordTitle);
+                return wordArr;
             }
         }
+        Utils utils = new Utils();
+        HashMap<Integer, ArrayList<String>> forCardMap = new HashMap<>();
 
-        MakeRandom random = new MakeRandom();
-        ArrayList<String> wordArr = new ArrayList<>();
-        char[] cArr = wordTitle.trim().toCharArray();
-        int spaceCount = 0;
+        for (int i = 0; i < wordArr.size(); i++) {
+            String wordTitle = wordArr.get(i);
+            ArrayList<String> arr = new ArrayList<>();
 
-        for (char c : cArr) {
-            wordArr.add(String.valueOf(c));
-
-            if (c == 'c') {
-                spaceCount++;
-            }
-        }
-
-        for (int i = 0; i < 4; i++) {
-            ArrayList<String> word = new ArrayList<>();
-            word.addAll(wordArr);
-            int wordSizeRemovedSpace = wordTitle.length() - spaceCount;
-            int randomCount = 0;
-
-            if (wordSizeRemovedSpace == 1) {
-                randomCount = 1;
-            } else if (wordSizeRemovedSpace == 2) {
-                randomCount = new Random().nextInt(3);
-            } else {
-                randomCount = new Random().nextInt(wordSizeRemovedSpace - 1);
+            for (int j = 0; j < 4; j++) {
+                arr.add(utils.makeWordToRandomChange(wordTitle));
             }
 
+            forCardMap.put(i, utils.makeOnCardToCorrect(arr, wordArr.get(i)));
         }
 
-
+        this.forCardMap = forCardMap;
     }
+
+
 }
