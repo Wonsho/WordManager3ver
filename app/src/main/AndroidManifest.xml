@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
         <activity
+            android:name=".game.fourcard.FourCardActivity"
+            android:exported="true" />
+        <activity
             android:name=".game.putspellatblankgame.PutSpellAtBlankActivity"
             android:exported="true" />
         <activity
