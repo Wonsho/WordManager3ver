@@ -5,9 +5,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
-import com.wons.wordmanager3ver.datavalues.Word;
-
-import java.util.ArrayList;
 
 public class FourCardViewModel extends ViewModel {
     private MyDao dao = MainViewModel.dao;
