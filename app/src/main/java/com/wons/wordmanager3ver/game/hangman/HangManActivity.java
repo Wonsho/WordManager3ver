@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityHangManBinding;
@@ -26,6 +27,7 @@ public class HangManActivity extends AppCompatActivity {
     private ActivityHangManBinding binding;
     private GameViewModel viewModel;
     private MykeyboardBinding keyBoardBinding;
+    private int check = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -280,6 +282,7 @@ public class HangManActivity extends AppCompatActivity {
     }
 
     private void inputKeyBoard(String spell) {
+        check = 0;
         if (spell.isEmpty() || spell.equals("")) {
             return;
         }
@@ -339,7 +342,7 @@ public class HangManActivity extends AppCompatActivity {
         }
         binding.im.setImageResource(imageId);
 
-        if(imageId == R.drawable.ic_num7) {
+        if (imageId == R.drawable.ic_num7) {
             showDialogs(GameCode.GAME_OVER);
             return;
         }
@@ -387,5 +390,17 @@ public class HangManActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (check == 0) {
+            Toast.makeText(getApplicationContext(), "한번더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();
+            check++;
+            return;
+        }
+
+        super.onBackPressed();
     }
 }

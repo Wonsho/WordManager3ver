@@ -8,15 +8,20 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/back.xml" value="0.1259259259259259" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_arrow_list_right.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_add_list.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_add_mini.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_cancel_24_white.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_create_24.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_playlist_add_24.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_playlist_add_check_24.xml" value="0.1" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_post_add_24.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_baseline_replay_24.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_bronze.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_gold.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_minus.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_myinfo.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_num1.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/drawable/ic_silver.xml" value="0.2074074074074074" />
@@ -58,7 +63,7 @@
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_result_word.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_same_word_list.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word.xml" value="0.536" />
-        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_add_list.xml" value="0.4" />
+        <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_add_list.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list.xml" value="0.536" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_add_wordlist.xml" value="0.4" />
         <entry key="..\:/Users/wono9/AndroidStudioProjects/WordManager3ver/app/src/main/res/layout/list_word_list_home.xml" value="0.536" />

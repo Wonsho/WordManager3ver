@@ -122,14 +122,14 @@ public class FourCardActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FourCardActivity.this)
                         .setTitle("알림")
                         .setMessage("게임 오버 되었습니다\n다시 하시겠습니까?")
-                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 viewModel.startGame(GameCode.GAME_RESTART);
                                 setView();
                             }
                         })
-                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("아니요", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();
@@ -147,14 +147,14 @@ public class FourCardActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FourCardActivity.this)
                         .setTitle("알림")
                         .setMessage("게임이 끝났습니다\n다시 하시겠습니까?")
-                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 viewModel.startGame(GameCode.GAME_RESTART);
                                 setView();
                             }
                         })
-                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("아니요", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();

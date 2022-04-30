@@ -58,9 +58,9 @@ public class AddWordAdapter extends BaseAdapter {
         TextView tv_wordTitle = view.findViewById(R.id.tv_wordTitle);
         TextView tv_wordKorean = view.findViewById(R.id.tv_wordKorean);
         TextView tv_percentage = view.findViewById(R.id.tv_percentage);
-        ImageView btn_rename = view.findViewById(R.id.btn_rename);
-        ImageView btn_memo = view.findViewById(R.id.btn_memo);
-        ImageView btn_delete = view.findViewById(R.id.btn_delete);
+        TextView btn_rename = view.findViewById(R.id.btn_rename);
+        TextView btn_memo = view.findViewById(R.id.btn_memo);
+        TextView btn_delete = view.findViewById(R.id.btn_delete);
 
         if (language == null || language.isEmpty()) {
             for (EnumLanguage enumLanguage : EnumLanguage.values()) {
@@ -78,9 +78,9 @@ public class AddWordAdapter extends BaseAdapter {
         String memo = infoMap.get(words.get(i).getWordTitle()).getWordMemo();
 
         if(memo == null || memo.isEmpty()) {
-            btn_memo.setImageResource(R.drawable.ic_baseline_playlist_add_24);
+            btn_memo.setText("메모하기");
         } else {
-            btn_memo.setImageResource(R.drawable.ic_baseline_playlist_add_check_24);
+            btn_memo.setText("메모수정");
         }
 
         if (percentage == -1) {

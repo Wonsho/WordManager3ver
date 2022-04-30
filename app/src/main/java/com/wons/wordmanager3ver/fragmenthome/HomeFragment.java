@@ -18,6 +18,7 @@ import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.databinding.FragmentHomeBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.EnumSetting;
+import com.wons.wordmanager3ver.datavalues.MY;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
@@ -44,11 +45,14 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private HomeFragmentViewModel viewModel;
+    private MY my;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
+        my = new MY(getActivity());
         onC();
         setGameList();
         setUserInfo();
@@ -91,6 +95,10 @@ public class HomeFragment extends Fragment {
             }
 
             startActivity(new Intent(getActivity(), StudyActivity.class));
+        });
+
+        binding.tvLanguage.setOnClickListener(v -> {
+            my.doIt();
         });
 
         binding.btnTest.setOnClickListener(v -> {
@@ -142,7 +150,7 @@ public class HomeFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("알림");
                 builder.setMessage("완료되지 못한 단어장이 존재합니다\n그래도 새로고침 하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
@@ -152,7 +160,7 @@ public class HomeFragment extends Fragment {
                         changeTodayWordList();
                     }
                 });
-                builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("아니요", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -168,22 +176,57 @@ public class HomeFragment extends Fragment {
             GameValue gameValue = (GameValue) ((GameListAdapter) binding.lvGame3.getAdapter()).getItem(i);
 
             if(gameValue.gameCode == EnumGame.HANGMAN_GAME.gameCodeInt) {
+                ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+                for(TodayWordList todayWordList : todayWordLists) {
+                    if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                        Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 startActivity(new Intent(getActivity(), HangManActivity.class));
             }
 
             if(gameValue.gameCode == EnumGame.MAKE_WORD_BY_SPELLING.gameCodeInt) {
+                ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+                for(TodayWordList todayWordList : todayWordLists) {
+                    if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                        Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 startActivity(new Intent(getActivity(), MakeWordGameActivity.class));
             }
 
             if (gameValue.gameCode == EnumGame.OX_QUIZ.gameCodeInt) {
+                ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+                for(TodayWordList todayWordList : todayWordLists) {
+                    if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                        Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 startActivity(new Intent(getActivity(), QuizActivity.class));
             }
 
             if (gameValue.gameCode == EnumGame.PUT_SPELL_AT_BLANK.gameCodeInt) {
+                ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+                for(TodayWordList todayWordList : todayWordLists) {
+                    if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                        Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 startActivity(new Intent(getActivity(), PutSpellAtBlankActivity.class));
             }
 
             if (gameValue.gameCode == EnumGame.FOUR_CARD.gameCodeInt) {
+                ArrayList<TodayWordList> todayWordLists = ((TodayListAdapter)binding.lvList.getAdapter()).getTodayWordLists();
+                for(TodayWordList todayWordList : todayWordLists) {
+                    if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
+                        Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 startActivity(new Intent(getActivity(), FourCardActivity.class));
             }
 

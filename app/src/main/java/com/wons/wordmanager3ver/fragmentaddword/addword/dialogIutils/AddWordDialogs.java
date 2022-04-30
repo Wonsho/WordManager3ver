@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.DialogAddWordBinding;
@@ -24,20 +25,36 @@ public class AddWordDialogs {
         View view = binding.getRoot();
 
         binding.btnAdd.setOnClickListener(v -> {
-            if((!binding.etWordTitle.getText().toString().isEmpty())&&(!binding.etWordKorean.getText().toString().isEmpty())) {
+
+            if ((!binding.etWordTitle.getText().toString().isEmpty()) && (!binding.etWordKorean.getText().toString().isEmpty())) {
                 ArrayList<String> word = new ArrayList<>();
                 String wordTitle = new Tools().removeOverSpace(binding.etWordTitle.getText().toString().trim());
                 String wordKorean = new Tools().removeOverSpace(binding.etWordKorean.getText().toString().trim());
-                word.add(wordTitle);
-                word.add(wordKorean);
-                callback.callback(word);
+                boolean check = true;
+                char[] cArr = wordTitle.toCharArray();
+
+                for (char c : cArr) {
+                    int value = (int)c;
+                    check = true;
+                    if(!((value>=97 && value <= 122) || (value >= 65 && value <=90) || c == ' ')) {
+                        check = false;
+                        binding.etWordTitle.setError("영문 입력 입니다");
+                        break;
+                    }
+                }
+                if(check) {
+                    word.add(wordTitle);
+                    word.add(wordKorean);
+                    callback.callback(word);
+                }
                 binding.etWordTitle.setText("");
                 binding.etWordKorean.setText("");
+
             } else if (binding.etWordTitle.getText().toString().isEmpty()) {
                 binding.etWordTitle.setError("필수 입니다");
             } else if (binding.etWordKorean.getText().toString().isEmpty()) {
                 binding.etWordKorean.setError("필수 입니다");
-            }  else {
+            } else {
                 binding.etWordKorean.setError("필수 입니다");
                 binding.etWordTitle.setError("필수 입니다");
             }

@@ -58,13 +58,13 @@ public class DialogInAddWordFragments {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("알림");
         builder.setMessage(listName + " 단어장을 삭제하시겠습니까? \n단어장 안에 있는 단어는 복구하실수 없습니다");
-        builder.setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("삭제하기", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 callback.callBack(true);
             }
         });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

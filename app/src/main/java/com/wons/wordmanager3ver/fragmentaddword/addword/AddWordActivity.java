@@ -233,14 +233,14 @@ public class AddWordActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("알림");
         builder.setMessage(word.getWordTitle() + " 단어를 삭제하시겠습니까?");
-        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 viewModel.deleteWord(word);
                 onRestart();
             }
         });
-        builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("아니요", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
