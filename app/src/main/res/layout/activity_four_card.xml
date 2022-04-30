@@ -156,6 +156,7 @@
                 android:layout_weight="@integer/material_motion_duration_long_1">
 
                 <LinearLayout
+                    android:id="@+id/card_1"
                     android:background="@drawable/list_theme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -180,6 +181,7 @@
                 android:layout_weight="@integer/material_motion_duration_long_1">
 
                 <LinearLayout
+                    android:id="@+id/card_2"
                     android:background="@drawable/list_theme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -204,6 +206,7 @@
                 android:layout_weight="@integer/material_motion_duration_long_1">
 
                 <LinearLayout
+                    android:id="@+id/card_3"
                     android:background="@drawable/list_theme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -228,6 +231,7 @@
                 android:layout_weight="@integer/material_motion_duration_long_1">
 
                 <LinearLayout
+                    android:id="@+id/card_4"
                     android:background="@drawable/list_theme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

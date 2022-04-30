@@ -29,6 +29,7 @@ import com.wons.wordmanager3ver.fragmenthome.dialogutils.DialogUtilsInHomeFragme
 import com.wons.wordmanager3ver.fragmenthome.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.fragmenthome.value.EnumGame;
 import com.wons.wordmanager3ver.fragmenthome.value.GameValue;
+import com.wons.wordmanager3ver.game.fourcard.FourCardActivity;
 import com.wons.wordmanager3ver.game.putspellatblankgame.PutSpellAtBlankActivity;
 import com.wons.wordmanager3ver.game.hangman.HangManActivity;
 import com.wons.wordmanager3ver.game.makeword.MakeWordGameActivity;
@@ -180,6 +181,10 @@ public class HomeFragment extends Fragment {
 
             if (gameValue.gameCode == EnumGame.PUT_SPELL_AT_BLANK.gameCodeInt) {
                 startActivity(new Intent(getActivity(), PutSpellAtBlankActivity.class));
+            }
+
+            if (gameValue.gameCode == EnumGame.FOUR_CARD.gameCodeInt) {
+                startActivity(new Intent(getActivity(), FourCardActivity.class));
             }
 
         });
