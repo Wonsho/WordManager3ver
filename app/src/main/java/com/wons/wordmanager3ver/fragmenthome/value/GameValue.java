@@ -26,7 +26,7 @@ public class GameValue {
                 this.gameCode = enumGame.gameCodeInt;
                 this.gameName = "스펠링 조합하기";
                 this.gameInfo = "스펠링 조합하기입니다\n컴퓨터가 고른 단어의 스펠링을 조합해보세요";
-                this.gamePic = R.drawable.pixabay;
+                this.gamePic = R.drawable.makeword;
                 break;
                 //todo recycler view 로 선택 단어 카드 만듦 --> 원래 스펠링을 뒤죽박죽 섞음
                 // 선택 화면을 누르면 값이 들어가는 뷰에 넣어줌
@@ -37,7 +37,7 @@ public class GameValue {
                 this.gameCode = enumGame.gameCodeInt;
                 this.gameName = "사지선다";
                 this.gameInfo = "사지선다입니다\n4개의 카드중 맞는것을 골라주세요";
-                this.gamePic = R.drawable.pixabay;
+                this.gamePic = R.drawable.four;
                 break;
                 //TODO  총 단어중에 내가 한 단어 표시 ex) 2/32
                 // 틀렸던 단어를 저장해서 사지선다 형태로 맞는 정답, 내가 선택한 카드를 보여주기
@@ -45,23 +45,23 @@ public class GameValue {
                 // 햇던것이 없으면 finish()*/
             }
 
-            case WRITE_WORD: {
-                this.gameCode = enumGame.gameCodeInt;
-                this.gameName = "받아쓰기";
-                this.gameInfo = "받아쓰기입니다\n소리를 듣고 단어를 써보세요";
-                this.gamePic = R.drawable.pixabay;
-                break;
-                //todo  총 단어중에 내가 한 단어 표시 ex) 2/32
-                // 받아쓰기 처음에 단어를 TTS 해주고 스피커 버튼을 달아 TTS 를 계속 실행 가능
-                // 백버튼 --> 햇던것 보여주기
-                // 없으면 finish*/
-            }
+//            case WRITE_WORD: {
+//                this.gameCode = enumGame.gameCodeInt;
+//                this.gameName = "받아쓰기";
+//                this.gameInfo = "받아쓰기입니다\n소리를 듣고 단어를 써보세요";
+//                this.gamePic = R.drawable.pixabay;
+//                break;
+//                //todo  총 단어중에 내가 한 단어 표시 ex) 2/32
+//                // 받아쓰기 처음에 단어를 TTS 해주고 스피커 버튼을 달아 TTS 를 계속 실행 가능
+//                // 백버튼 --> 햇던것 보여주기
+//                // 없으면 finish*/
+//            }
 
             case PUT_SPELL_AT_BLANK: {
                 this.gameCode = enumGame.gameCodeInt;
                 this.gameName = "빈칸 맞추기";
                 this.gameInfo = "빈칸 맞추기입니다\n컴퓨터가 고른 단어의 빈칸을 채워보세요";
-                this.gamePic = R.drawable.pixabay;
+                this.gamePic = R.drawable.putblank;
                 //todo 뜻을 보여줌
                 // 단어의 30%을 빈칸으로 설정
                 // (recycler view horizontal view 로 뿌려줌)
@@ -75,7 +75,7 @@ public class GameValue {
                 this.gameCode = enumGame.gameCodeInt;
                 this.gameName = "O X 퀴즈";
                 this.gameInfo = "O X 퀴즈입니다\n맞으면 O 틀리면 X 를 눌러주세요";
-                this.gamePic = R.drawable.pixabay;
+                this.gamePic = R.drawable.ox;
 
                 //todo 랜덤으로 틀린 답을 넣을지 맞는 답을 넣을지 1/3 의 확률로 실행
                 // 이것도 수량 표기  ex 1/65*

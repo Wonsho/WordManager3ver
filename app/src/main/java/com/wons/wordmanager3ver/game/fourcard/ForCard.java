@@ -15,14 +15,6 @@ public class ForCard {
     ForCard(ArrayList<String> wordArr) {
         this.wordArr = wordArr;
         makeForCardMap();
-
-        for (int i = 0; i < 4; i++) {
-            ArrayList<String> arr = forCardMap.get(i);
-
-            for (String s : arr) {
-                Log.e("data", s);
-            }
-        }
     }
 
     private void makeForCardMap() {
