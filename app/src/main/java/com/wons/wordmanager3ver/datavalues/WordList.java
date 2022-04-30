@@ -36,7 +36,7 @@ public class WordList {
         }
         this.listName = builder.toString();
         this.languageCode = languageCode;
-        this.listGradeInt = 0;
+        this.listGradeInt = -1;
         this.wordCountInt = 0;
         this.insertDate = insertDate;
     }

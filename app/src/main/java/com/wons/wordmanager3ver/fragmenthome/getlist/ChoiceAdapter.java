@@ -46,7 +46,7 @@ public class ChoiceAdapter extends BaseAdapter {
         binding = ListChoiceListBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
         binding.tvListTitle.setText(wordLists.get(i).listName);
         binding.tvListGrade.setText(String.valueOf(wordLists.get(i).getListGradeInt()) + "점");
-        if(wordLists.get(i).getListGradeInt() == 0) {
+        if(wordLists.get(i).getListGradeInt() == -1) {
             binding.tvListGrade.setText("데이터 없음");
         }
         binding.tvWordCount.setText(String.valueOf(wordLists.get(i).getWordCountInt()));

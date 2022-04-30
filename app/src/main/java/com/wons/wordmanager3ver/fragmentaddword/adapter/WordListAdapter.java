@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class WordListAdapter extends BaseAdapter {
@@ -65,11 +67,11 @@ public class WordListAdapter extends BaseAdapter {
             tv_notice.setVisibility(View.GONE);
         }
 
-        ((ImageView) view.findViewById(R.id.btn_delete)).setOnClickListener(v -> {
+        ((TextView) view.findViewById(R.id.btn_delete)).setOnClickListener(v -> {
             callback.callback(lists.get(i), EnumAction.DELETE);
         });
 
-        ((ImageView) view.findViewById(R.id.btn_rename)).setOnClickListener(v -> {
+        ((TextView) view.findViewById(R.id.btn_rename)).setOnClickListener(v -> {
             callback.callback(lists.get(i), EnumAction.RENAME);
         });
 

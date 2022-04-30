@@ -47,18 +47,9 @@
         app:layout_constraintTop_toTopOf="@id/tv_wordCount" />
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/ic_baseline_refresh_24"
-        app:layout_constraintBottom_toBottomOf="@id/btn_rename"
-        app:layout_constraintLeft_toLeftOf="@id/btn_rename"
-        app:layout_constraintRight_toRightOf="@id/btn_rename"
-        app:layout_constraintTop_toTopOf="@id/btn_rename" />
-
-    <ImageView
+    <TextView
+        android:textStyle="bold"
+        android:text="이름 변경"
         android:id="@+id/btn_rename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,12 +57,13 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:paddingRight="10dp"
-        android:src="@drawable/ic_baseline_create_24"
         app:layout_constraintBottom_toBottomOf="@id/btn_delete"
         app:layout_constraintRight_toLeftOf="@id/btn_delete"
         app:layout_constraintTop_toTopOf="@id/btn_delete" />
 
-    <ImageView
+    <TextView
+        android:textStyle="bold"
+        android:text="삭제"
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +71,6 @@
         android:clickable="true"
         android:paddingLeft="5dp"
         android:paddingRight="10dp"
-        android:src="@drawable/ic_baseline_cancel_24"
         app:layout_constraintBottom_toTopOf="@id/tv_listTitle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -113,6 +104,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_listTitle" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/tv_notice"
         android:layout_width="wrap_content"
         android:textColor="#5E5E5E"
