@@ -96,6 +96,7 @@ public class PutSpellAtBlankActivity extends AppCompatActivity {
                     tv.setText(showWordArr.get(i));
                 }
             }
+            v.setPadding(10,0,0,0);
             layoutShowWord.addView(v);
         }
 

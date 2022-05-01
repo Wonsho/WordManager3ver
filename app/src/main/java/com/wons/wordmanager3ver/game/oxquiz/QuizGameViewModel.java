@@ -78,7 +78,22 @@ public class QuizGameViewModel extends ViewModel {
 
         }
 
-        for (Word w : words) {
+        ArrayList<Word> mixedArr = new ArrayList<>();
+        ArrayList<Word> wordArr = new ArrayList<>();
+        wordArr.addAll(words);
+
+        while (true) {
+            if(wordArr.size() == 0) {
+                break;
+            }
+            int randomN = new Random().nextInt(wordArr.size());
+            mixedArr.add(wordArr.get(randomN));
+            wordArr.remove(randomN);
+        }
+
+
+
+        for (Word w : mixedArr) {
             int randomNum = new Random().nextInt(2);
 
             if (randomNum == 0) {
