@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.wons.wordmanager3ver.R;
+import com.wons.wordmanager3ver.tool.Tools;
 
 public class DialogOfGame {
 
@@ -46,6 +47,13 @@ public class DialogOfGame {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 callBackGameDialog.callBack(EnumGameStart.CLOSE);
+            }
+        });
+        builder.setNeutralButton("소리듣기", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                new Tools().speech(wordTitle);
+                getDialogWhenCorrect(context, callBackGameDialog, wordTitle, wordKorean).show();
             }
         });
 

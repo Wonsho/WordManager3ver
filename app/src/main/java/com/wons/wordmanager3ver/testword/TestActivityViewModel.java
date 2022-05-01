@@ -74,7 +74,22 @@ public class TestActivityViewModel extends ViewModel {
         Word word = getWordByIndex();
         TestWordResult wordResult = new TestWordResult(word.getWordId(), word.getWordTitle(), word.getWordListCodeInt());
 
-        if (word.getWordTitle().trim().toUpperCase().equals(wordTitle.toUpperCase())) {
+        String[] originArr = word.getWordTitle().trim().toUpperCase().split(" ");
+        String[] inputArr = wordTitle.toUpperCase().split(" ");
+
+        StringBuilder originBuilder = new StringBuilder();
+
+        for (String s : originArr) {
+            originBuilder.append(s.trim());
+        }
+
+        StringBuilder inputBuilder = new StringBuilder();
+
+        for (String s : inputArr) {
+            inputBuilder.append(s.trim());
+        }
+
+        if (originBuilder.toString().equals(inputBuilder.toString())) {
             wordResult.setTestResult(true);
         } else {
             wordResult.setTestResult(false);
@@ -86,12 +101,12 @@ public class TestActivityViewModel extends ViewModel {
     public void insertWordResultInDB() {
         TestWordResult[] testWordResults = myDao.getAllTestWordResult();
 
-        for(TestWordResult testWordResult : testWordResults) {
+        for (TestWordResult testWordResult : testWordResults) {
             myDao.deleteTestResult(testWordResult);
         }
 
         ArrayList<TestWordResult> testWordResults1 = this.testResult;
-        for(TestWordResult testWordResult : testWordResults1) {
+        for (TestWordResult testWordResult : testWordResults1) {
             myDao.insertTestResult(testWordResult);
         }
     }

@@ -68,9 +68,6 @@ public class Tools {
 //                            tts.setLanguage(Locale.JAPANESE);
 //                            break;
 //                        }
-                        default: {
-                            //todo 나중에 셋팅값 등록
-                        }
                     }
                 }
             }

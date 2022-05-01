@@ -19,6 +19,7 @@ import com.wons.wordmanager3ver.databinding.FragmentHomeBinding;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
 import com.wons.wordmanager3ver.datavalues.EnumSetting;
 import com.wons.wordmanager3ver.datavalues.MY;
+import com.wons.wordmanager3ver.datavalues.Setting;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
@@ -39,6 +40,7 @@ import com.wons.wordmanager3ver.studyword.StudyActivity;
 import com.wons.wordmanager3ver.testword.TestActivity;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
@@ -278,6 +280,7 @@ public class HomeFragment extends Fragment {
             wordList = viewModel.getTodayWordList(todayWordLists);
         } catch (Exception e) {
             Toast.makeText(getActivity(), "변경사항이 있어\n 오늘의 단어장이 초기화 되었습니다", Toast.LENGTH_SHORT).show();
+            viewModel.updateSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId,1);
             ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
             for(TodayWordList todayWordList : todayWordLists1) {
                 viewModel.deleteTodayList(todayWordList);

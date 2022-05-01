@@ -44,11 +44,33 @@ public class TestActivity extends AppCompatActivity {
             clickEnter();
         });
 
+        binding.btnPass.setOnClickListener(v -> {
+            onClickPass();
+        });
+
         binding.etWordTitle.setOnEditorActionListener((textView, i, keyEvent) -> {
             Log.e("event", String.valueOf(i) + " - "+keyEvent);
 
             return true;
         });
+    }
+
+    private void onClickPass() {
+
+        viewModel.addWordResult("1_pass");
+        int nowIndex = viewModel.getNowIndex();
+        viewModel.setLiveDataOfIndex(nowIndex + 1);
+
+        if (viewModel.getNowIndex() == viewModel.getWordSize()) {
+            viewModel.insertWordResultInDB(); // 시험이 다끝나면 DB에 저장 --> 결과 액티비티 띄우기
+            Intent intent = new Intent(TestActivity.this, TestResultActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        binding.etWordTitle.setText("");
+        showSoftKeyboard();
     }
 
     private void clickEnter() {
