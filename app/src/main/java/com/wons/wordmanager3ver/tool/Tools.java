@@ -2,6 +2,7 @@ package com.wons.wordmanager3ver.tool;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.util.Log;
 
 import com.wons.wordmanager3ver.MainViewModel;
@@ -56,6 +57,7 @@ public class Tools {
                         case ENGLISH: {
                             Log.e("TTS2", "Passed");
                             tts.setLanguage(Locale.ENGLISH);
+                            tts.setSpeechRate(0.78f);
                             break;
                         }
 //                        case CHINESE: {
@@ -77,23 +79,6 @@ public class Tools {
     }
 
     public void speech(String str) {
-        String[] strArr = str.trim().split(" ");
-        Log.e("sound2", strArr[0]);
-        Log.e("sound2-2", String.valueOf(strArr.length));
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(String str : strArr) {
-                    try {
-                        Log.e("Thread", "Passed");
-                        MainViewModel.tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);
-                        Thread.sleep(500);
-                    } catch (Exception e) {
-
-                    }
-                }
-            }
-        });
-        thread.start();
+        MainViewModel.tts.speak(str, TextToSpeech.QUEUE_FLUSH, null);
     }
 }

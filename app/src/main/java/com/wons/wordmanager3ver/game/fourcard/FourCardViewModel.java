@@ -1,5 +1,7 @@
 package com.wons.wordmanager3ver.game.fourcard;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -101,8 +103,12 @@ public class FourCardViewModel extends ViewModel {
                 return words;
             }
 
-
-
+            int getLife() {
+                int wordQuantity = gameLiveData.getValue().wordArr.size();
+                double life = (double) wordQuantity * 0.6;
+                Log.e("FourCard", "Life : " + String.valueOf(life));
+                return Integer.parseInt(String.format("%.0f", life));
+            }
         }
 
         Utils utils = new Utils(dao);
@@ -133,7 +139,7 @@ public class FourCardViewModel extends ViewModel {
 
                 gameLiveData.setValue(new ForCard(utils.getRandomWordToString()));
                 nowIndex.setValue(0);
-                life.setValue(gameLiveData.getValue().wordArr.size());
+                life.setValue(utils.getLife());
                 booleanMutableLiveData.setValue(getBooleanArr());
                 break;
             }
@@ -141,7 +147,7 @@ public class FourCardViewModel extends ViewModel {
             case GameCode.GAME_RESTART: {
                 gameLiveData.setValue(new ForCard(utils.getRandomWordToString()));
                 nowIndex.setValue(0);
-                life.setValue(gameLiveData.getValue().wordArr.size());
+                life.setValue(utils.getLife());
                 booleanMutableLiveData.setValue(getBooleanArr());
                 break;
             }

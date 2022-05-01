@@ -143,6 +143,15 @@ public class QuizGameViewModel extends ViewModel {
         return wordInfo.wordKorean;
     }
 
+    public String getWordTitle() {
+        String wordTitle = this.quizLiveData.getValue()
+                            .get(this.liveIndex.getValue())
+                            .word_title;
+
+        return wordTitle;
+    }
+
+
     public int getCorrectCount() {
         int count = 0;
         ArrayList<QuizObject> objects = this.quizLiveData.getValue();

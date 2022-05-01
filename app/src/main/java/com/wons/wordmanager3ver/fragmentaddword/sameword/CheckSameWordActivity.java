@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityCheckSameWordBinding;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
@@ -27,7 +28,7 @@ public class CheckSameWordActivity extends AppCompatActivity {
         binding = ActivityCheckSameWordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(CheckListViewModel.class);
-
+        overridePendingTransition(R.anim.vertical_enter,R.anim.non);
         this.wordTitle = getIntent().getStringExtra("wordTitle");
         this.word_korean = getIntent().getStringExtra("wordKorean");
         this.languageCode = getIntent().getIntExtra("languageCode", -1);
@@ -97,4 +98,9 @@ public class CheckSameWordActivity extends AppCompatActivity {
         ((CheckListAdapter)binding.lvWordlist.getAdapter()).notifyDataSetChanged();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.non,R.anim.vertical_exit);
+    }
 }

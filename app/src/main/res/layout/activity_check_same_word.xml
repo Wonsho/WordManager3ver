@@ -306,7 +306,7 @@
                     android:focusable="true"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="저장하지 않기"
+                    android:text="취소 하기"
                     android:textColor="@color/theme_black" />
 
             </LinearLayout>

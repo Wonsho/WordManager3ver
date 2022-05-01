@@ -35,12 +35,23 @@ public class ForCard {
             String[] vowelsUp = {"A", "E", "I", "O", "U"};
             String[] consonantsUp = {"Q", "W", "R", "T", "Y", "P", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"};
 
+            String[] vowels2 = {"a", "e", "i", "o", "u"};
+            String[] consonant2 = {"w", "r", "t", "y", "p", "s", "d", "f", "g", "h", "k", "l", "c", "v", "b", "n", "m"};
+            String[] vowelsUp2 = {"A", "E", "I", "O", "U"};
+            String[] consonantsUp2 = {"W", "R", "T", "Y", "P", "S", "D", "F", "G", "H","K", "L", "C", "V", "B", "N", "M"};
+
             //todo 다른 기호 일때
 
             ArrayList<String> vowelArr = new ArrayList<>(Arrays.asList(vowels));
             ArrayList<String> vowelsUpArr = new ArrayList<>(Arrays.asList(vowelsUp));
             ArrayList<String> consonantArr = new ArrayList<>(Arrays.asList(consonant));
             ArrayList<String> consonantUpArr = new ArrayList<>(Arrays.asList(consonantsUp));
+
+            ArrayList<String> vowelArr2 = new ArrayList<>(Arrays.asList(vowels2));
+            ArrayList<String> vowelsUpArr2 = new ArrayList<>(Arrays.asList(vowelsUp2));
+            ArrayList<String> consonantArr2 = new ArrayList<>(Arrays.asList(consonant2));
+            ArrayList<String> consonantUpArr2 = new ArrayList<>(Arrays.asList(consonantsUp2));
+
 
             public int wordRemovedSpaceLength(String word) {
                 String[] arr = word.split(" ");
@@ -81,7 +92,8 @@ public class ForCard {
                     randomCount = new Random().nextInt(2) + 1;
                 } else {
                     double n = (double) wordLengthRemovedSpace;
-                    randomCount = new Random().nextInt(Integer.parseInt(String.format("%.0f", n * 0.3))) + 1;
+                    randomCount = new Random().nextInt(Integer.parseInt(String.format("%.0f", n * 0.2))) + 1;
+                    Log.e("randomCount", String.valueOf(randomCount));
                 }
 
                     for (int i = 0; i < randomCount; i++) {
@@ -95,16 +107,16 @@ public class ForCard {
                         }
 
                         if (vowelArr.contains(wordArr.get(randomPlace))) {
-                            String randomSpell = vowelArr.get(new Random().nextInt(5));
+                            String randomSpell = vowelArr2.get(new Random().nextInt(5));
                             wordArr.set(randomPlace, randomSpell);
                         } else if (vowelsUpArr.contains(wordArr.get(randomPlace))) {
-                            String randomSpell = vowelsUpArr.get(new Random().nextInt(5));
+                            String randomSpell = vowelsUpArr2.get(new Random().nextInt(5));
                             wordArr.set(randomPlace, randomSpell);
                         } else if (consonantArr.contains(wordArr.get(randomPlace))) {
-                            String randomSpell = consonantArr.get(new Random().nextInt(21));
+                            String randomSpell = consonantArr2.get(new Random().nextInt(17));
                             wordArr.set(randomPlace, randomSpell);
                         } else if (consonantUpArr.contains(wordArr.get(randomPlace))) {
-                            String randomSpell = consonantUpArr.get(new Random().nextInt(21));
+                            String randomSpell = consonantUpArr2.get(new Random().nextInt(17));
                             wordArr.set(randomPlace, randomSpell);
                         } else {
                         }

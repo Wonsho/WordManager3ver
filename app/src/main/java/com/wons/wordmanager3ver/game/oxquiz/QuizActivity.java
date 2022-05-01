@@ -70,7 +70,7 @@ public class QuizActivity extends AppCompatActivity {
         if (b) {
             AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
             builder.setTitle("알림");
-            builder.setMessage("정답입니다");
+            builder.setMessage("정답입니다\n"+ viewModel.getWordTitle() +"\n"+ viewModel.getWordKorean() + " 입니다");
             builder.setOnDismissListener(listener -> {
                 if (nowIndex + 1 == viewModel.getWordQuantity()) {
                     showFinishDialog();
@@ -83,7 +83,7 @@ public class QuizActivity extends AppCompatActivity {
         if (!b) {
             AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
             builder.setTitle("알림");
-            builder.setMessage("틀렸습니다 \n" + "정답은 " + viewModel.getWordKorean() + " 입니다");
+            builder.setMessage("틀렸습니다 \n" + viewModel.getWordTitle() +"\n"+ viewModel.getWordKorean() + " 입니다");
             builder.setOnDismissListener(listener -> {
                 if (nowIndex + 1 == viewModel.getWordQuantity()) {
                     showFinishDialog();

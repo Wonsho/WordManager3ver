@@ -120,8 +120,7 @@ public class StudyActivity extends AppCompatActivity {
             viewModel.wordMutableLiveData.setValue(viewModel.getWordMap().get(listName).get(0));
         });
         viewModel.wordListMutableLiveData.setValue(viewModel.getWordLists().get(0));
-
-
+        
         //todo 초반 단어장 셋팅
     }
 
@@ -136,7 +135,7 @@ public class StudyActivity extends AppCompatActivity {
         binding.tvCountOfWord.setText(String.valueOf(viewModel.getSelectedWords().indexOf(word) + 1 + "/" + viewModel.getSelectedWords().size()));
         binding.tvKorean.setText(viewModel.getWordInfoByWord(word).wordKorean);
         String percentage = String.valueOf(viewModel.getWordInfoByWord(word).getCorrectPercentage()) + "%";
-        if(percentage.equals("0%")) {
+        if(percentage.equals("-1%")) {
             percentage = "데이터 없음";
         }
         String memo = viewModel.getWordInfoByWord(word).getWordMemo();
