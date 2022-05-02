@@ -107,7 +107,7 @@
         android:textStyle="bold"
         android:id="@+id/tv_notice"
         android:layout_width="wrap_content"
-        android:textColor="#5E5E5E"
+        android:textColor="#FF0000"
         android:layout_height="wrap_content"
         android:text="단어장을 눌러 단어를 추가해주세요!"
         app:layout_constraintBottom_toBottomOf="@id/btn_rename"

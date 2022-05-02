@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.wons.wordmanager3ver.databinding.ActivityQuizBinding;
 
+import java.util.ArrayList;
+
 public class QuizActivity extends AppCompatActivity {
     private ActivityQuizBinding binding;
     private QuizGameViewModel viewModel;
