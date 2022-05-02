@@ -1,9 +1,9 @@
 package com.wons.wordmanager3ver.game.makeword;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityMakeWordGameBinding;
+import com.wons.wordmanager3ver.databinding.TextSpellBinding;
+import com.wons.wordmanager3ver.databinding.WordSpellBinding;
 import com.wons.wordmanager3ver.game.dialogUtils.CallBackGameDialog;
 import com.wons.wordmanager3ver.game.dialogUtils.DialogOfGame;
 import com.wons.wordmanager3ver.game.dialogUtils.EnumGameStart;
@@ -25,9 +27,6 @@ import java.util.ArrayList;
 public class MakeWordGameActivity extends AppCompatActivity {
     private ActivityMakeWordGameBinding binding;
     private MakeSpellViewModel viewModel;
-    private final int NON = -1;
-    private final int FINISH = 1;
-    private final int NOT_YET = 0;
     private int backCount = 0;
 
     @Override
@@ -36,150 +35,147 @@ public class MakeWordGameActivity extends AppCompatActivity {
         binding = ActivityMakeWordGameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(MakeSpellViewModel.class);
-
-        viewModel.initData(GameCode.START);
         viewModel.startGame(GameCode.START);
-        onClick();
+        onclick();
         setGameView();
-        backCount = 0;
     }
 
-    private void onClick() {
-
-        binding.btnDelete.setOnClickListener(v -> {
-            viewModel.onclickBackBtn();
-            setGameView();
-            backCount = 0;
-        });
+    private void onclick() {
 
         binding.btnFinish.setOnClickListener(v -> {
             finish();
         });
 
-        binding.btnReset.setOnClickListener(v -> {
-            viewModel.onClickReplaceBtn();
-            setGameView();
+        binding.btnDelete.setOnClickListener(v -> {
+            viewModel.onClickBackBtn();
             backCount = 0;
+            setGameView();
         });
+
+        binding.btnReset.setOnClickListener(v -> {
+            viewModel.onClickReset();
+            backCount = 0;
+            setGameView();
+        });
+
     }
 
     private void setGameView() {
-        backCount = 0;
-        binding.tvWordKorean.setText("단어의 뜻 - \n" + viewModel.getWordKorean());
-        LinearLayout layoutWord = binding.layoutWord;
-        LinearLayout layoutSpell = binding.layoutSpell;
+        int wrongSpellIndex = viewModel.gameData.check();
+        int life = viewModel.gameData.getLife();
+        ArrayList<String> inputSpellArr = viewModel.gameData.getInputArr();
+        ArrayList<String> spellMenuArr = viewModel.gameData.getSpellMenuArr();
+        String wordKorean = viewModel.gameData.getWordKorean();
+        LinearLayout wordLay = binding.layoutWord;
+        LinearLayout spellLay = binding.layoutSpell;
+        wordLay.removeAllViews();
+        spellLay.removeAllViews();
+        binding.tvLife.setText(String.valueOf(life));
+        binding.tvWordKorean.setText(wordKorean);
 
-        layoutSpell.removeAllViews();
-        layoutWord.removeAllViews();
+        for (int i = 0; i < inputSpellArr.size(); i++) {
+            View v;
+            String s = inputSpellArr.get(i);
 
-        ArrayList<String> showWordArr = viewModel.getShowWordArr();
-        ArrayList<String> choiceWordArr = viewModel.getChoiceWordArr();
+            if (!s.equals(" ")) {
+                WordSpellBinding binding = WordSpellBinding.inflate(getLayoutInflater());
 
-        for (String s : showWordArr) {
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.word_spell, null);
-            TextView tv_spell = view.findViewById(R.id.tv_spell);
-            Log.e("inflate", "passed");
-            if (s.equals(" ")) {
-                LinearLayout layout = view.findViewById(R.id.container);
-                layout.setBackgroundResource(R.drawable.back);
-                tv_spell.setTextColor(Color.parseColor("#FFFFFFFF"));
-            } else if (s.equals("^")) {
-                tv_spell.setTextColor(Color.parseColor("#F2F2F2"));
+                if (s.equals("^")) {
+                    binding.tvSpell.setTextColor(Color.parseColor("#F2F2F2"));
+                } else {
+                    binding.tvSpell.setText(s);
+
+                    if (i == wrongSpellIndex && life != 0) {
+                        binding.tvSpell.setTextColor(Color.parseColor("#FF0000"));
+                    }
+                }
+                v = binding.getRoot();
             } else {
-                tv_spell.setText(s.trim().toUpperCase());
+                TextSpellBinding binding = TextSpellBinding.inflate(getLayoutInflater());
+                binding.tvSpelling.setText("  ");
+                v = binding.getRoot();
             }
-            layoutWord.addView(view);
+
+            wordLay.addView(v);
         }
 
-        for(String s : choiceWordArr) {
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.word_spell, null, true);
-            TextView tv_spell = view.findViewById(R.id.tv_spell);
+        class CallBackAction {
+            void showDialogByResult(EnumGameStart enumGameStart) {
 
-            tv_spell.setText(s.trim().toUpperCase());
-            tv_spell.setOnClickListener(v -> {
-                int resultCode = viewModel.inputSpell(((TextView)v).getText().toString());
-                switch (resultCode) {
-                    case NON : {
-                        setGameView();
-                        Log.e("InputSpell","Error");
+                switch (enumGameStart) {
+
+                    case CLOSE: {
+                        finish();
                         break;
                     }
 
-                    case FINISH: {
+                    case RESTART_OTHER_WORD: {
+                        viewModel.startGame(GameCode.RESTART_OTHER_WORD);
                         setGameView();
-                        int resultGameCode = viewModel.checkWord();
-                        switch (resultGameCode) {
-                            case GameCode.GAME_OVER: {
-                                AlertDialog dialog = new DialogOfGame().getDialogWhenGameOver(MakeWordGameActivity.this, new CallBackGameDialog() {
-                                    @Override
-                                    public void callBack(EnumGameStart enumGameStart) {
-                                        startGameByCode(enumGameStart);
-                                    }
-                                });
-                                dialog.setOnCancelListener(listener -> {
-                                   finish();
-                                });
-                                dialog.show();
-                                break;
-                            }
-
-                            case GameCode.GAME_WIN: {
-                                AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(MakeWordGameActivity.this, new CallBackGameDialog() {
-                                    @Override
-                                    public void callBack(EnumGameStart enumGameStart) {
-                                        startGameByCode(enumGameStart);
-                                    }
-                                }, viewModel.getBaseWord(), viewModel.getWordKorean());
-                                dialog.setOnCancelListener(listener -> {
-                                    finish();
-                                });
-                                dialog.show();
-                                break;
-                            }
-                        }
                         break;
                     }
 
-                    case NOT_YET: {
+                    case RESTART_SAME_WORD: {
+                        viewModel.startGame(GameCode.RESTART_SAME_WORD);
                         setGameView();
                         break;
                     }
                 }
+            }
+        }
+
+        for (String s : spellMenuArr) {
+            WordSpellBinding binding = WordSpellBinding.inflate(getLayoutInflater());
+            binding.tvSpell.setText(s);
+            binding.getRoot().setOnClickListener(v -> {
+                int resultCode = viewModel.onClickSpell(s);
+
+                switch (resultCode) {
+                    case GameCode.GAME_OVER: {
+                        new DialogOfGame().getDialogWhenGameOver(
+                                MakeWordGameActivity.this,
+                                new CallBackGameDialog() {
+                                    @Override
+                                    public void callBack(EnumGameStart enumGameStart) {
+                                        new CallBackAction().showDialogByResult(enumGameStart);
+                                    }
+                                }
+                        ).show();
+                        break;
+                    }
+
+                    case GameCode.GAME_WIN: {
+                        new DialogOfGame().getDialogWhenCorrect(
+                                MakeWordGameActivity.this,
+                                new CallBackGameDialog() {
+                                    @Override
+                                    public void callBack(EnumGameStart enumGameStart) {
+                                        new CallBackAction().showDialogByResult(enumGameStart);
+                                    }
+                                }
+                        ,viewModel.gameData.getWordTitle(), viewModel.gameData.getWordKorean()).show();
+                        break;
+                    }
+
+                    case -2: {
+                        Toast.makeText(getApplicationContext(), "정답이 아닌 스펠링이 있습니다\n" +
+                                                                      "  뒤로가기를 눌러주세요", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                setGameView();
             });
 
-            layoutSpell.addView(view);
+            spellLay.addView(binding.getRoot());
         }
+
     }
 
-    private void startGameByCode(EnumGameStart gameStart) {
-
-        switch (gameStart) {
-            case CLOSE: {
-                finish();
-                break;
-            }
-
-            case RESTART_SAME_WORD: {
-                viewModel.onClickReplaceBtn();
-                setGameView();
-                Log.e("startSame", "Passed");
-                break;
-            }
-
-            case RESTART_OTHER_WORD: {
-                viewModel.startGame(GameCode.RESTART_OTHER_WORD);
-                Log.e("startOther", "Passed");
-                setGameView();
-                break;
-            }
-        }
-    }
 
     @Override
     public void onBackPressed() {
-        if(backCount == 0) {
+        if (backCount == 0) {
             Toast.makeText(getApplicationContext(), "한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();
-            backCount ++;
+            backCount++;
             return;
         }
         super.onBackPressed();

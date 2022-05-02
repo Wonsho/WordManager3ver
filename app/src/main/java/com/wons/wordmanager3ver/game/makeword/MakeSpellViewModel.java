@@ -9,6 +9,7 @@ import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.Word;
+import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.game.GameCode;
 
 import java.util.ArrayList;
@@ -17,276 +18,128 @@ import java.util.Random;
 
 public class MakeSpellViewModel extends ViewModel {
     private MyDao dao = MainViewModel.dao;
+    private MutableLiveData<MakeWordGame> liveGameData;
+    public GameData gameData;
 
-    //todo 단순 데이터 -> 램덤으로 골라진 단어
-    private MutableLiveData<Word> baseWord; // 처음 선택된 단어
+    class GameData {
+        MakeWordGame game = liveGameData.getValue();
 
-    //todo View용도 -> 고른 데이터
-    private MutableLiveData<ArrayList<String>> showWord;
-
-    //todo View용도 -> 골라야 되는 데이터
-    private MutableLiveData<ArrayList<String>> choiceSpell;  // (골라야 되는 데이터 -> 바뀜)스펠링 선택하면 하나 하나 삭제
-
-    //todo 단순 데이터 -> 고른 데이터 저장
-    private MutableLiveData<ArrayList<String>> pickedSpell; // (고른뒤 추가 되는 데이터 -> 바낌 )고른 스펠링을 보여주는 정보 --> 나중에 이 둘을 비교 원래의 단어와 같을경우 승리
-
-    private final int DELETE = 0;
-    private final int ADD = 1;
-
-    public ArrayList<String> getShowWordArr() {
-        return this.showWord.getValue();
-    }
-
-    public ArrayList<String> getChoiceWordArr() {
-        return this.choiceSpell.getValue();
-    }
-
-
-    public void initData(int gameCode) {
-
-        if (gameCode == GameCode.START && (this.baseWord != null)) {
-            Log.e("init", "pass");
-            return;
+        public ArrayList<String> getSpellMenuArr() {
+            return game.accessGameData.getSpellMenuArr();
         }
 
-        if (this.baseWord == null) {
-            this.baseWord = new MutableLiveData<>();
+        public ArrayList<String> getInputArr() {
+            return game.accessGameData.getInputArr();
         }
 
-        if (this.showWord == null) {
-            this.showWord = new MutableLiveData<>();
-            this.showWord.setValue(new ArrayList<>());
+        public String getWordKorean() {
+            WordInfo info = dao.getWordInfo(
+                    game.accessGameData.getOriginWord(),
+                    MainViewModel.getUserInfo().getLanguageCode()
+            );
+
+            return info.wordKorean;
         }
 
-        if (this.choiceSpell == null) {
-            this.choiceSpell = new MutableLiveData<>();
-            this.choiceSpell.setValue(new ArrayList<>());
+        public String getWordTitle() {
+           return liveGameData.getValue().accessGameData.getOriginWord();
         }
 
-        if (this.pickedSpell == null) {
-            this.pickedSpell = new MutableLiveData<>();
-            this.pickedSpell.setValue(new ArrayList<>());
+
+        /*This method is check before spell text is correct or not
+        * use when before setView and then get wrong spell index.
+        * if return value is not -1 --> change index spell color to red
+        *
+        * @return
+        * if spell is right -> -1
+        * else --> return wrong spell's index of Arr*/
+        public int check() {
+            if (!game.accessGameData.check()) {
+                return game.accessGameData.getWrongIndex();
+            } else {
+                return -1;
+            }
+        }
+
+        public int getLife() {
+            return game.accessGameData.getLife();
         }
     }
+
 
     public void startGame(int gameCode) {
 
+        class Utils {
+
+            String getRandomWord() {
+                TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(
+                        MainViewModel.getUserInfo().getLanguageCode()
+                );
+
+                ArrayList<Word> wordArr = new ArrayList<>();
+
+                for (TodayWordList t : todayWordLists) {
+                    wordArr.addAll(new ArrayList<>(Arrays.asList(dao.getAllWordByLanguageByListCode(
+                            t.getListLanguageCode(),
+                            t.getListCode()
+                    ))));
+                }
+
+                return wordArr.get(new Random().nextInt(wordArr.size())).getWordTitle();
+            }
+
+
+        }
+
+        if (liveGameData == null) {
+            liveGameData = new MutableLiveData<>();
+        }
+
         switch (gameCode) {
+            case GameCode.RESTART_SAME_WORD: {
+                MakeWordGame game = liveGameData.getValue();
+                game.gameAction.restart();
+                liveGameData.setValue(game);
+                break;
+            }
+
             case GameCode.START: {
-                if (baseWord.getValue() != null) {
-                    Log.e("init", "pass");
+
+                if (liveGameData.getValue() != null) {
                     return;
                 }
-                this.pickedSpell.setValue(new ArrayList<>());
-                choiceRandomWord();
-                makeShowWord();
-                makeChoiceSpell();
-                break;
+
             }
 
             case GameCode.RESTART_OTHER_WORD: {
-                this.pickedSpell.setValue(new ArrayList<>());
-                choiceRandomWord();
-                makeShowWord();
-                makeChoiceSpell();
-                break;
-            }
-
-            case GameCode.RESTART_SAME_WORD: {
-                this.pickedSpell.setValue(new ArrayList<>());
-                makeShowWord();
-                makeChoiceSpell();
+                liveGameData.setValue(new MakeWordGame(new Utils().getRandomWord()));
                 break;
             }
         }
 
+        if (gameData == null) {
+            gameData = new GameData();
+        }
+
     }
 
-    private void choiceRandomWord() {
-        TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(
-                MainViewModel.getUserInfo().getLanguageCode()
-        );
-        ArrayList<Word> words = new ArrayList<>();
-
-        for (TodayWordList todayWordList : todayWordLists) {
-            words.addAll(new ArrayList<>(Arrays.asList(dao.getAllWordByLanguageByListCode(
-                    MainViewModel.getUserInfo().getLanguageCode(),
-                    todayWordList.getListCode()
-            ))));
-        }
-
-        int randomNum = new Random().nextInt(words.size());
-        this.baseWord.setValue(words.get(randomNum));
-        makeShowWord();
+    // resultCode -2 is return code reason is inputArr has wrong spell
+    public int onClickSpell(String spell) {
+        MakeWordGame game = liveGameData.getValue();
+        int resultCode = game.gameAction.onClickSpell(spell);
+        liveGameData.setValue(game);
+        return resultCode;
     }
 
-    // 만약 pickSpell의 사이즈가 0이면 새로 만들고 아니면 pick을 바탕으로 만들기
-    private void makeShowWord() {
-
-        if(this.pickedSpell.getValue().size() == 0) {
-            initShowWord();
-        } else {
-            initShowWord();
-            ArrayList<String> pickArr = this.pickedSpell.getValue();
-            ArrayList<String> showWord = this.showWord.getValue();
-
-            int spaceCount = 0;
-            for(int i=0 ; i<showWord.size() ; i++) {
-                if(showWord.get(i).equals(" ")) {
-                    spaceCount++;
-                    continue;
-                }
-                try {
-                    showWord.set(i, pickArr.get(i-spaceCount));
-                } catch (Exception e) {
-                    break;
-                }
-
-            }
-            this.showWord.setValue(showWord);
-        }
+    public void onClickBackBtn() {
+        MakeWordGame game = liveGameData.getValue();
+        game.gameAction.onClickBackBtn();
+        liveGameData.setValue(game);
     }
 
-    private void initShowWord() {
-        ArrayList<String> strArr = new ArrayList<>();
-        String word = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
-        char[] wordToChars = word.toCharArray();
-
-
-        //todo if .equls " " --> 빈칸
-        // .equals "^" --> 텍스트만 빈것 */
-        for (char strChar : wordToChars) {
-            if (String.valueOf(strChar).equals(" ")) {
-                strArr.add(" ");
-            } else {
-                strArr.add("^");
-            }
-        }
-        this.showWord.setValue(strArr);
-    }
-
-    private void makeChoiceSpell() {
-        ArrayList<String> strArr = new ArrayList<>();
-        String word = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
-        char[] wordToChars = word.toCharArray();
-
-        for (char c : wordToChars) {
-            if (String.valueOf(c).equals(" ")) continue;
-            strArr.add(String.valueOf(c));
-        }
-
-        ArrayList<String> choiceSpell = new ArrayList<>();
-
-        while (true) {
-
-            if (strArr.size() == 0) {
-                break;
-            }
-
-            int randomNum = new Random().nextInt(strArr.size());
-            choiceSpell.add(strArr.get(randomNum));
-            strArr.remove(randomNum);
-
-        }
-        this.choiceSpell.setValue(choiceSpell);
-    }
-
-    // 들어온 값이 없으면 -1, 선택을 다했으면 1, 아니면 0
-    public int inputSpell(String spell) {
-
-        if(spell.isEmpty()) {
-            return -1;
-        }
-
-        ArrayList<String> pickArr = this.pickedSpell.getValue();
-        pickArr.add(spell.trim().toUpperCase());
-        this.pickedSpell.setValue(pickArr);
-        makeShowWord();
-        changeChoiceSpell(DELETE, spell);
-
-        String originWord = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
-        StringBuilder builder = new StringBuilder();
-        String[] strings = originWord.split(" ");
-
-        for(String s : strings) {
-            builder.append(s.trim());
-        }
-
-        String removedSpaceOriginWord = builder.toString();
-
-        if(removedSpaceOriginWord.length() == this.pickedSpell.getValue().size()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    private void changeChoiceSpell(int action, String spell) {
-        ArrayList<String> choiceSpell = this.choiceSpell.getValue();
-
-        if(action == DELETE) {
-            //todo pick의 마지막껄 가져와서 같은 값 지우기
-            int index = choiceSpell.indexOf(spell);
-            choiceSpell.remove(index);
-        }
-
-        if(action == ADD) {
-            choiceSpell.add(spell.trim());
-        }
-
-        this.choiceSpell.setValue(choiceSpell);
-    }
-
-    public void onclickBackBtn() {
-
-        if(this.pickedSpell.getValue().size() == 0) {
-            return;
-        }
-        ArrayList<String> pikArr = this.pickedSpell.getValue();
-        String spell = pickedSpell.getValue().get(pikArr.size()-1);
-        pikArr.remove(pikArr.size()-1);
-        this.pickedSpell.setValue(pikArr);
-        makeShowWord();
-        changeChoiceSpell(ADD, spell);
-    }
-
-    public void onClickReplaceBtn() {
-        startGame(GameCode.RESTART_SAME_WORD);
-    }
-
-    public String getWordKorean() {
-        return dao.getWordInfo(
-                this.baseWord.getValue().getWordTitle().trim().toUpperCase(),
-                MainViewModel.getUserInfo().getLanguageCode()
-                ).wordKorean;
-    }
-
-    public int checkWord() {
-        String originWord = this.baseWord.getValue().getWordTitle().trim().toUpperCase();
-        StringBuilder stringBuilder = new StringBuilder();
-        String[] strArr = originWord.split(" ");
-        for(String s : strArr) {
-            stringBuilder.append(s.trim().toUpperCase());
-        }
-        String originWordRemovedSpace = stringBuilder.toString();
-
-        ArrayList<String> pickArr = this.pickedSpell.getValue();
-        StringBuilder stringBuilder1 = new StringBuilder();
-
-        for(String s : pickArr) {
-            stringBuilder1.append(s.trim().toUpperCase());
-        }
-
-        String pickWord = stringBuilder1.toString();
-
-        if(originWordRemovedSpace.equals(pickWord)) {
-            return GameCode.GAME_WIN;
-        } else {
-            return GameCode.GAME_OVER;
-        }
-    }
-
-    public String getBaseWord() {
-        return this.baseWord.getValue().getWordTitle();
+    public void onClickReset() {
+        MakeWordGame game = liveGameData.getValue();
+        game.gameAction.onClickReset();
+        liveGameData.setValue(game);
     }
 }

@@ -2,19 +2,26 @@ package com.wons.wordmanager3ver.game.makeword;
 
 import android.annotation.SuppressLint;
 
+import com.wons.wordmanager3ver.game.GameCode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+
+//todo
+// 빨간거 있으면 목숨 하나 깐다
+// 빨간거거 있는 상태에서 인풋 스펠을 하면 return을 해준다*/
 public class MakeWordGame {
     private String originWordTitle;
-    private ArrayList<String> originWordArr; // 띄어쓰기 존재
-    private ArrayList<String> inputWordArr; // 띄어쓰기 존재
-    private ArrayList<String> inputWordCopyArr; // 띄어쓰기 존재
+    private ArrayList<String> originWordArr;
+    private ArrayList<String> inputWordArr;
+    private ArrayList<String> inputWordCopyArr;
     private ArrayList<String> spellMenuArr;
     private ArrayList<String> spellMenuCopyArr;
     private int inputIndex;
     private int life;
+    private boolean check = true;
     public AccessGameData accessGameData;
     public GameAction gameAction;
 
@@ -26,6 +33,10 @@ public class MakeWordGame {
     }
 
     class AccessGameData {
+
+        public String getOriginWord() {
+            return originWordTitle;
+        }
 
         public ArrayList<String> getInputArr() {
             return inputWordArr;
@@ -39,15 +50,35 @@ public class MakeWordGame {
             return life;
         }
 
+        // this two method ( getWrongIndex and check )is using for check word spelling is correct or not
+        // at first do check check is true or not when before setView
+        // if !check -->
+        //get nowIndex - 1
+        // if wordArr.get(nowIndex - 1).equals(" ") --> -1 one more
+        //don't save here index state
+        // and then change Text Color that index spell is to red
+        public int getWrongIndex() {
+
+            if (inputIndex == 0) {
+                return -1;
+            }
+
+            int wrongIndex = inputIndex - 1;
+
+            if (originWordArr.get(wrongIndex).equals(" ")) {
+                wrongIndex -= 1;
+            }
+
+            return wrongIndex;
+        }
+
+        public boolean check() {
+            return check;
+        }
+
     }
 
     class GameAction {
-        /*
-         * 다시시작
-         * 뒤로 가기
-         * 새로 고침
-         * 스펠링 입력
-         */
 
         public void restart() {
             life = getLife(originWordTitle);
@@ -55,29 +86,75 @@ public class MakeWordGame {
             inputWordArr = new ArrayList<>();
             inputWordArr.addAll(inputWordCopyArr);
             spellMenuArr = new ArrayList<>();
-            spellMenuCopyArr.addAll(spellMenuCopyArr);
+            spellMenuArr.addAll(spellMenuCopyArr);
+            check = true;
         }
 
         public void onClickBackBtn() {
+
             if (inputIndex == 0) {
                 return;
             }
 
+            inputIndex = inputIndex - 1;
+
+            if (originWordArr.get(inputIndex).equals(" ")) {
+                inputIndex = inputIndex - 1;
+            }
+
+            String backSpell = inputWordArr.get(inputIndex);
+            inputWordArr.set(inputIndex, "^");
+            spellMenuArr.add(backSpell);
+            check = true;
+
         }
 
         public void onClickReset() {
+            check = true;
+
             inputIndex = 0;
             inputWordArr = new ArrayList<>();
             inputWordArr.addAll(inputWordCopyArr);
             spellMenuArr = new ArrayList<>();
-            spellMenuCopyArr.addAll(spellMenuCopyArr);
+            spellMenuArr.addAll(spellMenuCopyArr);
 
         }
 
+        //-2 is notion wrong
         public int onClickSpell(String spell) {
-            int resultCode = 0;
+            if (!check) {
+                return -2;
+            }
 
-            return resultCode;
+            int index = inputIndex;
+            inputWordArr.set(index, spell);
+            spellMenuArr.remove(spellMenuArr.indexOf(spell));
+
+            String originSpell = originWordArr.get(index);
+
+            if(!originSpell.equals(spell)) {
+                life -= 1;
+                check = false;
+            }
+
+            if(life == 0) {
+                return GameCode.GAME_OVER;
+            }
+
+            if(!inputWordArr.contains("^")) {
+                return GameCode.GAME_WIN;
+            }
+
+            index = index + 1;
+
+            if(originWordArr.get(index).equals(" ")) {
+                index = index + 1;
+            }
+
+            inputIndex = index;
+
+            return -1;
+
         }
 
     }
