@@ -61,6 +61,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
     }
 
     private void setGameView() {
+        Log.e("setGameView", "pass");
         int wrongSpellIndex = viewModel.gameData.check();
         int life = viewModel.gameData.getLife();
         ArrayList<String> inputSpellArr = viewModel.gameData.getInputArr();
@@ -110,6 +111,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     }
 
                     case RESTART_OTHER_WORD: {
+                        Log.e("restart", "pass");
                         viewModel.startGame(GameCode.RESTART_OTHER_WORD);
                         setGameView();
                         break;
@@ -159,11 +161,12 @@ public class MakeWordGameActivity extends AppCompatActivity {
 
                     case -2: {
                         Toast.makeText(getApplicationContext(), "정답이 아닌 스펠링이 있습니다\n" +
-                                                                      "  뒤로가기를 눌러주세요", Toast.LENGTH_SHORT).show();
+                                                                      "  지우기를 눌러주세요", Toast.LENGTH_SHORT).show();
                     }
                 }
                 setGameView();
             });
+            binding.getRoot().setPadding(20,0,0,0);
 
             spellLay.addView(binding.getRoot());
         }

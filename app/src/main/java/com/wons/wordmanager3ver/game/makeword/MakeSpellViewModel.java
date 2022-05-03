@@ -1,6 +1,7 @@
 package com.wons.wordmanager3ver.game.makeword;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -22,19 +23,19 @@ public class MakeSpellViewModel extends ViewModel {
     public GameData gameData;
 
     class GameData {
-        MakeWordGame game = liveGameData.getValue();
+
 
         public ArrayList<String> getSpellMenuArr() {
-            return game.accessGameData.getSpellMenuArr();
+            return liveGameData.getValue().accessGameData.getSpellMenuArr();
         }
 
         public ArrayList<String> getInputArr() {
-            return game.accessGameData.getInputArr();
+            return liveGameData.getValue().accessGameData.getInputArr();
         }
 
         public String getWordKorean() {
             WordInfo info = dao.getWordInfo(
-                    game.accessGameData.getOriginWord(),
+                    liveGameData.getValue().accessGameData.getOriginWord().toUpperCase(),
                     MainViewModel.getUserInfo().getLanguageCode()
             );
 
@@ -54,15 +55,15 @@ public class MakeSpellViewModel extends ViewModel {
         * if spell is right -> -1
         * else --> return wrong spell's index of Arr*/
         public int check() {
-            if (!game.accessGameData.check()) {
-                return game.accessGameData.getWrongIndex();
+            if (!liveGameData.getValue().accessGameData.check()) {
+                return liveGameData.getValue().accessGameData.getWrongIndex();
             } else {
                 return -1;
             }
         }
 
         public int getLife() {
-            return game.accessGameData.getLife();
+            return liveGameData.getValue().accessGameData.getLife();
         }
     }
 
@@ -112,7 +113,11 @@ public class MakeSpellViewModel extends ViewModel {
             }
 
             case GameCode.RESTART_OTHER_WORD: {
-                liveGameData.setValue(new MakeWordGame(new Utils().getRandomWord()));
+                Log.e("restartOther", "pass");
+                String word = new Utils().getRandomWord();
+                Log.e("word", word);
+                liveGameData.setValue(new MakeWordGame(word));
+                Log.e("saved word",liveGameData.getValue().accessGameData.getOriginWord());
                 break;
             }
         }

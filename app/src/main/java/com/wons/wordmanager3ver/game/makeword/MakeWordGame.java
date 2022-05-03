@@ -1,6 +1,7 @@
 package com.wons.wordmanager3ver.game.makeword;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.wons.wordmanager3ver.game.GameCode;
 
@@ -8,10 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-
-//todo
-// 빨간거 있으면 목숨 하나 깐다
-// 빨간거거 있는 상태에서 인풋 스펠을 하면 return을 해준다*/
 public class MakeWordGame {
     private String originWordTitle;
     private ArrayList<String> originWordArr;
@@ -26,7 +23,7 @@ public class MakeWordGame {
     public GameAction gameAction;
 
     MakeWordGame(String wordTitle) {
-        String word = wordTitle.trim().toUpperCase();
+        String word = wordTitle.trim();
         gameAction = new GameAction();
         accessGameData = new AccessGameData();
         initData(word);

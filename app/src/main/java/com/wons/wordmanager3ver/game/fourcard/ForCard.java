@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.game.fourcard;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class ForCard {
                 return builder.toString();
             }
 
+            @SuppressLint("DefaultLocale")
             public String makeRandomWord(String wordTitle) {
                 ArrayList<String> wordArr = makeWordToArr(wordTitle);
                 int wordLengthRemovedSpace = wordRemovedSpaceLength(wordTitle);
