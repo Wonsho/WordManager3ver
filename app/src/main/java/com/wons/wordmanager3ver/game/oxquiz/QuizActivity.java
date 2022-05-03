@@ -113,6 +113,7 @@ public class QuizActivity extends AppCompatActivity {
         alertDialog.setOnDismissListener(listener -> {
             finish();
         });
+        alertDialog.setCancelable(false);
         alertDialog.show();
     }
 

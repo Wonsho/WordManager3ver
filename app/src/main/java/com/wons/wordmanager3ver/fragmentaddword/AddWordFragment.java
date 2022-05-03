@@ -141,6 +141,7 @@ public class AddWordFragment extends Fragment {
 
                                 }
                             }, wordList.listName);
+                            alertDialog.setCancelable(false);
                             alertDialog.show();
                             break;
                         }
@@ -193,6 +194,7 @@ public class AddWordFragment extends Fragment {
                 }
             }
         }, EnumDo.RENAME);
+         dialogForReName.setCancelable(false);
         dialogForReName.show();
     }
 

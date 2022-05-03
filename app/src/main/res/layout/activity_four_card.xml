@@ -90,13 +90,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/tt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="목숨 : "
         android:textColor="@color/theme_black"
+        android:layout_marginLeft="10dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_life"
-        app:layout_constraintRight_toLeftOf="@id/tv_life"
-        app:layout_constraintTop_toTopOf="@id/tv_life" />
+        app:layout_constraintTop_toTopOf="@id/tv_life"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
         android:id="@+id/tv_life"
@@ -106,7 +108,7 @@
         android:text="0"
         android:textColor="@color/theme_black"
         android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tt"
         app:layout_constraintTop_toBottomOf="@id/lay_title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

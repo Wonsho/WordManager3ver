@@ -66,7 +66,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tt"
             android:textColor="@color/theme_black"
             android:textStyle="bold"
             android:text="0"
@@ -74,9 +74,11 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tt"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintRight_toLeftOf="@id/tv_life"
             app:layout_constraintBottom_toBottomOf="@id/tv_life"
             app:layout_constraintTop_toTopOf="@id/tv_life"
             android:text="목숨 : "
@@ -133,17 +135,30 @@
             app:layout_constraintBottom_toBottomOf="@id/btn_reset"/>
 
         <ScrollView
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:layout_margin="5dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/guideline1">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/theme_black"
+                    android:textStyle="bold"
+                    android:text="- 단어의 뜻 -"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:textSize="17sp"
                     android:id="@+id/tv_wordKorean"
                     android:layout_width="wrap_content"

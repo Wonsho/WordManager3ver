@@ -139,7 +139,7 @@ public class FourCardActivity extends AppCompatActivity {
                 builder.setOnCancelListener(listener -> {
                     finish();
                 });
-
+                builder.setCancelable(false);
                 builder.show();
             }
 
@@ -164,7 +164,7 @@ public class FourCardActivity extends AppCompatActivity {
                 builder.setOnCancelListener(listener -> {
                     finish();
                 });
-
+                builder.setCancelable(false);
                 builder.show();
             }
 

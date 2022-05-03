@@ -61,6 +61,7 @@ public class AddWordActivity extends AppCompatActivity {
 
         binding.btnAddWord.setOnClickListener(v -> {
             if (viewModel.getWordCount() != 20) {
+                dialogForAddWord.setCancelable(false);
                 dialogForAddWord.show();
             } else {
                 Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
@@ -198,6 +199,7 @@ public class AddWordActivity extends AppCompatActivity {
                     switch (action) {
                         case RENAME: {
                             setDialogForRename(word);
+                            dialogForRename.setCancelable(false);
                             dialogForRename.show();
 
                             break;
@@ -246,6 +248,7 @@ public class AddWordActivity extends AppCompatActivity {
 
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
     }
 

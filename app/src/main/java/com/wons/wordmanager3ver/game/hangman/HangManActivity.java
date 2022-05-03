@@ -261,9 +261,7 @@ public class HangManActivity extends AppCompatActivity {
                             resetGame(enumGameStart);
                         }
                     });
-            alertDialog.setOnCancelListener(v -> {
-                alertDialog.show();
-            });
+            alertDialog.setCancelable(false);
             alertDialog.show();
         }
         if (code == GameCode.GAME_WIN) {
@@ -274,9 +272,8 @@ public class HangManActivity extends AppCompatActivity {
                             resetGame(enumGameStart);
                         }
                     }, viewModel.wordTitle, viewModel.getWordKorean());
-            dialog.setOnCancelListener(v -> {
-                dialog.show();
-            });
+
+            dialog.setCancelable(false);
             dialog.show();
         }
     }

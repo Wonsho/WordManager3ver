@@ -158,6 +158,7 @@ public class PutSpellAtBlankActivity extends AppCompatActivity {
                 dialog.setOnCancelListener(listener -> {
                     finish();
                 });
+                dialog.setCancelable(false);
                 dialog.show();
             }
 
@@ -175,6 +176,7 @@ public class PutSpellAtBlankActivity extends AppCompatActivity {
                 dialog.setOnCancelListener(listener -> {
                     finish();
                 });
+                dialog.setCancelable(false);
                 dialog.show();
             }
 

@@ -1,9 +1,9 @@
 package com.wons.wordmanager3ver.game.makeword;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -134,7 +134,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
 
                 switch (resultCode) {
                     case GameCode.GAME_OVER: {
-                        new DialogOfGame().getDialogWhenGameOver(
+                        AlertDialog dialog = new DialogOfGame().getDialogWhenGameOver(
                                 MakeWordGameActivity.this,
                                 new CallBackGameDialog() {
                                     @Override
@@ -142,12 +142,14 @@ public class MakeWordGameActivity extends AppCompatActivity {
                                         new CallBackAction().showDialogByResult(enumGameStart);
                                     }
                                 }
-                        ).show();
+                        );
+                        dialog.setCancelable(false);
+                        dialog.show();
                         break;
                     }
 
                     case GameCode.GAME_WIN: {
-                        new DialogOfGame().getDialogWhenCorrect(
+                        AlertDialog dialog = new DialogOfGame().getDialogWhenCorrect(
                                 MakeWordGameActivity.this,
                                 new CallBackGameDialog() {
                                     @Override
@@ -155,7 +157,9 @@ public class MakeWordGameActivity extends AppCompatActivity {
                                         new CallBackAction().showDialogByResult(enumGameStart);
                                     }
                                 }
-                        ,viewModel.gameData.getWordTitle(), viewModel.gameData.getWordKorean()).show();
+                        ,viewModel.gameData.getWordTitle(), viewModel.gameData.getWordKorean());
+                        dialog.setCancelable(false);
+                        dialog.show();
                         break;
                     }
 

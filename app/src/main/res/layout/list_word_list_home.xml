@@ -47,7 +47,6 @@
         android:textSize="17sp"
         android:id="@+id/tv_listTitle"
         android:layout_marginLeft="5dp"
-        android:textStyle="bold"
         android:textColor="@color/theme_black"
         app:layout_constraintLeft_toRightOf="@id/tv2"
         app:layout_constraintBottom_toBottomOf="@id/iv"

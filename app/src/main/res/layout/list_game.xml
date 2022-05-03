@@ -36,7 +36,6 @@
                 android:text="행맨 게임"
                 android:textColor="@color/theme_black"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/dot"
                 app:layout_constraintLeft_toRightOf="@id/dot"
                 app:layout_constraintTop_toTopOf="@id/dot" />
