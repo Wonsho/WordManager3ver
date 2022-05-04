@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModel;
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
+import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
 import com.wons.wordmanager3ver.datavalues.TestWordResult;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
+import com.wons.wordmanager3ver.tool.Tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,7 +117,7 @@ public class TestResultActivityViewModel extends ViewModel {
                 return "불합격";
             }
         }
-        for(TodayWordList todayWordList : todayWordLists) {
+        for (TodayWordList todayWordList : todayWordLists) {
             todayWordList.passOrNo = true;
             dao.updateTodayList(todayWordList);
         }
@@ -123,26 +125,46 @@ public class TestResultActivityViewModel extends ViewModel {
         int exp = getTestExp();
         Log.e("exp", String.valueOf(exp));
         UserInfo userInfo = dao.getUserInfoByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+        int userLevel = userInfo.getLv();
         userInfo.addExp(exp);
         dao.updateUserInfo(userInfo);
+        UserInfo updatedUserInfo = dao.getUserInfoByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
 
-        return "합격";
+        Log.e("level", String.valueOf(userLevel) + " and " + updatedUserInfo.getLv());
+
+        if (userLevel != updatedUserInfo.getLv()) {
+            int gap = updatedUserInfo.getLv() - userLevel;
+
+            for(int i = 0; i < gap; i++) {
+                int level = userLevel + i + 1;
+                FlagUserLevelData flagUserLevelData = new FlagUserLevelData(
+                        MainViewModel.getUserInfo().getLanguageCode(),
+                        new Tools().getNoWDate(),
+                        level
+                );
+                MainViewModel.dao.insertFlagUserData(flagUserLevelData);
+            }
+        }
+
+            return "합격";
     }
 
     private int getTestExp() {
-         int wordCount = 0;
-         double exp = 0.0;
-         TestWordResult[] testWordResults = dao.getAllTestWordResult();
+        int wordCount = 0;
+        double exp = 0.0;
+        TestWordResult[] testWordResults = dao.getAllTestWordResult();
 
-         for(TestWordResult testWordResult : testWordResults) {
-             if(wordCount <= 25) {
-                 exp += 0.6;
-             } else {
-                 exp += 0.8;
-             }
-             wordCount++;
-         }
-         return (int) exp;
+        for (TestWordResult testWordResult : testWordResults) {
+            if (wordCount <= 25) {
+                 exp += 1.8;
+//                exp += 10.8;
+
+            } else {
+                exp += 2.0;
+            }
+            wordCount++;
+        }
+        return (int) exp;
     }
 
     public ArrayList<TestWordResult> getTestResultArr() {
@@ -157,19 +179,19 @@ public class TestResultActivityViewModel extends ViewModel {
     public void updateWordData() {
         //todo 시험본 단어 업데이트
         TestWordResult[] testWordResults = dao.getAllTestWordResult();
-        for(TestWordResult testWordResult : testWordResults) {
-            Log.e("updateWordData","pass");
+        for (TestWordResult testWordResult : testWordResults) {
+            Log.e("updateWordData", "pass");
             WordInfo wordInfo = wordInfoHashMap.get(
                     testWordResult.getWordTitle().trim().toUpperCase()
             );
             wordInfo.addTestedCount();
-            if(testWordResult.getTestResult()) {
+            if (testWordResult.getTestResult()) {
                 wordInfo.addCorrectCount();
             }
             dao.updateWordInfo(wordInfo);
         }
 
-       updateWordListGrade();
+        updateWordListGrade();
 
     }
 
@@ -177,14 +199,14 @@ public class TestResultActivityViewModel extends ViewModel {
 
         ArrayList<WordList> wordLists = new ArrayList<>();
 
-        for(TodayWordList todayWordList : todayWordLists) {
+        for (TodayWordList todayWordList : todayWordLists) {
             WordList wordList = dao.getSelectedWordlist(todayWordList.getListCode());
             wordLists.add(wordList);
         }
 
-        for(WordList wordList : wordLists) {
+        for (WordList wordList : wordLists) {
             int average = MainViewModel.getAverageWordGradeInWordList(wordList);
-            Log.e("average" , String.valueOf(average));
+            Log.e("average", String.valueOf(average));
             wordList.setListGradeInt(average);
             dao.updateWordList(wordList);
         }

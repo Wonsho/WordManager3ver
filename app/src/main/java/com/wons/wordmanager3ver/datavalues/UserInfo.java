@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey;
 import com.wons.wordmanager3ver.tool.Tools;
 
 @Entity
-public class UserInfo {
+public class
+UserInfo {
     @PrimaryKey
     @NonNull
     private int languageCode;

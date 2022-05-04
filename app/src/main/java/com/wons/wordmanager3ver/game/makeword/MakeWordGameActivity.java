@@ -86,7 +86,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
                 } else {
                     binding.tvSpell.setText(s);
 
-                    if (i == wrongSpellIndex && life != 0) {
+                    if ((i == wrongSpellIndex && life != 0) || (i == wrongSpellIndex + 1 && life == 0)) {
                         binding.tvSpell.setTextColor(Color.parseColor("#FF0000"));
                     }
                 }

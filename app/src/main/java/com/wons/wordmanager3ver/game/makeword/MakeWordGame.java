@@ -250,6 +250,9 @@ public class MakeWordGame {
                 , ((double) wordLengthRemovedSpace * 0.3)
         ));
 
+        if(wordLengthRemovedSpace == 1) {
+            return 1;
+        }
         return life;
     }
 
