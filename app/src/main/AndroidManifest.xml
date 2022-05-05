@@ -12,40 +12,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
         <activity
-            android:name=".game.fourcard.FourCardActivity"
+            android:name=".infoactivity.InfoActivity"
             android:exported="true" />
         <activity
-            android:name=".game.putspellatblankgame.PutSpellAtBlankActivity"
+            android:name=".addwordactivity.WordListActivity"
             android:exported="true" />
         <activity
-            android:name=".game.oxquiz.QuizActivity"
+            android:name=".gamefragment.game.fourcard.FourCardActivity"
             android:exported="true" />
         <activity
-            android:name=".game.makeword.MakeWordGameActivity"
+            android:name=".gamefragment.game.putspellatblankgame.PutSpellAtBlankActivity"
             android:exported="true" />
         <activity
-            android:name=".fragmenthome.getlist.ChoiceListActivity"
+            android:name=".gamefragment.game.oxquiz.QuizActivity"
             android:exported="true" />
         <activity
-            android:name=".fragmentaddword.memo.MemoActivity"
+            android:name=".gamefragment.game.makeword.MakeWordGameActivity"
             android:exported="true" />
         <activity
-            android:name=".fragmentaddword.sameword.CheckSameWordActivity"
+            android:name=".mainutils.getlist.ChoiceListActivity"
             android:exported="true" />
         <activity
-            android:name=".testword.TestResultActivity"
+            android:name=".addwordactivity.memo.MemoActivity"
             android:exported="true" />
         <activity
-            android:name=".fragmentaddword.addword.AddWordActivity"
+            android:name=".addwordactivity.sameword.CheckSameWordActivity"
             android:exported="true" />
         <activity
-            android:name=".testword.TestActivity"
+            android:name=".testfragment.testword.TestResultActivity"
             android:exported="true" />
         <activity
-            android:name=".studyword.StudyActivity"
+            android:name=".addwordactivity.addword.AddWordActivity"
             android:exported="true" />
         <activity
-            android:name=".game.hangman.HangManActivity"
+            android:name=".testfragment.testword.TestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".studyfragment.studyword.StudyActivity"
+            android:exported="true" />
+        <activity
+            android:name=".gamefragment.game.hangman.HangManActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

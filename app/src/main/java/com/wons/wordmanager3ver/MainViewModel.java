@@ -2,12 +2,9 @@ package com.wons.wordmanager3ver;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-import android.widget.ArrayAdapter;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
 import com.wons.wordmanager3ver.datavalues.EnumDialogSettingValue;
 import com.wons.wordmanager3ver.datavalues.EnumLanguage;
@@ -20,15 +17,11 @@ import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
 import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordInfo;
 import com.wons.wordmanager3ver.datavalues.WordList;
-import com.wons.wordmanager3ver.fragmentaddword.addword.AddWordActivity;
 import com.wons.wordmanager3ver.tool.Tools;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class MainViewModel extends ViewModel {
     public static MainDatabase database;
@@ -176,12 +169,73 @@ public class MainViewModel extends ViewModel {
         return sum / words1.length;
     }
 
-    public static Setting getSetting(int settingCode) {
-        return dao.getSetting(settingCode);
-    }
 
     public static void updateWordList(WordList list) {
         dao.updateWordList(list);
     }
+
+
+
+    //todo userinfo
+
+
+
+    //todo 뷰의 메소드
+
+    public static Setting getSetting(int settingCode) {
+        return dao.getSetting(settingCode);
+    }
+
+    public void updateSetting(int settingCode,int settingValue) {
+        Setting setting = dao.getSetting(settingCode);
+        setting.settingValue = settingValue;
+        dao.updateUserSetting(setting);
+    }
+
+    public HashMap<Integer, WordList> getTodayWordList(ArrayList<TodayWordList> todayWordLists) {
+        ArrayList<TodayWordList> todayWordLists1 = todayWordLists;
+        HashMap<Integer, WordList> todayListMap = new HashMap<>();
+        for(TodayWordList wordList : todayWordLists1) {
+            WordList wordList1 =  dao.getSelectedWordlist(wordList.getListCode());
+            todayListMap.put(wordList1.getListCodeInt(), wordList1);
+        }
+
+        return  todayListMap;
+    }
+
+    public void insertTodayWordList(TodayWordList wordList) {
+        dao.insertTodayList(wordList);
+    }
+
+    public ArrayList<TodayWordList> getTodayWordList(int languageCode) {
+        return new ArrayList<>(Arrays.asList(dao.getAllTodayListByLanguageCode(languageCode)));
+    }
+
+    public void deleteTodayList(TodayWordList todayWordList) {
+        dao.deleteTodayList(todayWordList);
+    }
+
+    public ArrayList<TodayWordList> getRandomTodayWordList(ArrayList<Integer> integers) {
+        ArrayList<TodayWordList> todayWordLists = new ArrayList<>();
+        ArrayList<WordList> wordLists = new ArrayList<>(Arrays.asList(dao.getAllWordlistByLanguageCode(MainViewModel.getUserInfo().getLanguageCode())));
+        for(int i = 0 ; i < integers.size() ; i++) {
+            WordList wordList = wordLists.get(integers.get(i));
+            todayWordLists.add(new TodayWordList(wordList.getLanguageCode(), wordList.getListCodeInt(), false));
+        }
+        return todayWordLists;
+    }
+
+
+    public void setRecommendSettingReset() {
+        Setting setting = dao.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId);
+        setting.settingValue = 1;
+        dao.updateUserSetting(setting);
+    }
+
+
+
+
+
+
 
 }
