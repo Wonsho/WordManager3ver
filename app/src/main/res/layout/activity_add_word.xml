@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:paddingLeft="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -144,10 +145,12 @@
         app:layout_constraintTop_toBottomOf="@id/line2" />
 
     <TextView
+        android:textStyle="bold"
+        android:textColor="@color/theme_black"
         android:id="@+id/tv_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="단어장에 단어가 없습니다\n단어를 추가해 주세요"
+        android:text="             단어장에 단어가 없습니다\n상단의 버튼을 눌러 단어를 추가해 주세요"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/lv_word"
         app:layout_constraintLeft_toLeftOf="@id/lv_word"

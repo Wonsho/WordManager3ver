@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="     단어장이 없습니다\n\n단어장을 만들어 주세요!"
+            android:text="                     단어장이 없습니다\n\상단의 버튼을 눌러 단어장을 만들어 주세요!"
             android:textColor="@color/red"
             android:textSize="20sp"
             android:textStyle="bold"

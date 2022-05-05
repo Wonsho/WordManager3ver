@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.wons.wordmanager3ver.databinding.ActivityMainBinding;
 import com.wons.wordmanager3ver.datavalues.EnumSetting;
+import com.wons.wordmanager3ver.datavalues.MY;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
 import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
@@ -123,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
+        binding.back.setOnClickListener(v -> {
+            MY.doIt(getApplicationContext());
+        });
+
         binding.btnReplace.setOnClickListener(v -> {
             if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
                 Toast.makeText(getApplicationContext(), "저장된 단어장이 없습니다", Toast.LENGTH_LONG).show();
@@ -225,7 +230,8 @@ public class MainActivity extends AppCompatActivity {
             binding.tv1.setVisibility(View.VISIBLE);
         } else if(binding.lvList.getAdapter().getCount() == 0) {
             binding.tv1.setVisibility(View.VISIBLE);
-            binding.tv1.setText("공부할 단어장 리스트가 비어있습니다\n            새로고침을 해주세요");
+            binding.tv1.setText("공부할 단어장 리스트가 비어있습니다\n"+
+                                "   상단의 새로고침을 눌러주세요");
             setVisible(true);
         } else {
             setVisible(false);

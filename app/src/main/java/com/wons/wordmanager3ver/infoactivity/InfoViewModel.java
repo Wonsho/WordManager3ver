@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel;
 import com.wons.wordmanager3ver.MainViewModel;
 import com.wons.wordmanager3ver.MyDao;
 import com.wons.wordmanager3ver.datavalues.FlagUserLevelData;
+import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
+import com.wons.wordmanager3ver.datavalues.Word;
 import com.wons.wordmanager3ver.datavalues.WordList;
 
 import java.util.ArrayList;
@@ -31,10 +33,10 @@ public class InfoViewModel extends ViewModel {
     public int getUserGrade(int languageCode) {
         WordList[] wordLists = dao.getAllWordlistByLanguageCode(languageCode);
         int sum = 0;
-        for(WordList wordList : wordLists) {
+        for (WordList wordList : wordLists) {
             sum += wordList.getListGradeInt();
         }
-        return (int)((double)sum / (double)wordLists.length);
+        return (int) ((double) sum / (double) wordLists.length);
     }
 
     public int getWordListQuantity(int languageCode) {
@@ -43,7 +45,7 @@ public class InfoViewModel extends ViewModel {
 
     public ArrayList<FlagUserLevelData> getFlagUserData(int languageCode) {
         FlagUserLevelData[] flagUserLevelData = dao.getAllFlagUserDataByLanguage(languageCode);
-        if(flagUserLevelData.length == 0) {
+        if (flagUserLevelData.length == 0) {
             dao.insertFlagUserData(new FlagUserLevelData(languageCode, getNowUserInfo().getStartDay(), 1));
         }
         return new ArrayList<FlagUserLevelData>(Arrays.asList(dao.getAllFlagUserDataByLanguage(languageCode)));

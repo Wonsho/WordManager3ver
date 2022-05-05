@@ -4,22 +4,22 @@ import android.content.Context;
 import android.widget.Toast;
 
 public class MY {
-    private int i = 0;
-    private Context c;
+    private static int i = 0;
+    private static Context c;
 
-    public MY(Context c) {
-        this.c = c;
-    }
-
-    public void doIt() {
+    public static void doIt(Context _c) {
         i++;
-        if(i == 5) {
+        if(c == null) {
+            c = _c;
+        }
+        if(i == 10) {
+            i = 0;
             show();
         }
 
     }
 
-    private void show() {
+    private static void show() {
         Toast.makeText(c, "만든이 : 정원호 2022-05-01 작성함", Toast.LENGTH_SHORT).show();
     }
 }

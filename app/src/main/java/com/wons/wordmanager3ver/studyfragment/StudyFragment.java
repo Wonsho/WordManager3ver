@@ -51,8 +51,14 @@ public class StudyFragment extends Fragment {
     }
 
     private void setWordQuantity() {
-        int quantity = 3;
+        int quantity = viewModel.getTodayWordQuantity();
         binding.tvWordCount.setText(String.valueOf(quantity));
-
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setWordQuantity();
+    }
+
 }

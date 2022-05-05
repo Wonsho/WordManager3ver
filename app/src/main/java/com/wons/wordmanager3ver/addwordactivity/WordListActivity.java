@@ -67,6 +67,10 @@ public class WordListActivity extends AppCompatActivity {
 
     }
     private void onClick() {
+        
+        binding.btnBack.setOnClickListener(v -> {
+            finish();
+        });
 
         binding.btnAddList.setOnClickListener(v -> {
 //            dialogForAddList.show();
