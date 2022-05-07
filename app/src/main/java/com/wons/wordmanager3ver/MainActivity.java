@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setUserInfo();
         onClick();
         setTodayWordList();
+        isCheckUsedCount();
         getSupportFragmentManager().beginTransaction().replace(binding.frame.getId(), new GameFragment()).commit();
         binding.menu.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -280,6 +281,26 @@ public class MainActivity extends AppCompatActivity {
         } else {
             binding.cardStudy.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void isCheckUsedCount() {
+
+        if(viewModel.checkUsedCount()) {
+            //todo show dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("알림")
+                    .setMessage("사용한지 5일이 되었습니다")
+                    .setPositiveButton("리뷰작성하기", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //todo 리뷰
+                        }
+                    })
+                    .setNegativeButton("닫기",null)
+                    .setCancelable(false);
+            builder.show();
+        }
+
     }
 
 

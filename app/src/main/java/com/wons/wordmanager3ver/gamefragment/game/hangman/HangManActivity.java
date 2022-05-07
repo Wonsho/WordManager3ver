@@ -55,62 +55,6 @@ public class HangManActivity extends AppCompatActivity {
 
         keyBoardBinding = MykeyboardBinding.inflate(getLayoutInflater(), binding.keyboard, true);
 
-        keyBoardBinding.btn0.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-        });
-
-        keyBoardBinding.btn1.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-
-        });
-
-        keyBoardBinding.btn2.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-
-        });
-
-        keyBoardBinding.btn3.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-
-        });
-
-        keyBoardBinding.btn4.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-
-        });
-
-        keyBoardBinding.btn5.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-
-        });
-
-        keyBoardBinding.btn6.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-
-            removeView(v);
-        });
-
-        keyBoardBinding.btn7.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-        });
-
-        keyBoardBinding.btn8.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-        });
-
-        keyBoardBinding.btn9.setOnClickListener(v -> {
-            inputKeyBoard(((TextView) v).getText().toString().trim());
-            removeView(v);
-        });
-
         keyBoardBinding.btnQ.setOnClickListener(v -> {
             inputKeyBoard(((TextView) v).getText().toString().trim());
             removeView(v);
@@ -241,9 +185,6 @@ public class HangManActivity extends AppCompatActivity {
             removeView(v);
         });
 
-        keyBoardBinding.btnBack.setOnClickListener(v -> {
-            return;
-        });
     }
 
 

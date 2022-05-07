@@ -232,6 +232,17 @@ public class MainViewModel extends ViewModel {
         dao.updateUserSetting(setting);
     }
 
+    public boolean checkUsedCount() {
+        UsedCount count = dao.getUsedCount();
+
+        // if
+        // return Value is
+        // false that mean is don't show Dialog,
+        // true is show Dialog
+        return count.checkCount();
+
+    }
+
 
 
 

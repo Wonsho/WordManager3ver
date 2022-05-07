@@ -147,6 +147,7 @@
                         android:id="@+id/lv_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:listSelector="@android:color/transparent"
                         app:layout_constraintTop_toBottomOf="@id/line1" />
 
                     <ImageView
@@ -276,6 +277,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                app:layout_constraintRight_toRightOf="@id/g2"
+                app:layout_constraintLeft_toLeftOf="@id/g2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/white"
+                android:layout_width="5dp"
+                android:layout_height="0dp"
+                android:elevation="3dp"/>
+
+            <TextView
+                app:layout_constraintRight_toRightOf="@id/g2"
+                app:layout_constraintLeft_toLeftOf="@id/g2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/theme2"
+                android:layout_width="9dp"
+                android:layout_height="0dp"/>
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/g2"
                 android:layout_width="wrap_content"
@@ -295,13 +315,9 @@
                 app:layout_constraintRight_toLeftOf="@id/g2"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/bottom_note" />
-
                 <TextView
-                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="단어장 만들기" />
@@ -321,13 +337,9 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_myinfo" />
-
                 <TextView
-                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="나의 정보" />

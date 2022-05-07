@@ -26,7 +26,34 @@ public class DialogOfGame {
             }
         });
 
+        builder.setNeutralButton("정답 보기", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                showShowAnswer(context);
+            }
+        });
+
         return builder.create();
+    }
+
+    private void showShowAnswer(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("알림")
+                .setMessage("광고를 보고 정답을 찾으시겠습니까?")
+                .setNegativeButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        builder.setCancelable(false)
+                .show();
     }
 
     public AlertDialog getDialogWhenCorrect(Context context, CallBackGameDialog callBackGameDialog, String wordTitle, String wordKorean) {
