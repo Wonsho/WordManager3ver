@@ -107,9 +107,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:text="공부할 단어장 고르기"
+                        android:text="공부할 단어장"
                         android:textColor="@color/theme_black"
-                        android:textSize="17sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginTop="5dp"
                         app:layout_constraintLeft_toLeftOf="@id/c1"
@@ -316,6 +316,8 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
@@ -338,6 +340,8 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"

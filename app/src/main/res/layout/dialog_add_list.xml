@@ -50,7 +50,7 @@
         android:layout_marginLeft="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="10dp"
-        android:text=" 단어장 이름 ex) 어려운 단어모음 "
+        android:text=" 단어장 이름"
         app:layout_constraintTop_toBottomOf="@id/line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -65,6 +65,7 @@
 
     <TextView
         android:textColor="@color/purple_700"
+        android:textSize="18sp"
 
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
@@ -90,6 +91,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:text="취소"
+        android:textSize="18sp"
         app:layout_constraintLeft_toRightOf="@id/line3"
         app:layout_constraintTop_toBottomOf="@id/line2"
         app:layout_constraintRight_toRightOf="parent"

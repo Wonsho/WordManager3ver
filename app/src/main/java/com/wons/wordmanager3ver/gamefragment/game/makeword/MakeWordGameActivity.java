@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
     private ActivityMakeWordGameBinding binding;
     private MakeSpellViewModel viewModel;
     private int backCount = 0;
+    boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,14 @@ public class MakeWordGameActivity extends AppCompatActivity {
         });
 
         binding.btnDelete.setOnClickListener(v -> {
+            check = true;
             viewModel.onClickBackBtn();
             backCount = 0;
             setGameView();
         });
 
         binding.btnReset.setOnClickListener(v -> {
+            check = true;
             viewModel.onClickReset();
             backCount = 0;
             setGameView();
@@ -84,6 +88,12 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     binding.tvSpell.setText(s);
 
                     if ((i == wrongSpellIndex && life != 0) || (i == wrongSpellIndex + 1 && life == 0)) {
+                        if(check) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "틀렸습니다, 목숨 -1", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0,200);
+                            toast.show();
+                            check = false;
+                        }
                         binding.tvSpell.setTextColor(Color.parseColor("#FF0000"));
                     }
                 }
@@ -108,6 +118,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     }
 
                     case RESTART_OTHER_WORD: {
+                        check = true;
                         Log.e("restart", "pass");
                         viewModel.startGame(GameCode.RESTART_OTHER_WORD);
                         setGameView();
@@ -115,6 +126,7 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     }
 
                     case RESTART_SAME_WORD: {
+                        check = true;
                         viewModel.startGame(GameCode.RESTART_SAME_WORD);
                         setGameView();
                         break;
@@ -161,8 +173,10 @@ public class MakeWordGameActivity extends AppCompatActivity {
                     }
 
                     case -2: {
-                        Toast.makeText(getApplicationContext(), "정답이 아닌 스펠링이 있습니다\n" +
-                                                                      "  지우기를 눌러주세요", Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(getApplicationContext(), "정답이 아닌 스펠링이 있습니다\n" +
+                                                                                   "    지우기를 눌러주세요", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER,0,200);
+                        toast.show();
                     }
                 }
                 setGameView();

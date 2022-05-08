@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.wons.wordmanager3ver.databinding.ActivityFourCardBinding;
 import com.wons.wordmanager3ver.gamefragment.game.GameCode;
 
@@ -183,6 +185,14 @@ public class FourCardActivity extends AppCompatActivity {
                 return;
             }
 
+            case -1 : {
+                Toast toast = Toast.makeText(getApplicationContext(), "틀렸습니다 목숨 -1", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,200);
+                toast.show();
+
+
+            }
+
         }
 
         setView();
@@ -193,9 +203,9 @@ public class FourCardActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if(check == 0) {
-            Toast.makeText(getApplicationContext(), "한번더 누르면 종료됩니다",Toast.LENGTH_SHORT)
-                    .show();
+           Toast toast = Toast.makeText(getApplicationContext(), "한번더 누르면 종료됩니다",Toast.LENGTH_SHORT);
             check ++;
+            toast.show();
             return;
         }
         super.onBackPressed();

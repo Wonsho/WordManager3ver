@@ -50,7 +50,7 @@ public class AddWordAdapter extends BaseAdapter {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_word_add_list, viewGroup, false);
         }
 
-        TextView tv_language = view.findViewById(R.id.tv_language);
+//        TextView tv_language = view.findViewById(R.id.tv_language);
         TextView tv_wordTitle = view.findViewById(R.id.tv_wordTitle);
         TextView tv_wordKorean = view.findViewById(R.id.tv_wordKorean);
         TextView tv_percentage = view.findViewById(R.id.tv_percentage);
@@ -68,7 +68,7 @@ public class AddWordAdapter extends BaseAdapter {
 
         int percentage = infoMap.get(words.get(i).getWordTitle()).getCorrectPercentage();
         Log.e("percentage", String.valueOf(percentage));
-        tv_language.setText(language);
+//        tv_language.setText(language);
         tv_wordTitle.setText(words.get(i).getWordTitle());
         tv_wordKorean.setText(infoMap.get(words.get(i).getWordTitle()).wordKorean);
         String memo = infoMap.get(words.get(i).getWordTitle()).getWordMemo();

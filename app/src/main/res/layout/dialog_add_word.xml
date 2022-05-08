@@ -65,7 +65,7 @@
         android:background="@color/white"
         android:layout_marginLeft="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text=" 단어 ex) Run "
+        android:text=" 단어 "
         app:layout_constraintTop_toBottomOf="@id/btn_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@id/et_wordTitle"
         android:padding="10dp"
         android:gravity="center"
-        android:hint="단어 뜻을 적어주세요"
+        android:hint="뜻을 적어주세요"
         android:background="@drawable/list_theme"
         android:id="@+id/et_wordKorean"
         android:layout_width="match_parent"
@@ -90,7 +90,7 @@
         android:layout_marginLeft="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="10dp"
-        android:text=" 단어뜻 ex) 달리다, 달리기 "
+        android:text=" 단어의 의미 "
         app:layout_constraintTop_toBottomOf="@id/et_wordTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -111,6 +111,7 @@
         android:padding="5dp"
         android:textStyle="bold"
         android:gravity="center"
+        android:textSize="18sp"
         android:textColor="@color/purple_700"
         app:layout_constraintRight_toRightOf="@id/line3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -128,6 +129,8 @@
         android:textStyle="bold"
         android:gravity="center"
         android:text="취소"
+        android:textSize="18sp"
+
         android:textColor="#F44336"
         android:id="@+id/btn_cancel"
         app:layout_constraintLeft_toRightOf="@id/line3"

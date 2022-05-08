@@ -77,7 +77,7 @@ public class WordListActivity extends AppCompatActivity {
             MainViewModel.insertWordList(new WordList("~", MainViewModel.getUserInfo().getLanguageCode(), new Tools().getNoWDate()));
             WordList[] wordList = MainViewModel.dao.getSelectedWordlist(MainViewModel.getUserInfo().getLanguageCode(), "~");
             WordList wordList1 = wordList[0];
-            String listName = "단어장 " + String.valueOf(wordList1.listCodeInt);
+            String listName = "새단어장 " + String.valueOf(wordList1.listCodeInt);
             wordList1.listName = listName;
             MainViewModel.updateWordList(wordList1);
             setWordlist();
