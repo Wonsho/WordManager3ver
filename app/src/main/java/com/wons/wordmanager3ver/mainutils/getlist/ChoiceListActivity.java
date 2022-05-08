@@ -19,7 +19,6 @@ public class ChoiceListActivity extends AppCompatActivity {
 
     private ActivityChoiceListBinding binding;
     private MyDao dao;
-    private int maxCount;
     private int languageCode;
 
     @Override
@@ -28,27 +27,32 @@ public class ChoiceListActivity extends AppCompatActivity {
         binding = ActivityChoiceListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         dao = MainViewModel.dao;
+        int wordListQuantity = dao.getAllWordlistByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).length;
+        binding.tvCountOfList.setText(String.valueOf(wordListQuantity));
+
         binding.btnBack.setOnClickListener(v -> {
             finish();
         });
-
-        maxCount = getIntent().getIntExtra("maxCount", -1);
         languageCode = getIntent().getIntExtra("languageCode", -1);
-
-        if(maxCount == -1) {
-            Log.e("ChoiceActivity", "Error");
-            finish();
-        }
-        binding.tvCountOfList.setText(String.valueOf(maxCount));
         binding.tvCountOfSelected.setText(String.valueOf(0));
         setListview();
+        onClick();
+    }
+
+
+    private void onClick() {
+        binding.btnAdd.setOnClickListener(v -> {
+            insertTodayWordList(((ChoiceAdapter)binding.lv.getAdapter()).getSelectedWordList());
+        });
     }
 
     private void setListview() {
+
         if(binding.lv.getAdapter() == null) {
-            binding.lv.setAdapter(new ChoiceAdapter(maxCount, new AdapterCallBack() {
+            binding.lv.setAdapter(new ChoiceAdapter(new AdapterCallBack() {
                 @Override
                 public void callBack(boolean check) {
+
                     if(check) {
                         int count = Integer.parseInt(binding.tvCountOfSelected.getText().toString().trim());
                         count++;

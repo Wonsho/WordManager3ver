@@ -122,6 +122,7 @@
                     android:background="@drawable/list_theme">
 
                     <ListView
+                        android:layout_marginTop="1dp"
                         android:id="@+id/lv_word"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -320,7 +321,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="시험 본 각단어장안의 단어 70% 이상을 맞아야 합격입니다"
+                android:text="시험 본 각단어장안의 단어 80% 이상을 맞아야 합격입니다"
                 app:layout_constraintLeft_toLeftOf="@id/t6"
                 app:layout_constraintTop_toBottomOf="@id/t6" />
 

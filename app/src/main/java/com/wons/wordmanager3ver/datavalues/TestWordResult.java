@@ -12,10 +12,12 @@ public class TestWordResult {
     private int wordId; // -> 원래의 단어 아이디 공유
     private String wordTitle;
     private int listCodeOfWord;
+    public String inputWord;
     private boolean testResult;
 
-    public TestWordResult(int wordId, String wordTitle, int listCodeOfWord) {
+    public TestWordResult(int wordId, String wordTitle, int listCodeOfWord, String inputWord) {
         this.wordId = wordId;
+        this.inputWord = inputWord;
         this.wordTitle = wordTitle;
         this.listCodeOfWord = listCodeOfWord;
         this.testResult = false;

@@ -34,7 +34,7 @@ public class WordListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWordListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        overridePendingTransition(R.anim.right_enter,R.anim.non);
         setLanguageTitle();
         onClick();
         setWordlist();
@@ -191,5 +191,12 @@ public class WordListActivity extends AppCompatActivity {
         Log.e("onstart" , "Passed");
         setWordlist();
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.non,R.anim.right_exit);
+    }
+
 }
 

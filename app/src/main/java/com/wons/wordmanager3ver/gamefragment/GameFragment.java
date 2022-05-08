@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.MainActivity;
 import com.wons.wordmanager3ver.databinding.FragmentGameBinding;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.gamefragment.game.fourcard.FourCardActivity;
@@ -60,6 +61,10 @@ public class GameFragment extends Fragment {
 
         binding.lvGame3.setOnItemClickListener((adapterView, view, i, l) -> {
             GameValue gameValue = (GameValue) ((GameListAdapter) binding.lvGame3.getAdapter()).getItem(i);
+
+            if(!((MainActivity)getActivity()).isTodayListCheck()) {
+                return;
+            }
 
             if(gameValue.gameCode == EnumGame.HANGMAN_GAME.gameCodeInt) {
                 ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordLists();

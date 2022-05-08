@@ -112,7 +112,7 @@ public class TestResultActivityViewModel extends ViewModel {
                     correctWordCount++;
                 }
             }
-            if ((int) (correctWordCount / wordCount * 100.0) < 70) {
+            if ((int) (correctWordCount / wordCount * 100.0) < 80) {
                 return "불합격";
             }
         }

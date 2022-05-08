@@ -70,7 +70,7 @@ public class TestActivityViewModel extends ViewModel {
 
     public void addWordResult(String wordTitle) {
         Word word = getWordByIndex();
-        TestWordResult wordResult = new TestWordResult(word.getWordId(), word.getWordTitle(), word.getWordListCodeInt());
+        TestWordResult wordResult = new TestWordResult(word.getWordId(), word.getWordTitle(), word.getWordListCodeInt(), wordTitle);
 
         String[] originArr = word.getWordTitle().trim().toUpperCase().split(" ");
         String[] inputArr = wordTitle.toUpperCase().split(" ");

@@ -3,6 +3,7 @@ package com.wons.wordmanager3ver;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,15 +14,11 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.wons.wordmanager3ver.databinding.ActivityMainBinding;
-import com.wons.wordmanager3ver.datavalues.EnumSetting;
 import com.wons.wordmanager3ver.datavalues.MY;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.datavalues.UserInfo;
-import com.wons.wordmanager3ver.datavalues.UserRecommendWordListSettingValue;
 import com.wons.wordmanager3ver.datavalues.WordList;
 import com.wons.wordmanager3ver.mainutils.adapter.TodayListAdapter;
-import com.wons.wordmanager3ver.mainutils.dialogutils.CallBackInHomeFragment;
-import com.wons.wordmanager3ver.mainutils.dialogutils.DialogUtilsInHomeFragment;
 import com.wons.wordmanager3ver.mainutils.getlist.ChoiceListActivity;
 import com.wons.wordmanager3ver.gamefragment.GameFragment;
 import com.wons.wordmanager3ver.infoactivity.InfoActivity;
@@ -108,30 +105,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void onClick() {
 
-        binding.btnSetting.setOnClickListener(v -> {
-            if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
-                Toast.makeText(getApplicationContext(), "저장된 단어장이 없습니다", Toast.LENGTH_LONG).show();
-                return;
-            }
-            AlertDialog alertDialog = new DialogUtilsInHomeFragment().getDialogForTodayWordList(MainActivity.this,
-                    viewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue,
-                    viewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue, new CallBackInHomeFragment() {
-                        @Override
-                        public void callback(int setting, int listCount) {
-                            viewModel.updateSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId, setting);
-                            viewModel.updateSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId, listCount);
-                        }
-                    });
-            alertDialog.show();
-        });
-
         binding.back.setOnClickListener(v -> {
             MY.doIt(getApplicationContext());
         });
 
         binding.btnReplace.setOnClickListener(v -> {
             if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
-                Toast.makeText(getApplicationContext(), "저장된 단어장이 없습니다", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "만들어진 단어장이 없습니다", Toast.LENGTH_LONG).show();
                 return;
             }
             if(viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode()).size() != 0) {
@@ -150,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("알림");
-                builder.setMessage("완료되지 못한 단어장이 존재합니다\n그래도 새로고침 하시겠습니까?");
+                builder.setMessage("완료되지 못한 단어장이 존재합니다\n그래도 다시 고르시겠습니까?");
                 builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -180,6 +160,9 @@ public class MainActivity extends AppCompatActivity {
         binding.btnUserInfo.setOnClickListener(v -> {
             startActivity(new Intent(this, InfoActivity.class));
         });
+        binding.layAddTodayList.setOnClickListener(v -> {
+            changeTodayWordList();
+        });
     }
 
 
@@ -198,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         setTodayWordList();
     }
 
+    @SuppressLint("SetTextI18n")
     private void setTodayWordList() {
         if (binding.lvList.getAdapter() == null) {
             binding.lvList.setAdapter(new TodayListAdapter());
@@ -212,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("set C", "pass");
             Toast.makeText(getApplicationContext(), "변경사항이 있어\n 오늘의 단어장이 초기화 되었습니다", Toast.LENGTH_SHORT).show();
-            viewModel.updateSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId,1);
             ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
             for(TodayWordList todayWordList : todayWordLists1) {
                 viewModel.deleteTodayList(todayWordList);
@@ -226,62 +209,30 @@ public class MainActivity extends AppCompatActivity {
         ((TodayListAdapter)binding.lvList.getAdapter()).notifyDataSetChanged();
 
         if(MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size() == 0) {
-            binding.tv1.setText("            아직 만든 단어장이 없습니다. \n하단 탭을 눌러 단어장을 먼저 만들어 주세요.");
-            setVisible(true);
+            binding.tv1.setText("아직 만든 단어장이 없습니다. \n하단 메뉴를 눌러 단어장을 먼저 만들어 주세요.");
+            binding.tvWordlist.setText("단어장 만들기");
             binding.tv1.setVisibility(View.VISIBLE);
+            binding.layAddTodayList.setVisibility(View.GONE);
         } else if(binding.lvList.getAdapter().getCount() == 0) {
-            binding.tv1.setVisibility(View.VISIBLE);
+            binding.tv1.setVisibility(View.GONE);
+            binding.layAddTodayList.setVisibility(View.VISIBLE);
+            binding.tvWordlist.setText("단어장");
             binding.tv1.setText("공부할 단어장 리스트가 비어있습니다\n"+
                                 "   상단의 새로고침을 눌러주세요");
-            setVisible(true);
         } else {
-            setVisible(false);
             binding.tv1.setVisibility(View.GONE);
+            binding.layAddTodayList.setVisibility(View.GONE);
+            binding.tvWordlist.setText("단어장");
+
         }
     }
 
     private void changeTodayWordList() {
-        int recommendValue = viewModel.getSetting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId).settingValue;
-
-        if(recommendValue == UserRecommendWordListSettingValue.USER_RECOMMEND_STYLE_RECOMMEND.recommendStyleCodeInt) {
-
-            ArrayList<Integer> integers = new ArrayList<>();
-
-            while(true) {
-                if(integers.size() == viewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue) {
-                    break;
-                }
-
-                int randomNum = (int)(Math.random()*MainViewModel.getAllWordListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode()).size());
-
-                if(!integers.contains(randomNum)) {
-                    integers.add(randomNum);
-                }
-
-            }
-            ArrayList<TodayWordList> todayWordLists = viewModel.getRandomTodayWordList(integers);
-            for(TodayWordList todayWordList : todayWordLists) {
-                viewModel.insertTodayWordList(todayWordList);
-            }
-            setTodayWordList();
-            Toast.makeText(getApplicationContext(), "새로고침 되었습니다", Toast.LENGTH_SHORT).show();
-        }
-        if(recommendValue == UserRecommendWordListSettingValue.USER_RECOMMEND_STYLE_CHOICE.recommendStyleCodeInt) {
             Intent intent = new Intent(getApplicationContext(), ChoiceListActivity.class);
-            intent.putExtra("maxCount", viewModel.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId).settingValue);
             intent.putExtra("languageCode", MainViewModel.getUserInfo().getLanguageCode());
             startActivity(intent);
-        }
     }
 
-
-    public void setVisible(boolean check) {
-        if(check) {
-            binding.cardStudy.setVisibility(View.GONE);
-        } else {
-            binding.cardStudy.setVisibility(View.VISIBLE);
-        }
-    }
 
     private void isCheckUsedCount() {
 
@@ -301,6 +252,16 @@ public class MainActivity extends AppCompatActivity {
             builder.show();
         }
 
+    }
+
+    public boolean isTodayListCheck() {
+
+        if(binding.tv1.getVisibility() == View.VISIBLE || binding.layAddTodayList.getVisibility() == View.VISIBLE) {
+            Toast.makeText(getApplicationContext(), "공부할 단어장이 지정되지 않았습니다", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
 

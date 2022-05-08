@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.wons.wordmanager3ver.databinding.ListChoiceListBinding;
 import com.wons.wordmanager3ver.datavalues.WordList;
@@ -14,15 +15,13 @@ import java.util.ArrayList;
 
 public class ChoiceAdapter extends BaseAdapter {
     private ArrayList<WordList> wordLists;
-    private int maxCount;
     private ArrayList<WordList> selectedWordList;
     private AdapterCallBack callBack;
     //todo 콜백 (selected WordList)
 
-    ChoiceAdapter(int maxCount, AdapterCallBack callBack) {
+    ChoiceAdapter(AdapterCallBack callBack) {
         wordLists = new ArrayList<>();
         selectedWordList = new ArrayList<>();
-        this.maxCount = maxCount;
         this.callBack = callBack;
     }
     @Override
@@ -53,19 +52,19 @@ public class ChoiceAdapter extends BaseAdapter {
         binding.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(wordLists.get(i).getWordCountInt() == 0) {
+                    binding.cb.setChecked(false);
+                    Toast.makeText(viewGroup.getContext(), "단어가 없는 단어장 입니다", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if(b) {
                     // 체크
                     Log.e("check", String.valueOf(b));
                     selectedWordList.add(wordLists.get(i));
-                    //todo 콜백 실행
                     callBack.callBack(true);
-                    if(maxCount == selectedWordList.size()) {
-                        callBack.callBackIndex(selectedWordList);
-                    }
 
                 } else {
                     selectedWordList.remove(wordLists.get(i));
-                    //todo 콜백
                     callBack.callBack(false);
                     Log.e("check", String.valueOf(b));
                 }
@@ -76,5 +75,9 @@ public class ChoiceAdapter extends BaseAdapter {
 
     public void setWordLists(ArrayList<WordList> wordLists) {
         this.wordLists = wordLists;
+    }
+
+    public ArrayList<WordList> getSelectedWordList() {
+        return this.selectedWordList;
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.MainActivity;
 import com.wons.wordmanager3ver.databinding.FragmentTestBinding;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.testfragment.testword.TestActivity;
@@ -43,6 +44,10 @@ public class TestFragment extends Fragment {
         binding.btnTest.setOnClickListener(v -> {
 
             boolean check = true;
+
+            if(!((MainActivity)getActivity()).isTodayListCheck()) {
+                return;
+            }
 
             ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList();
             for(TodayWordList todayWordList : todayWordLists) {

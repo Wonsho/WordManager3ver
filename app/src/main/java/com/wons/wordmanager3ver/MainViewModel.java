@@ -43,14 +43,6 @@ public class MainViewModel extends ViewModel {
                     dao.insertUserSetting(new Setting(EnumSetting.TTS_SPEED.settingCodeId, 0));
                 }
 
-                if (enumSetting.settingCodeId == EnumSetting.USER_RECOMMEND_STYLE.settingCodeId) {
-                    dao.insertUserSetting(new Setting(EnumSetting.USER_RECOMMEND_STYLE.settingCodeId, UserRecommendWordListSettingValue.USER_RECOMMEND_STYLE_RECOMMEND.recommendStyleCodeInt));
-                }
-
-                if (enumSetting.settingCodeId == EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId) {
-                    dao.insertUserSetting(new Setting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId, 1));
-                }
-
                 if (enumSetting.settingCodeId == EnumSetting.LANGUAGE.settingCodeId) {
                     dao.insertUserSetting(new Setting(EnumSetting.LANGUAGE.settingCodeId, EnumLanguage.ENGLISH.languageCodeInt));
                 }

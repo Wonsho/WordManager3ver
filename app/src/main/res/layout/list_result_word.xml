@@ -10,13 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <TextView
+        android:layout_marginLeft="5dp"
         android:id="@+id/tv_wordTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:textSize="18sp"
         android:text="AppleAppleAppleAppleAppleAppleAppleAppleAppleApple"
         android:textColor="@color/theme_black"
         android:textStyle="bold"
@@ -25,9 +27,11 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        android:layout_marginLeft="5dp"
         android:id="@+id/tv_wordKorean"
         android:padding="5dp"
         android:textStyle="bold"
+        android:textSize="17sp"
         android:text="이건 사과야 빨간 사과야 "
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline4"
@@ -47,12 +51,43 @@
         android:textStyle="bold"
         android:textColor="@color/theme_black"
         android:gravity="center"
-        android:text="정답?"
+        android:text="O"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guideline4"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/lay_wrongWord"
+        app:layout_constraintRight_toLeftOf="@id/guideline4"
+        app:layout_constraintLeft_toLeftOf="@id/tv_wordKorean"
+        app:layout_constraintTop_toBottomOf="@id/tv_wordKorean"
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tt"
+            android:layout_marginTop="10dp"
+            android:text="내가 적은 단어-"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_inputWord"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp"
+            android:textSize="18sp"
+            android:textColor="#C80505"
+            android:text="inputWord"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wons.wordmanager3ver.MainActivity;
 import com.wons.wordmanager3ver.databinding.FragmentStudyBinding;
 import com.wons.wordmanager3ver.datavalues.TodayWordList;
 import com.wons.wordmanager3ver.studyfragment.studyword.StudyActivity;
@@ -39,6 +40,11 @@ public class StudyFragment extends Fragment {
     private void onClick() {
 
         binding.btnTest.setOnClickListener(v -> {
+
+            if(!((MainActivity)getActivity()).isTodayListCheck()) {
+                return;
+            }
+
             ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList();
             for(TodayWordList todayWordList : todayWordLists) {
                 if(viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {

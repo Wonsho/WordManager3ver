@@ -28,6 +28,7 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(InfoViewModel.class);
         nowUserInfo = viewModel.getNowUserInfo();
+        overridePendingTransition(R.anim.right_enter,R.anim.non);
         binding.btnBack.setOnClickListener(v -> {
             finish();
         });
@@ -119,5 +120,13 @@ public class InfoActivity extends AppCompatActivity {
         ((MyWayAdapter) binding.lvMyWay.getAdapter()).setUserData(viewModel.getFlagUserData(nowUserInfo.getLanguageCode()));
         ((MyWayAdapter) binding.lvMyWay.getAdapter()).notifyDataSetChanged();
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.non,R.anim.right_exit);
+    }
+
+
 
 }

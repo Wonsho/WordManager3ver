@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver.testfragment.testword.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +48,24 @@ public class ResultAdapter extends BaseAdapter {
         binding.tvWordTitle.setText(arrayList.get(i).getWordTitle());
         binding.tvWordKorean.setText(wordInfoHashMap.get(arrayList.get(i).getWordTitle().trim().toUpperCase()).wordKorean);
         if(arrayList.get(i).getTestResult()) {
-            binding.tvPass.setText("정답");
+            binding.tvPass.setText("O");
+            binding.tvPass.setTextColor(Color.parseColor("#FF3700B3"));
+            binding.layWrongWord.setVisibility(View.GONE);
         } else {
-            binding.tvPass.setText("틀림");
+
+            if(arrayList.get(i).inputWord.equals("1_pass")) {
+                binding.tvInputWord.setText("패스한 단어 입니다.");
+                binding.tvPass.setText("P");
+                binding.tvPass.setTextColor(Color.parseColor("#FF0000"));
+                binding.layWrongWord.setVisibility(View.GONE);
+
+            } else {
+                binding.tvInputWord.setText(arrayList.get(i).inputWord);
+                binding.layWrongWord.setVisibility(View.VISIBLE);
+                binding.tvPass.setText("X");
+                binding.tvPass.setTextColor(Color.parseColor("#FF0000"));
+            }
+
         }
         return binding.getRoot();
     }

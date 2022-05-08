@@ -29,27 +29,27 @@ public class DialogOfGame {
         builder.setNeutralButton("정답 보기", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                showShowAnswer(context);
+                showShowAnswer(context,callBackGameDialog);
             }
         });
 
         return builder.create();
     }
 
-    private void showShowAnswer(Context context) {
+    private void showShowAnswer(Context context, CallBackGameDialog callBackGameDialog) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("알림")
                 .setMessage("광고를 보고 정답을 찾으시겠습니까?")
                 .setNegativeButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                            // todo 광고
                     }
                 })
                 .setPositiveButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                            getDialogWhenGameOver(context, callBackGameDialog).show();
                     }
                 });
         builder.setCancelable(false)
