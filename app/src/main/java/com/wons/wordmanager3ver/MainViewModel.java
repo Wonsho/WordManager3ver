@@ -150,12 +150,12 @@ public class MainViewModel extends ViewModel {
                     word.getWordTitle().trim().toUpperCase(),
                     word.getLanguageCode()
             );
-            if(wordInfo.getTestedTimes() != 0) {
+            if (wordInfo.getTestedTimes() != 0) {
                 check = true;
             }
             sum += wordInfo.getCorrectPercentage();
         }
-        if(!check) {
+        if (!check) {
             return -1;
         }
         return sum / words1.length;
@@ -167,9 +167,7 @@ public class MainViewModel extends ViewModel {
     }
 
 
-
     //todo userinfo
-
 
 
     //todo 뷰의 메소드
@@ -178,7 +176,7 @@ public class MainViewModel extends ViewModel {
         return dao.getSetting(settingCode);
     }
 
-    public void updateSetting(int settingCode,int settingValue) {
+    public void updateSetting(int settingCode, int settingValue) {
         Setting setting = dao.getSetting(settingCode);
         setting.settingValue = settingValue;
         dao.updateUserSetting(setting);
@@ -187,12 +185,12 @@ public class MainViewModel extends ViewModel {
     public HashMap<Integer, WordList> getTodayWordList(ArrayList<TodayWordList> todayWordLists) {
         ArrayList<TodayWordList> todayWordLists1 = todayWordLists;
         HashMap<Integer, WordList> todayListMap = new HashMap<>();
-        for(TodayWordList wordList : todayWordLists1) {
-            WordList wordList1 =  dao.getSelectedWordlist(wordList.getListCode());
+        for (TodayWordList wordList : todayWordLists1) {
+            WordList wordList1 = dao.getSelectedWordlist(wordList.getListCode());
             todayListMap.put(wordList1.getListCodeInt(), wordList1);
         }
 
-        return  todayListMap;
+        return todayListMap;
     }
 
     public void insertTodayWordList(TodayWordList wordList) {
@@ -210,7 +208,7 @@ public class MainViewModel extends ViewModel {
     public ArrayList<TodayWordList> getRandomTodayWordList(ArrayList<Integer> integers) {
         ArrayList<TodayWordList> todayWordLists = new ArrayList<>();
         ArrayList<WordList> wordLists = new ArrayList<>(Arrays.asList(dao.getAllWordlistByLanguageCode(MainViewModel.getUserInfo().getLanguageCode())));
-        for(int i = 0 ; i < integers.size() ; i++) {
+        for (int i = 0; i < integers.size(); i++) {
             WordList wordList = wordLists.get(integers.get(i));
             todayWordLists.add(new TodayWordList(wordList.getLanguageCode(), wordList.getListCodeInt(), false));
         }
@@ -218,11 +216,6 @@ public class MainViewModel extends ViewModel {
     }
 
 
-    public void setRecommendSettingReset() {
-        Setting setting = dao.getSetting(EnumSetting.USER_RECOMMEND_TODAY_LIST_COUNT.settingCodeId);
-        setting.settingValue = 1;
-        dao.updateUserSetting(setting);
-    }
 
     public boolean checkUsedCount() {
         UsedCount count = dao.getUsedCount();
@@ -235,10 +228,41 @@ public class MainViewModel extends ViewModel {
 
     }
 
+    /*
+     * this method is do reset WordInfo's test result
+     * testResult changed at after did wordTest
+     * so when finish all test to pass or do reset todayWordList
+     * must use this method to reset All WordInfo;s test Result*/
+    public void setWordInfoTestResultToReset() {
+        TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
+        ArrayList<Word> wordArr = new ArrayList<>();
 
+        for (TodayWordList t : todayWordLists) {
+            wordArr.addAll(new ArrayList<>(Arrays.asList(dao.getAllWordByLanguageByListCode(
+                    t.getListLanguageCode(),
+                    t.getListCode()
+            ))));
+        }
 
+        for (Word w : wordArr) {
+            WordInfo wordInfo = dao.getWordInfo(w.getWordTitle().trim().toUpperCase(), w.getLanguageCode());
+            wordInfo.setTestResult(false);
+            dao.updateWordInfo(wordInfo);
+        }
+    }
 
+    public void setWordInfoTestResultToReset(int error) {
+        WordInfo[] wordInfo = dao.getAllWordInfoByLanguageCode(getUserInfo().getLanguageCode());
 
+        if(wordInfo.length == 0) {
+            return;
+        }
+
+        for (WordInfo w : wordInfo) {
+            w.setTestResult(false);
+            dao.updateWordInfo(w);
+        }
+    }
 
 
 }

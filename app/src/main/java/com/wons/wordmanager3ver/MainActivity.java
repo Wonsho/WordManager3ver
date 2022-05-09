@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        viewModel.setWordInfoTestResultToReset();
                         ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
                         for(TodayWordList list : todayWordLists) {
                             viewModel.deleteTodayList(list);
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 builder.create().show();
             } else {
+                viewModel.setWordInfoTestResultToReset();
                 changeTodayWordList();
             }
         });
@@ -195,12 +197,13 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.e("set C", "pass");
-            Toast.makeText(getApplicationContext(), "변경사항이 있어\n 오늘의 단어장이 초기화 되었습니다", Toast.LENGTH_SHORT).show();
+            viewModel.setWordInfoTestResultToReset(-1);
+            Toast.makeText(getApplicationContext(), "       변경사항이 있어\n " +
+                                                        "오늘의 단어장이 초기화 되었습니다", Toast.LENGTH_SHORT).show();
             ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
             for(TodayWordList todayWordList : todayWordLists1) {
                 viewModel.deleteTodayList(todayWordList);
             }
-            viewModel.setRecommendSettingReset();
             todayWordLists = new ArrayList<>();
             wordList = new HashMap<>();
         }
@@ -213,15 +216,20 @@ public class MainActivity extends AppCompatActivity {
             binding.tvWordlist.setText("단어장 만들기");
             binding.tv1.setVisibility(View.VISIBLE);
             binding.layAddTodayList.setVisibility(View.GONE);
+            binding.cardStudy.setVisibility(View.GONE);
+
         } else if(binding.lvList.getAdapter().getCount() == 0) {
             binding.tv1.setVisibility(View.GONE);
             binding.layAddTodayList.setVisibility(View.VISIBLE);
+            binding.cardStudy.setVisibility(View.GONE);
+
             binding.tvWordlist.setText("단어장");
             binding.tv1.setText("공부할 단어장 리스트가 비어있습니다\n"+
                                 "   상단의 새로고침을 눌러주세요");
         } else {
             binding.tv1.setVisibility(View.GONE);
             binding.layAddTodayList.setVisibility(View.GONE);
+            binding.cardStudy.setVisibility(View.VISIBLE);
             binding.tvWordlist.setText("단어장");
 
         }

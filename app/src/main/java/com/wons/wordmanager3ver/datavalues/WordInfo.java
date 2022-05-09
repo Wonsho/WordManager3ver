@@ -21,14 +21,28 @@ public class WordInfo {
     public String wordKorean;
     private int testedTimes;
     private int correctTimes;
+    private boolean todayTestResult;
 
     public WordInfo(String wordEnglish, String wordKorean, int languageCode) {
         this.wordEnglish = new Tools().removeOverSpace(wordEnglish.toUpperCase());
         this.wordKorean = wordKorean;
+        this.todayTestResult = false;
         this.wordMemo = "";
         this.testedTimes = 0;
         this.correctTimes = 0;
         this.languageCode = languageCode;
+    }
+
+    public void setTodayTestResult(boolean todayTestResult) {
+        this.todayTestResult = todayTestResult;
+    }
+
+    public void setTestResult(boolean result) {
+        this.todayTestResult = result;
+    }
+
+    public boolean todayTestResult() {
+        return this.todayTestResult;
     }
 
     public int getInfoId() {

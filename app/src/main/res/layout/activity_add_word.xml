@@ -152,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="단어장에 단어가 없습니다\n상단의 버튼을 눌러 단어를 추가해 주세요"
+        android:text="단어장에 단어가 없습니다\n상단 '+'버튼을 눌러 단어를 추가해 주세요"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
         android:background="@drawable/blankbox"
