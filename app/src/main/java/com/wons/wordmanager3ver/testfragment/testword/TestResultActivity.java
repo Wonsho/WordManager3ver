@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import com.wons.wordmanager3ver.databinding.ActivityTestResultBinding;
 import com.wons.wordmanager3ver.testfragment.testword.adapter.ResultAdapter;
@@ -45,6 +46,8 @@ public class TestResultActivity extends AppCompatActivity {
                 return;
             }
             viewModel.indexOfLiveData.setValue(viewModel.indexOfLiveData.getValue() - 1);
+            binding.tvListName.setText(viewModel.getListTitle());
+
         });
 
         binding.btnRight.setOnClickListener(v -> {
@@ -52,6 +55,8 @@ public class TestResultActivity extends AppCompatActivity {
                 return;
             }
             viewModel.indexOfLiveData.setValue(viewModel.indexOfLiveData.getValue() + 1);
+            binding.tvListName.setText(viewModel.getListTitle());
+
         });
     }
 
@@ -59,7 +64,7 @@ public class TestResultActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setActiveView() {
         //todo 라이브 데이터 옵져브
-        binding.tvListName.setText(viewModel.getListTitle());
+//        binding.tvListName.setText(viewModel.getListTitle());
         binding.tvListCount.setText("[" + (viewModel.indexOfLiveData.getValue() + 1) + "/" + viewModel.getWordListSize() + "]");
         setResultListView();
     }
@@ -67,6 +72,12 @@ public class TestResultActivity extends AppCompatActivity {
     private void setResultListView() {
         if (binding.lvWord.getAdapter() == null) {
             binding.lvWord.setAdapter(new ResultAdapter());
+        }
+        if(viewModel.getTestResultArr().size() == 0) {
+            binding.tvTest.setVisibility(View.VISIBLE);
+        } else {
+            binding.tvTest.setVisibility(View.GONE);
+
         }
         ((ResultAdapter) binding.lvWord.getAdapter()).setArrayList(viewModel.getTestResultArr());
         ((ResultAdapter) binding.lvWord.getAdapter()).setWordInfoHashMap(viewModel.wordInfoHashMap);
@@ -80,6 +91,7 @@ public class TestResultActivity extends AppCompatActivity {
         binding.tvListCountInResult.setText(String.valueOf(viewModel.getWordListSize()));// 단어장 갯수
         binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()));// 단어 개수
         binding.tvCorrectCount.setText(viewModel.getCorrectWordCount() + "/" + viewModel.getWordCount());// 맞은 단어 개수
-        binding.tvPass.setText(viewModel.getTestResult());// 합격 여부
+        viewModel.getTestResult();
+        binding.tvListName.setText(viewModel.getListTitle());
     }
 }

@@ -41,7 +41,7 @@ public class WordInfo {
         this.todayTestResult = result;
     }
 
-    public boolean todayTestResult() {
+    public boolean getTodayTestResult() {
         return this.todayTestResult;
     }
 

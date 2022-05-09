@@ -116,18 +116,25 @@ public class MainActivity extends AppCompatActivity {
             }
             if(viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode()).size() != 0) {
                 ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+                boolean check = true;
+
                 for(TodayWordList list : todayWordLists) {
                     if(!list.passOrNo) {
+                        check = false;
                         break;
-                    }  else {
-                        ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
-                        for(TodayWordList list1 : todayWordLists1) {
-                            viewModel.deleteTodayList(list1);
-                        }
-                        changeTodayWordList();
-                        return;
                     }
                 }
+
+                if(check) {
+                    viewModel.setWordInfoTestResultToReset();
+                    ArrayList<TodayWordList> todayWordLists1 = viewModel.getTodayWordList(MainViewModel.getUserInfo().getLanguageCode());
+                    for(TodayWordList list1 : todayWordLists1) {
+                        viewModel.deleteTodayList(list1);
+                    }
+                    changeTodayWordList();
+                    return;
+                }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("알림");
                 builder.setMessage("완료되지 못한 단어장이 존재합니다\n그래도 다시 고르시겠습니까?");

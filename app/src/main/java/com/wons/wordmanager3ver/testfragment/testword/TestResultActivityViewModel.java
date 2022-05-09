@@ -102,27 +102,47 @@ public class TestResultActivityViewModel extends ViewModel {
         return count;
     }
 
-    public String getTestResult() {
+    public void getTestResult() {
+        int correctCount = 0;
+        int exp = 0;
+
         for (int i = 0; i < this.todayWordLists.size(); i++) {
             ArrayList<TestWordResult> testWordResults = this.testWordMap.get(i);
-            int wordCount = testWordResults.size();
-            double correctWordCount = 0.0;
+            boolean check = true;
             for (TestWordResult testWordResult : testWordResults) {
+                WordInfo wordInfo = dao.getWordInfo(testWordResult.getWordTitle().trim().toUpperCase(),
+                        MainViewModel.getUserInfo().getLanguageCode());
+
                 if (testWordResult.getTestResult()) {
-                    correctWordCount++;
+                    wordInfo.setTestResult(true);
+                    correctCount++;
+
+                    if (correctCount > 25) {
+                        exp += 3;
+                    } else {
+                        exp += 2;
+                    }
+
+                } else {
+                    wordInfo.setTestResult(false);
+
+                    if (exp < 0) {
+                        exp = 0;
+                    } else {
+                        exp -= 1;
+                    }
+                    check = false;
                 }
+                dao.updateWordInfo(wordInfo);
             }
-            if ((int) (correctWordCount / wordCount * 100.0) < 80) {
-                return "불합격";
+
+            if (check) {
+                TodayWordList todayWordList = todayWordLists.get(i);
+                todayWordList.passOrNo = true;
+                dao.updateTodayList(todayWordList);
             }
-        }
-        for (TodayWordList todayWordList : todayWordLists) {
-            todayWordList.passOrNo = true;
-            dao.updateTodayList(todayWordList);
         }
 
-        int exp = getTestExp();
-        Log.e("exp", String.valueOf(exp));
         UserInfo userInfo = dao.getUserInfoByLanguageCode(MainViewModel.getUserInfo().getLanguageCode());
         int userLevel = userInfo.getLv();
         userInfo.addExp(exp);
@@ -134,7 +154,7 @@ public class TestResultActivityViewModel extends ViewModel {
         if (userLevel != updatedUserInfo.getLv()) {
             int gap = updatedUserInfo.getLv() - userLevel;
 
-            for(int i = 0; i < gap; i++) {
+            for (int i = 0; i < gap; i++) {
                 int level = userLevel + i + 1;
                 FlagUserLevelData flagUserLevelData = new FlagUserLevelData(
                         MainViewModel.getUserInfo().getLanguageCode(),
@@ -144,26 +164,6 @@ public class TestResultActivityViewModel extends ViewModel {
                 MainViewModel.dao.insertFlagUserData(flagUserLevelData);
             }
         }
-
-            return "합격";
-    }
-
-    private int getTestExp() {
-        int wordCount = 0;
-        double exp = 0.0;
-        TestWordResult[] testWordResults = dao.getAllTestWordResult();
-
-        for (TestWordResult testWordResult : testWordResults) {
-            if (wordCount <= 25) {
-                 exp += 1.8;
-//                exp += 10.8;
-
-            } else {
-                exp += 2.0;
-            }
-            wordCount++;
-        }
-        return (int) exp;
     }
 
     public ArrayList<TestWordResult> getTestResultArr() {
@@ -210,5 +210,6 @@ public class TestResultActivityViewModel extends ViewModel {
             dao.updateWordList(wordList);
         }
     }
+
 }
 

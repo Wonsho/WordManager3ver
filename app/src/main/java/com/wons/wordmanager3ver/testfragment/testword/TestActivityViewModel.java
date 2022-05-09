@@ -32,7 +32,14 @@ public class TestActivityViewModel extends ViewModel {
 
         for (TodayWordList todayWordList : todayWordLists) {
             Word[] words = myDao.getAllWordByLanguageByListCode(todayWordList.getListLanguageCode(), todayWordList.getListCode());
-            wordsArr.addAll(Arrays.asList(words));
+            ArrayList<Word> words1 = new ArrayList<>();
+            for (Word w : words) {
+                WordInfo wordInfo = myDao.getWordInfo(w.getWordTitle().trim().toUpperCase(), w.getLanguageCode());
+                if(!wordInfo.getTodayTestResult()) {
+                    words1.add(w);
+                }
+            }
+            wordsArr.addAll(words1);
         }
         liveDataOfIndex.setValue(0);
     }
