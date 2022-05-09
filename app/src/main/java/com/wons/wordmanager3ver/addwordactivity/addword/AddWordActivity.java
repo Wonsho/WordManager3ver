@@ -60,12 +60,12 @@ public class AddWordActivity extends AppCompatActivity {
         });
 
         binding.btnAddWord.setOnClickListener(v -> {
-            if (viewModel.getWordCount() != 20) {
+//            if (viewModel.getWordCount() != 20) {
                 dialogForAddWord.setCancelable(false);
                 dialogForAddWord.show();
-            } else {
-                Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
-            }
+//            } else {
+//                Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
+//            }
         });
 
         binding.btnView.setOnClickListener(v -> {
@@ -91,11 +91,11 @@ public class AddWordActivity extends AppCompatActivity {
 
                 switch (resultCode) {
                     case AddWordViewModel.NON: {
-                        if (viewModel.getWordCount() == 20) {
-                            Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
-                            dialogForAddWord.dismiss();
-                            return;
-                        }
+//                        if (viewModel.getWordCount() == 20) {
+//                            Toast.makeText(getApplicationContext(), "단어장에 단어는 20개만 저장가능 합니다", Toast.LENGTH_LONG).show();
+//                            dialogForAddWord.dismiss();
+//                            return;
+//                        }
                         viewModel.insertWord(words);
                         Toast.makeText(getApplicationContext(), "저장 되었습니다", Toast.LENGTH_SHORT).show();
                         setWordListView();
@@ -227,7 +227,7 @@ public class AddWordActivity extends AppCompatActivity {
             binding.tvInfo.setVisibility(View.GONE);
         }
         viewModel.setLiveDataCount(viewModel.getAllWordInList());
-        binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()) + "/20");
+        binding.tvWordCount.setText(String.valueOf(viewModel.getWordCount()));
         ((AddWordAdapter) binding.lvWord.getAdapter()).notifyDataSetChanged();
     }
 

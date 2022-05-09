@@ -82,23 +82,6 @@
                 app:layout_constraintLeft_toRightOf="@id/tv_list_count_in_result"
                 app:layout_constraintTop_toTopOf="@id/tv_list_count_in_result" />
 
-
-            <ImageView
-                android:id="@+id/btn_addList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_baseline_add_list"
-                app:layout_constraintBottom_toBottomOf="@id/btn_back"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/btn_back" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ListView

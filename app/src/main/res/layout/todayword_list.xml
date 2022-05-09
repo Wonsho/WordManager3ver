@@ -22,22 +22,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_language"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/tv_wordTitle"
-        app:layout_constraintLeft_toLeftOf="@id/tv_wordTitle"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/tv_wordKorean"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:text="사과\n형용사는 뭐고 명사는 사과 맞는데 뭐라 할지 모르겠네"
         android:textColor="@color/theme_black"
         android:textSize="15sp"
@@ -68,15 +58,15 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
+        android:id="@+id/tv_result"
         android:textStyle="bold"
         android:textColor="@color/purple_700"
-        android:textSize="17sp"
+        android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="@id/tv"
         app:layout_constraintBottom_toTopOf="@id/tv"
         app:layout_constraintTop_toBottomOf="@id/tv_wordTitle"
         android:text="합격"
         android:padding="5dp"
-        android:background="@drawable/list_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

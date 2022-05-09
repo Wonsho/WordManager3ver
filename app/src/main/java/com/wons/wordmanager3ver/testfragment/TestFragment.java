@@ -34,8 +34,8 @@ public class TestFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(TestFragmentViewModel.class);
         binding = FragmentTestBinding.inflate(inflater, container,false );
         onClick();
+        setTestWord();
         setWordQuantityText();
-
         return binding.getRoot();
     }
 
@@ -58,7 +58,7 @@ public class TestFragment extends Fragment {
                 }
             }
             if(check) {
-                Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n새로고침 해주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n다시 공부할 단어장을 골라 주세요", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -71,9 +71,17 @@ public class TestFragment extends Fragment {
         binding.tvWordCount.setText(String.valueOf(quantity));
     }
 
+    private void setTestWord() {
+        binding.tvWordTestCount.setText(String.valueOf(viewModel.getTestTodayWordQuantity()));
+        binding.tvPassedWordCount.setText(
+                String.valueOf(viewModel.getTodayWordQuantity() - viewModel.getTestTodayWordQuantity())
+        );
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+        setTestWord();
         setWordQuantityText();
     }
 }

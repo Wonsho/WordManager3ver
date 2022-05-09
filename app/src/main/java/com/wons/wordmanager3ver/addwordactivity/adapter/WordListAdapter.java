@@ -49,7 +49,7 @@ public class WordListAdapter extends BaseAdapter {
         TextView tv_listGrade = view.findViewById(R.id.tv_listGrade);
         TextView tv_notice = view.findViewById(R.id.tv_notice);
 
-        tv_wordCount.setText(String.valueOf(lists.get(i).getWordCountInt()) + "/20");
+        tv_wordCount.setText(String.valueOf(lists.get(i).getWordCountInt()));
         tv_listTitle.setText(lists.get(i).listName);
         String listGrade = String.valueOf(lists.get(i).getListGradeInt() + "점");
         if (lists.get(i).getListGradeInt() == -1) {

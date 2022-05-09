@@ -61,63 +61,107 @@ public class GameFragment extends Fragment {
 
         binding.lvGame3.setOnItemClickListener((adapterView, view, i, l) -> {
             GameValue gameValue = (GameValue) ((GameListAdapter) binding.lvGame3.getAdapter()).getItem(i);
-
+            boolean check = true;
             if(!((MainActivity)getActivity()).isTodayListCheck()) {
                 return;
             }
 
             if(gameValue.gameCode == EnumGame.HANGMAN_GAME.gameCodeInt) {
                 ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordLists();
+                check = true;
                 for(TodayWordList todayWordList : todayWordLists) {
+                    check = todayWordList.passOrNo;
                     if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
                         Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                }
+                if(check) {
+                    Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n다시 공부할 단어장을 골라 주세요", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 startActivity(new Intent(getActivity(), HangManActivity.class));
             }
 
             if(gameValue.gameCode == EnumGame.MAKE_WORD_BY_SPELLING.gameCodeInt) {
                 ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordLists();
+                check = true;
                 for(TodayWordList todayWordList : todayWordLists) {
+                    check = todayWordList.passOrNo;
                     if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
                         Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
+
+                if(check) {
+                    Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n다시 공부할 단어장을 골라 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 startActivity(new Intent(getActivity(), MakeWordGameActivity.class));
             }
 
             if (gameValue.gameCode == EnumGame.OX_QUIZ.gameCodeInt) {
                 ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordLists();
+                check = true;
                 for(TodayWordList todayWordList : todayWordLists) {
+                    check = todayWordList.passOrNo;
                     if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
                         Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
+
+
+                if(check) {
+                    Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n다시 공부할 단어장을 골라 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 startActivity(new Intent(getActivity(), QuizActivity.class));
             }
 
             if (gameValue.gameCode == EnumGame.PUT_SPELL_AT_BLANK.gameCodeInt) {
                 ArrayList<TodayWordList> todayWordLists =viewModel.getTodayWordLists();
+                check = true;
                 for(TodayWordList todayWordList : todayWordLists) {
+                    check = todayWordList.passOrNo;
                     if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
                         Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
+
+
+                if(check) {
+                    Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n다시 공부할 단어장을 골라 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 startActivity(new Intent(getActivity(), PutSpellAtBlankActivity.class));
             }
 
             if (gameValue.gameCode == EnumGame.FOUR_CARD.gameCodeInt) {
                 ArrayList<TodayWordList> todayWordLists = viewModel.getTodayWordLists();
+                check = true;
                 for(TodayWordList todayWordList : todayWordLists) {
+                    check = todayWordList.passOrNo;
                     if (viewModel.getWordCountOfTodayWordList(todayWordList) == 0) {
                         Toast.makeText(getActivity(), "단어가 없는 단어장이 있습니다", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
+
+
+                if(check) {
+                    Toast.makeText(getActivity(), "모든 시험을 합격하셨습니다\n다시 공부할 단어장을 골라 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                
                 startActivity(new Intent(getActivity(), FourCardActivity.class));
             }
 

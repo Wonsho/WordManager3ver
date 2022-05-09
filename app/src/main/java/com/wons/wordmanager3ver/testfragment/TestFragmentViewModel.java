@@ -37,4 +37,26 @@ public class TestFragmentViewModel extends ViewModel {
         return words.size();
     }
 
+    public int getTestTodayWordQuantity() {
+        TodayWordList[] todayWordLists = dao.getAllTodayListByLanguageCode(
+                MainViewModel.getUserInfo().getLanguageCode()
+        );
+
+        int count = 0;
+
+        ArrayList<Word> words = new ArrayList<Word>();
+
+        for (TodayWordList t : todayWordLists) {
+            words.addAll(Arrays.asList(dao.getAllWordByLanguageByListCode(t.getListLanguageCode(), t.getListCode())));
+        }
+
+        for(Word w : words) {
+            if(dao.getWordInfo(w.getWordTitle().trim().toUpperCase(), MainViewModel.getUserInfo().getLanguageCode()).getTodayTestResult()) {
+            } else {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

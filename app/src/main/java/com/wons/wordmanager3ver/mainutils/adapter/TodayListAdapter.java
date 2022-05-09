@@ -28,7 +28,7 @@ public class TodayListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public TodayWordList getItem(int i) {
         return todayWordLists.get(i);
     }
 
@@ -57,7 +57,7 @@ public class TodayListAdapter extends BaseAdapter {
         } else {
             binding.tvPass.setVisibility(View.GONE);
         }
-        binding.tvWordCount.setText(String.valueOf(wordLists.get(todayWordLists.get(i).getListCode()).getWordCountInt()) + "/20");
+        binding.tvWordCount.setText(String.valueOf(wordLists.get(todayWordLists.get(i).getListCode()).getWordCountInt()));
 
         return binding.getRoot();
     }

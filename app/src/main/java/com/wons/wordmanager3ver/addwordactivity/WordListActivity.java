@@ -73,7 +73,6 @@ public class WordListActivity extends AppCompatActivity {
         });
 
         binding.btnAddList.setOnClickListener(v -> {
-//            dialogForAddList.show();
             MainViewModel.insertWordList(new WordList("~", MainViewModel.getUserInfo().getLanguageCode(), new Tools().getNoWDate()));
             WordList[] wordList = MainViewModel.dao.getSelectedWordlist(MainViewModel.getUserInfo().getLanguageCode(), "~");
             WordList wordList1 = wordList[0];
@@ -96,13 +95,6 @@ public class WordListActivity extends AppCompatActivity {
 
 
     private void setLanguageTitle() {
-//        EnumLanguage[] enumLanguages = EnumLanguage.values();
-//        int languageCode = MainViewModel.getUserInfo().getLanguageCode();
-//        for (EnumLanguage enumLanguage : enumLanguages) {
-//            if (languageCode == enumLanguage.languageCodeInt) {
-//                binding.tvLanguage.setText(enumLanguage.getLanguage());
-//            }
-//        }
     }
 
     private void setWordlist() {

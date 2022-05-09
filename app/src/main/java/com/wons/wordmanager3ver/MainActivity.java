@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -25,6 +26,7 @@ import com.wons.wordmanager3ver.infoactivity.InfoActivity;
 import com.wons.wordmanager3ver.studyfragment.StudyFragment;
 import com.wons.wordmanager3ver.testfragment.TestFragment;
 import com.wons.wordmanager3ver.addwordactivity.WordListActivity;
+import com.wons.wordmanager3ver.todayword.TodayWordActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,6 +173,15 @@ public class MainActivity extends AppCompatActivity {
         });
         binding.layAddTodayList.setOnClickListener(v -> {
             changeTodayWordList();
+        });
+        binding.lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, TodayWordActivity.class);
+                TodayWordList todayWordList = ((TodayListAdapter)binding.lvList.getAdapter()).getItem(i);
+                intent.putExtra("listCode", todayWordList.getListCode());
+                startActivity(intent);
+            }
         });
     }
 
