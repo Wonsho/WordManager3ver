@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.material.snackbar.Snackbar;
 import com.wons.wordmanager3ver.databinding.ActivityFourCardBinding;
 import com.wons.wordmanager3ver.gamefragment.game.GameCode;
@@ -32,6 +33,8 @@ public class FourCardActivity extends AppCompatActivity {
         viewModel.startGame(GameCode.START);
         onClick();
         setView();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
 
     }
 

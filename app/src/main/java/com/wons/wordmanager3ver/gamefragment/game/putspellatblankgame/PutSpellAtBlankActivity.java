@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityPutSpellAtBlankBinding;
 import com.wons.wordmanager3ver.gamefragment.game.GameCode;
@@ -35,6 +36,8 @@ public class PutSpellAtBlankActivity extends AppCompatActivity {
         viewModel.startGame(GameCode.START);
         onClick();
         setView();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
     }
 
     class GameResult {

@@ -85,7 +85,16 @@ public class MakeSpellViewModel extends ViewModel {
                     ))));
                 }
 
-                return wordArr.get(new Random().nextInt(wordArr.size())).getWordTitle();
+                ArrayList<String> correctWordArr = new ArrayList<>();
+
+                for (Word w : wordArr) {
+
+                    if(dao.getWordInfo(w.getWordTitle().trim().toUpperCase(), w.getLanguageCode()).getTodayTestResult())
+                        continue;
+                    correctWordArr.add(w.getWordTitle().trim());
+                }
+
+                return correctWordArr.get(new Random().nextInt(correctWordArr.size()));
             }
 
 

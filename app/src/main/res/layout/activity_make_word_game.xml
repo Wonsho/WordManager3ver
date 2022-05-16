@@ -166,7 +166,8 @@
                     android:layout_margin="7dp"
                     android:lineSpacingExtra="2dp"
                     android:text="asdasdasfasgaggsgagsagdsgsdgzsdfasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdasdasdasfasgaggsgagsagdsgsdgzsdfzsdfFdSffszfzsdfzsdfszdfszdzsdfFdSffszfzsdfzsdfszdfszd"
-                    android:textColor="@color/theme_black" />
+                    android:textColor="@color/theme_black"
+                    android:paddingBottom="100dp"/>
             </LinearLayout>
         </ScrollView>
 
@@ -183,6 +184,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.7" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:elevation="5dp"
+            ads:adUnitId="ca-app-pub-4928749861370127/7584621560"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            ads:adSize="BANNER"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            ads:layout_constraintBottom_toBottomOf="@id/guideline2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+
 
         <TextView
             android:id="@+id/t"

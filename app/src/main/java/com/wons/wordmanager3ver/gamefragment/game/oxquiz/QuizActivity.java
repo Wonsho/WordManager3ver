@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.wons.wordmanager3ver.databinding.ActivityQuizBinding;
 
 public class QuizActivity extends AppCompatActivity {
@@ -32,6 +33,8 @@ public class QuizActivity extends AppCompatActivity {
         });
         onClick();
         setView();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
     }
 
     private void setView() {

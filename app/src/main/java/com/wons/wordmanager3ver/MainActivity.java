@@ -1,5 +1,6 @@
 package com.wons.wordmanager3ver;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +14,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 import com.wons.wordmanager3ver.databinding.ActivityMainBinding;
 import com.wons.wordmanager3ver.datavalues.MY;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.buildDataBase(getApplicationContext());
         setUserInfo();
@@ -47,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
         setTodayWordList();
         isCheckUsedCount();
         getSupportFragmentManager().beginTransaction().replace(binding.frame.getId(), new GameFragment()).commit();
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+            }
+        });
+
         binding.menu.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

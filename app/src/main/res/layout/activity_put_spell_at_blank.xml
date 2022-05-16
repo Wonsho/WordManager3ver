@@ -118,7 +118,8 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="100dp">
 
                 <TextView
                     android:id="@+id/tv_wordKorean"
@@ -138,6 +139,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.7" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:elevation="5dp"
+            ads:adUnitId="ca-app-pub-4928749861370127/7584621560"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            ads:adSize="BANNER"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            ads:layout_constraintBottom_toBottomOf="@id/guideline"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+
 
         <androidx.cardview.widget.CardView
             android:layout_margin="5dp"

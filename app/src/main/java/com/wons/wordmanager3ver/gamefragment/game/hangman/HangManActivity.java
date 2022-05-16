@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.wons.wordmanager3ver.R;
 import com.wons.wordmanager3ver.databinding.ActivityHangManBinding;
 import com.wons.wordmanager3ver.databinding.MykeyboardBinding;
@@ -42,6 +43,9 @@ public class HangManActivity extends AppCompatActivity {
         binding.btnBack.setOnClickListener(v -> {
             finish();
         });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
 
     }
 

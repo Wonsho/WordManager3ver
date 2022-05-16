@@ -56,11 +56,20 @@ public class GameViewModel extends ViewModel {
             wordArrOfTodayWord.addAll(Arrays.asList(words1));
         }
 
-        int randomNum = new Random().nextInt(wordArrOfTodayWord.size());
-        Log.e("todayWordSize", String.valueOf(wordArrOfTodayWord.size()));
+        ArrayList<String> unCorrectWordArr = new ArrayList<>();
+
+        for(Word w : wordArrOfTodayWord) {
+            if(myDao.getWordInfo(w.getWordTitle().toUpperCase(), w.getLanguageCode()).getTodayTestResult())
+                continue;
+            unCorrectWordArr.add(w.getWordTitle().trim().toUpperCase());
+        }
+
+
+        int randomNum = new Random().nextInt(unCorrectWordArr.size());
+        Log.e("todayWordSize", String.valueOf(unCorrectWordArr.size()));
         Log.e("RandomNum", String.valueOf(randomNum));
 
-        this.wordTitle = wordArrOfTodayWord.get(randomNum).getWordTitle().trim().toUpperCase();
+        this.wordTitle = unCorrectWordArr.get(randomNum);
         Log.e("word", this.wordTitle);
     }
 

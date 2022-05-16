@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wons.wordmanager3ver">
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round1"
         android:supportsRtl="true"
         android:theme="@style/Theme.WordManager3ver">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4928749861370127~3048279057"
+            />
         <activity
             android:name=".todayword.TodayWordActivity"
             android:exported="true" />

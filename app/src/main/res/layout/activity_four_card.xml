@@ -151,10 +151,25 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="단어의 뜻"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"/>
             </LinearLayout>
 
         </ScrollView>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:elevation="5dp"
+            ads:adUnitId="ca-app-pub-4928749861370127/7584621560"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            ads:adSize="BANNER"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/guideline9"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+
 
         <LinearLayout
             android:gravity="center|top"

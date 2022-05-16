@@ -87,13 +87,8 @@ public class MainViewModel extends ViewModel {
         tts = new Tools().speakTTS(context, enumLanguage);
     }
 
-
     public static UserInfo getUserInfo() {
         return dao.getUserInfoByLanguageCode(dao.getSetting(EnumSetting.LANGUAGE.settingCodeId).settingValue);
-    }
-
-    public static void upDateUserInfo(UserInfo userInfo) {
-        dao.updateUserInfo(userInfo);
     }
 
     public static void changeLanguageSetting(int languageCode) {
@@ -161,25 +156,12 @@ public class MainViewModel extends ViewModel {
         return sum / words1.length;
     }
 
-
     public static void updateWordList(WordList list) {
         dao.updateWordList(list);
     }
 
-
-    //todo userinfo
-
-
-    //todo 뷰의 메소드
-
     public static Setting getSetting(int settingCode) {
         return dao.getSetting(settingCode);
-    }
-
-    public void updateSetting(int settingCode, int settingValue) {
-        Setting setting = dao.getSetting(settingCode);
-        setting.settingValue = settingValue;
-        dao.updateUserSetting(setting);
     }
 
     public HashMap<Integer, WordList> getTodayWordList(ArrayList<TodayWordList> todayWordLists) {
@@ -193,10 +175,6 @@ public class MainViewModel extends ViewModel {
         return todayListMap;
     }
 
-    public void insertTodayWordList(TodayWordList wordList) {
-        dao.insertTodayList(wordList);
-    }
-
     public ArrayList<TodayWordList> getTodayWordList(int languageCode) {
         return new ArrayList<>(Arrays.asList(dao.getAllTodayListByLanguageCode(languageCode)));
     }
@@ -205,26 +183,16 @@ public class MainViewModel extends ViewModel {
         dao.deleteTodayList(todayWordList);
     }
 
-    public ArrayList<TodayWordList> getRandomTodayWordList(ArrayList<Integer> integers) {
-        ArrayList<TodayWordList> todayWordLists = new ArrayList<>();
-        ArrayList<WordList> wordLists = new ArrayList<>(Arrays.asList(dao.getAllWordlistByLanguageCode(MainViewModel.getUserInfo().getLanguageCode())));
-        for (int i = 0; i < integers.size(); i++) {
-            WordList wordList = wordLists.get(integers.get(i));
-            todayWordLists.add(new TodayWordList(wordList.getLanguageCode(), wordList.getListCodeInt(), false));
-        }
-        return todayWordLists;
-    }
-
-
-
     public boolean checkUsedCount() {
         UsedCount count = dao.getUsedCount();
+        boolean check = count.checkCount();
+        dao.upDateUsedDay(count);
 
         // if
         // return Value is
         // false that mean is don't show Dialog,
         // true is show Dialog
-        return count.checkCount();
+        return check;
 
     }
 

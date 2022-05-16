@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.wons.wordmanager3ver.databinding.ActivityMakeWordGameBinding;
 import com.wons.wordmanager3ver.databinding.TextSpellBinding;
 import com.wons.wordmanager3ver.databinding.WordSpellBinding;
@@ -37,6 +38,8 @@ public class MakeWordGameActivity extends AppCompatActivity {
         viewModel.startGame(GameCode.START);
         onclick();
         setGameView();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
     }
 
     private void onclick() {

@@ -124,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.6" />
+            app:layout_constraintGuide_percent="0.7" />
 
         <FrameLayout
             android:id="@+id/keyboard"
@@ -136,12 +136,26 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline1" />
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:elevation="5dp"
+            ads:adUnitId="ca-app-pub-4928749861370127/7584621560"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            ads:adSize="BANNER"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/guideline2"
+             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

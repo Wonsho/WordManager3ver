@@ -37,9 +37,18 @@ public class PutSpellBlankViewModel extends ViewModel {
                            )
                    )));
                 }
-                Log.e("random", String.valueOf(words.size()));
-                int randomNum = new Random().nextInt(words.size());
-                return words.get(randomNum);
+
+                ArrayList<Word> correctWordArr = new ArrayList<>();
+
+                for (Word w : words) {
+
+                    if (dao.getWordInfo(w.getWordTitle().trim().toUpperCase(), w.getLanguageCode()).getTodayTestResult())
+                        continue;
+                    correctWordArr.add(w);
+                }
+
+                int randomNum = new Random().nextInt(correctWordArr.size());
+                return correctWordArr.get(randomNum);
             }
 
             private String getWordKorean(Word word) {
